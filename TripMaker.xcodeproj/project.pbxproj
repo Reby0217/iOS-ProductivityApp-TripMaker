@@ -14,6 +14,7 @@
 		613381E52BA6A1C600DB71AC /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613381E42BA6A1C600DB71AC /* Route.swift */; };
 		613381E72BA6A29000DB71AC /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613381E62BA6A29000DB71AC /* Location.swift */; };
 		613381E92BA6A33D00DB71AC /* Reward.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613381E82BA6A33D00DB71AC /* Reward.swift */; };
+		613381EE2BA6B38100DB71AC /* dataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613381ED2BA6B38100DB71AC /* dataModel.swift */; };
 		61C355C72BA69ABA00B8FD66 /* TripMakerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61C355C62BA69ABA00B8FD66 /* TripMakerApp.swift */; };
 		61C355C92BA69ABA00B8FD66 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61C355C82BA69ABA00B8FD66 /* ContentView.swift */; };
 		61C355CB2BA69ABA00B8FD66 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61C355CA2BA69ABA00B8FD66 /* Item.swift */; };
@@ -28,6 +29,7 @@
 		613381E42BA6A1C600DB71AC /* Route.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Route.swift; sourceTree = "<group>"; };
 		613381E62BA6A29000DB71AC /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		613381E82BA6A33D00DB71AC /* Reward.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reward.swift; sourceTree = "<group>"; };
+		613381ED2BA6B38100DB71AC /* dataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dataModel.swift; sourceTree = "<group>"; };
 		61C355C32BA69ABA00B8FD66 /* TripMaker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TripMaker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		61C355C62BA69ABA00B8FD66 /* TripMakerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripMakerApp.swift; sourceTree = "<group>"; };
 		61C355C82BA69ABA00B8FD66 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -57,6 +59,7 @@
 				613381E82BA6A33D00DB71AC /* Reward.swift */,
 				4407A1582BA6A7690047DF93 /* FocusSession.swift */,
 				4407A15A2BA6A7D80047DF93 /* UserProfile.swift */,
+				613381ED2BA6B38100DB71AC /* dataModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -185,6 +188,7 @@
 				61C355C92BA69ABA00B8FD66 /* ContentView.swift in Sources */,
 				4407A1592BA6A7690047DF93 /* FocusSession.swift in Sources */,
 				61C355CB2BA69ABA00B8FD66 /* Item.swift in Sources */,
+				613381EE2BA6B38100DB71AC /* dataModel.swift in Sources */,
 				613381E02BA69EA900DB71AC /* Tables.swift in Sources */,
 				613381E52BA6A1C600DB71AC /* Route.swift in Sources */,
 				613381E92BA6A33D00DB71AC /* Reward.swift in Sources */,

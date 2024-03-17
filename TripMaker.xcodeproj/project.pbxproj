@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4407A1592BA6A7690047DF93 /* FocusSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4407A1582BA6A7690047DF93 /* FocusSession.swift */; };
+		4407A15B2BA6A7D80047DF93 /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4407A15A2BA6A7D80047DF93 /* UserProfile.swift */; };
 		613381E02BA69EA900DB71AC /* Tables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613381DF2BA69EA900DB71AC /* Tables.swift */; };
 		613381E32BA69F0800DB71AC /* SQLite in Frameworks */ = {isa = PBXBuildFile; productRef = 613381E22BA69F0800DB71AC /* SQLite */; };
 		613381E52BA6A1C600DB71AC /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613381E42BA6A1C600DB71AC /* Route.swift */; };
@@ -20,6 +22,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4407A1582BA6A7690047DF93 /* FocusSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusSession.swift; sourceTree = "<group>"; };
+		4407A15A2BA6A7D80047DF93 /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
 		613381DF2BA69EA900DB71AC /* Tables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tables.swift; sourceTree = "<group>"; };
 		613381E42BA6A1C600DB71AC /* Route.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Route.swift; sourceTree = "<group>"; };
 		613381E62BA6A29000DB71AC /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
@@ -51,6 +55,8 @@
 				613381E42BA6A1C600DB71AC /* Route.swift */,
 				613381E62BA6A29000DB71AC /* Location.swift */,
 				613381E82BA6A33D00DB71AC /* Reward.swift */,
+				4407A1582BA6A7690047DF93 /* FocusSession.swift */,
+				4407A15A2BA6A7D80047DF93 /* UserProfile.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -177,12 +183,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				61C355C92BA69ABA00B8FD66 /* ContentView.swift in Sources */,
+				4407A1592BA6A7690047DF93 /* FocusSession.swift in Sources */,
 				61C355CB2BA69ABA00B8FD66 /* Item.swift in Sources */,
 				613381E02BA69EA900DB71AC /* Tables.swift in Sources */,
 				613381E52BA6A1C600DB71AC /* Route.swift in Sources */,
 				613381E92BA6A33D00DB71AC /* Reward.swift in Sources */,
 				613381E72BA6A29000DB71AC /* Location.swift in Sources */,
 				61C355C72BA69ABA00B8FD66 /* TripMakerApp.swift in Sources */,
+				4407A15B2BA6A7D80047DF93 /* UserProfile.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

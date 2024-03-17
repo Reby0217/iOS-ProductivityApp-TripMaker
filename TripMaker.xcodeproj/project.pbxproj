@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		613381E02BA69EA900DB71AC /* Tables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613381DF2BA69EA900DB71AC /* Tables.swift */; };
+		613381E32BA69F0800DB71AC /* SQLite in Frameworks */ = {isa = PBXBuildFile; productRef = 613381E22BA69F0800DB71AC /* SQLite */; };
 		61C355C72BA69ABA00B8FD66 /* TripMakerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61C355C62BA69ABA00B8FD66 /* TripMakerApp.swift */; };
 		61C355C92BA69ABA00B8FD66 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61C355C82BA69ABA00B8FD66 /* ContentView.swift */; };
 		61C355CB2BA69ABA00B8FD66 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61C355CA2BA69ABA00B8FD66 /* Item.swift */; };
@@ -15,6 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		613381DF2BA69EA900DB71AC /* Tables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tables.swift; sourceTree = "<group>"; };
 		61C355C32BA69ABA00B8FD66 /* TripMaker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TripMaker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		61C355C62BA69ABA00B8FD66 /* TripMakerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripMakerApp.swift; sourceTree = "<group>"; };
 		61C355C82BA69ABA00B8FD66 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -28,12 +31,29 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				613381E32BA69F0800DB71AC /* SQLite in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		613381DD2BA69DE600DB71AC /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				613381DF2BA69EA900DB71AC /* Tables.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		613381DE2BA69DF100DB71AC /* View */ = {
+			isa = PBXGroup;
+			children = (
+				61C355C82BA69ABA00B8FD66 /* ContentView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		61C355BA2BA69ABA00B8FD66 = {
 			isa = PBXGroup;
 			children = (
@@ -53,8 +73,9 @@
 		61C355C52BA69ABA00B8FD66 /* TripMaker */ = {
 			isa = PBXGroup;
 			children = (
+				613381DE2BA69DF100DB71AC /* View */,
+				613381DD2BA69DE600DB71AC /* Model */,
 				61C355C62BA69ABA00B8FD66 /* TripMakerApp.swift */,
-				61C355C82BA69ABA00B8FD66 /* ContentView.swift */,
 				61C355CA2BA69ABA00B8FD66 /* Item.swift */,
 				61C355CC2BA69ABB00B8FD66 /* Assets.xcassets */,
 				61C355CE2BA69ABB00B8FD66 /* Preview Content */,
@@ -86,6 +107,9 @@
 			dependencies = (
 			);
 			name = TripMaker;
+			packageProductDependencies = (
+				613381E22BA69F0800DB71AC /* SQLite */,
+			);
 			productName = TripMaker;
 			productReference = 61C355C32BA69ABA00B8FD66 /* TripMaker.app */;
 			productType = "com.apple.product-type.application";
@@ -114,6 +138,9 @@
 				Base,
 			);
 			mainGroup = 61C355BA2BA69ABA00B8FD66;
+			packageReferences = (
+				613381E12BA69F0800DB71AC /* XCRemoteSwiftPackageReference "SQLite.swift" */,
+			);
 			productRefGroup = 61C355C42BA69ABA00B8FD66 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -142,6 +169,7 @@
 			files = (
 				61C355C92BA69ABA00B8FD66 /* ContentView.swift in Sources */,
 				61C355CB2BA69ABA00B8FD66 /* Item.swift in Sources */,
+				613381E02BA69EA900DB71AC /* Tables.swift in Sources */,
 				61C355C72BA69ABA00B8FD66 /* TripMakerApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -348,6 +376,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		613381E12BA69F0800DB71AC /* XCRemoteSwiftPackageReference "SQLite.swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/stephencelis/SQLite.swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.15.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		613381E22BA69F0800DB71AC /* SQLite */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 613381E12BA69F0800DB71AC /* XCRemoteSwiftPackageReference "SQLite.swift" */;
+			productName = SQLite;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 61C355BB2BA69ABA00B8FD66 /* Project object */;
 }

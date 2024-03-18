@@ -38,3 +38,40 @@ struct RewardTable {
     let picture = Expression<String>("picture")
     let isClaimed = Expression<Bool>("isClaimed")
 }
+
+struct FocusSessionTable {
+    let table = Table("focusSession")
+    let focusSessionID = Expression<UUID>("ID") // primary key
+    let userID = Expression<UUID>("userID") // foreign key
+    let startTime = Expression<Date>("startTime")
+    let endTime = Expression<Date>("endTime")
+}
+
+struct LocationVisitedTable {
+    let table = Table("locationVisited")
+    let focusSessionID = Expression<UUID>("focusSessionID") // foreign key
+    let locationID = Expression<UUID>("locationID") // foreign key
+}
+
+struct UserProfileTable {
+    let table = Table("userProfile")
+    let userID = Expression<UUID>("userID") // primary key
+    let username = Expression<String>("username")
+    let image = Expression<String>("image")
+    let dayTotal = Expression<Int>("dayTotal")
+    let weekTotal = Expression<Int>("weekTotal")
+    let monthTotal = Expression<Int>("monthTotal")
+    let yearTotal = Expression<Int>("yearTotal")
+}
+
+struct UserRouteTable {
+    let table = Table("userRoute")
+    let userID = Expression<UUID>("userID") // foreign key
+    let routeID = Expression<UUID>("routeID") // foreign key
+}
+
+struct UserRewardTable {
+    let table = Table("userRewards")
+    let userID = Expression<UUID>("userID") // foreign key
+    let rewardID = Expression<UUID>("rewardID") // foreign key
+}

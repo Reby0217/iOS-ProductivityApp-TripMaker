@@ -235,7 +235,6 @@ class DBManager {
             throw NSError(domain: "Location Not Found!", code: 404, userInfo: nil)
         }
         
-        // Retrieve tags for the location
         let tagsQuery = tagTable.table.filter(tagTable.locationID == locationID).select(tagTable.tag)
         let tags = try db?.prepare(tagsQuery).map { $0[tagTable.tag] } ?? []
 
@@ -373,6 +372,7 @@ class DBManager {
     
     
     // MARK: Methods for FocusSession
+    // TODO: NOT Complete!!!
     
     /**
     - Description: Updates the list of locations visited during a focus session identified by sessionID.

@@ -225,6 +225,17 @@ class DBManager {
     
     
     /**
+    - Description: Fetches all tags associated with a specific location.
+    - Returns: An array of strings representing the tags associated with the location. Returns an empty array if no tags are found or in case of an error.
+    */
+    func fetchTagsForLocation(locationID: UUID) throws -> [String] {
+        let tagsQuery = tagTable.table.filter(tagTable.locationID == locationID).select(tagTable.tag)
+        let tagsRecords = try db?.prepare(tagsQuery)
+        return tagsRecords?.map { $0[tagTable.tag] } ?? []
+    }
+    
+    
+    /**
     - Description: Fetches a single location's details by locationID.
     - Returns: A Location object containing the details of the location.
     */
@@ -235,8 +246,7 @@ class DBManager {
             throw NSError(domain: "Location Not Found!", code: 404, userInfo: nil)
         }
         
-        let tagsQuery = tagTable.table.filter(tagTable.locationID == locationID).select(tagTable.tag)
-        let tags = try db?.prepare(tagsQuery).map { $0[tagTable.tag] } ?? []
+        let tags = try fetchTagsForLocation(locationID: locationID)
 
         return Location(
             name: location[locationTable.name],
@@ -407,6 +417,17 @@ class DBManager {
     
     
     /**
+    - Description: Fetches all location IDs visited during a specific focus session with given sessionID.
+    - Returns: An array of location IDs visited during the focus session. Returns an empty array if no locations are visited or in case of an error.
+    */
+    func fetchVisitedLocationsForSession(sessionID: UUID) throws -> [UUID] {
+        let locationsQuery = locationVisitedTable.table.filter(locationVisitedTable.focusSessionID == sessionID)
+        let visitedLocationsRecords = try db?.prepare(locationsQuery)
+        return visitedLocationsRecords?.map { $0[locationVisitedTable.locationID] } ?? []
+    }
+    
+    
+    /**
     - Description: Retrieves the details of a focus session, including the start time, end time, and locations visited, identified by sessionID.
     - Returns: A FocusSession object with the details of the focus session.
     */
@@ -416,9 +437,7 @@ class DBManager {
             throw NSError(domain: "Session Not Found!", code: 404, userInfo: nil)
         }
         
-        let locationsQuery = locationVisitedTable.table.filter(locationVisitedTable.focusSessionID == sessionID)
-        let visitedLocationsRecords = try db?.prepare(locationsQuery)
-        let visitedLocations = visitedLocationsRecords?.map { $0[locationVisitedTable.locationID] } ?? []
+        let visitedLocations = try fetchVisitedLocationsForSession(sessionID: sessionID)
         
         return FocusSession(
             ID: sessionID,
@@ -449,6 +468,39 @@ class DBManager {
     
     
     /**
+    - Description: Fetches all route IDs associated with a given user with specified userID.
+    - Returns: An array of UUIDs representing the route IDs associated with the user. Returns an empty array if no routes are found or in case of an error.
+    */
+    func fetchRoutesForUser(userID: UUID) throws -> [UUID] {
+        let routesQuery = userRouteTable.table.filter(userRouteTable.userID == userID)
+        let routesRecords = try db?.prepare(routesQuery)
+        return routesRecords?.map { $0[userRouteTable.routeID] } ?? []
+    }
+    
+    
+    /**
+    - Description: Retrieves all focus session IDs related to a particular user with specified userID.
+    - Returns: An array of UUIDs of the focus sessions associated with the user. An empty array is returned if the user has no focus sessions or in case of an error.
+    */
+    func fetchFocusSessionsForUser(userID: UUID) throws -> [UUID] {
+        let focusSessionQuery = focusSessionTable.table.filter(focusSessionTable.userID == userID)
+        let focusSessionRecords = try db?.prepare(focusSessionQuery)
+        return focusSessionRecords?.map { $0[focusSessionTable.focusSessionID] } ?? []
+    }
+    
+    
+    /**
+    - Description: Obtains all reward IDs claimed by a user with specified userID.
+    - Returns: An array of UUIDs for the rewards claimed by the user. If the user has not claimed any rewards or in case of an error, an empty array is returned.
+    */
+    func fetchRewardsForUser(userID: UUID) throws -> [UUID] {
+        let rewardsQuery = userRewardTable.table.filter(userRewardTable.userID == userID)
+        let rewardsRecords = try db?.prepare(rewardsQuery)
+        return rewardsRecords?.map { $0[userRewardTable.rewardID] } ?? []
+    }
+    
+    
+    /**
     - Description: Fetches a user profile, including routes, focus sessions, and rewards associated with the user identified by userID.
     - Returns: A UserProfile object containing the user's profile details and associated data.
     */
@@ -458,18 +510,10 @@ class DBManager {
             throw NSError(domain: "User Not Found!", code: 404, userInfo: nil)
         }
         
-        let routesQuery = userRouteTable.table.filter(userRouteTable.userID == userID)
-        let routesRecords = try db?.prepare(routesQuery)
-        let routeArray = routesRecords?.map { $0[userRouteTable.routeID] } ?? []
-
-        let focusSessionQuery = focusSessionTable.table.filter(focusSessionTable.userID == userID)
-        let focusSessionRecords = try db?.prepare(focusSessionQuery)
-        let focusSessionArray = focusSessionRecords?.map { $0[focusSessionTable.focusSessionID] } ?? []
+        let routeArray = try fetchRoutesForUser(userID: userID)
+        let focusSessionArray = try fetchFocusSessionsForUser(userID: userID)
+        let rewardsArray = try fetchRewardsForUser(userID: userID)
         
-        let rewardsQuery = userRewardTable.table.filter(userRewardTable.userID == userID)
-        let rewardsRecords = try db?.prepare(rewardsQuery)
-        let rewardsArray = rewardsRecords?.map { $0[userRewardTable.rewardID] } ?? []
-
         return UserProfile(
             userID: userID,
             username: user[userProfileTable.username],

@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		4407A1592BA6A7690047DF93 /* FocusSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4407A1582BA6A7690047DF93 /* FocusSession.swift */; };
 		4407A15B2BA6A7D80047DF93 /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4407A15A2BA6A7D80047DF93 /* UserProfile.swift */; };
+		4407A15F2BAA04F30047DF93 /* UnsplashPhotoPicker in Frameworks */ = {isa = PBXBuildFile; productRef = 4407A15E2BAA04F30047DF93 /* UnsplashPhotoPicker */; };
+		4407A1612BAA0F6B0047DF93 /* urlTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4407A1602BAA0F6B0047DF93 /* urlTask.swift */; };
+		4407A1642BAA40D00047DF93 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4407A1632BAA40D00047DF93 /* Utilities.swift */; };
+		4407A1662BAA41A70047DF93 /* LocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4407A1652BAA41A70047DF93 /* LocationView.swift */; };
 		613381E02BA69EA900DB71AC /* Tables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613381DF2BA69EA900DB71AC /* Tables.swift */; };
 		613381E32BA69F0800DB71AC /* SQLite in Frameworks */ = {isa = PBXBuildFile; productRef = 613381E22BA69F0800DB71AC /* SQLite */; };
 		613381E52BA6A1C600DB71AC /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613381E42BA6A1C600DB71AC /* Route.swift */; };
@@ -25,6 +29,9 @@
 /* Begin PBXFileReference section */
 		4407A1582BA6A7690047DF93 /* FocusSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusSession.swift; sourceTree = "<group>"; };
 		4407A15A2BA6A7D80047DF93 /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
+		4407A1602BAA0F6B0047DF93 /* urlTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = urlTask.swift; sourceTree = "<group>"; };
+		4407A1632BAA40D00047DF93 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
+		4407A1652BAA41A70047DF93 /* LocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationView.swift; sourceTree = "<group>"; };
 		613381DF2BA69EA900DB71AC /* Tables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tables.swift; sourceTree = "<group>"; };
 		613381E42BA6A1C600DB71AC /* Route.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Route.swift; sourceTree = "<group>"; };
 		613381E62BA6A29000DB71AC /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
@@ -44,12 +51,21 @@
 			buildActionMask = 2147483647;
 			files = (
 				613381E32BA69F0800DB71AC /* SQLite in Frameworks */,
+				4407A15F2BAA04F30047DF93 /* UnsplashPhotoPicker in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4407A1622BAA40AC0047DF93 /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				4407A1632BAA40D00047DF93 /* Utilities.swift */,
+			);
+			path = Utility;
+			sourceTree = "<group>";
+		};
 		613381DD2BA69DE600DB71AC /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -60,6 +76,7 @@
 				4407A1582BA6A7690047DF93 /* FocusSession.swift */,
 				4407A15A2BA6A7D80047DF93 /* UserProfile.swift */,
 				613381ED2BA6B38100DB71AC /* dataModel.swift */,
+				4407A1602BAA0F6B0047DF93 /* urlTask.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -68,6 +85,7 @@
 			isa = PBXGroup;
 			children = (
 				61C355C82BA69ABA00B8FD66 /* ContentView.swift */,
+				4407A1652BAA41A70047DF93 /* LocationView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -91,6 +109,7 @@
 		61C355C52BA69ABA00B8FD66 /* TripMaker */ = {
 			isa = PBXGroup;
 			children = (
+				4407A1622BAA40AC0047DF93 /* Utility */,
 				613381DE2BA69DF100DB71AC /* View */,
 				613381DD2BA69DE600DB71AC /* Model */,
 				61C355C62BA69ABA00B8FD66 /* TripMakerApp.swift */,
@@ -127,6 +146,7 @@
 			name = TripMaker;
 			packageProductDependencies = (
 				613381E22BA69F0800DB71AC /* SQLite */,
+				4407A15E2BAA04F30047DF93 /* UnsplashPhotoPicker */,
 			);
 			productName = TripMaker;
 			productReference = 61C355C32BA69ABA00B8FD66 /* TripMaker.app */;
@@ -158,6 +178,7 @@
 			mainGroup = 61C355BA2BA69ABA00B8FD66;
 			packageReferences = (
 				613381E12BA69F0800DB71AC /* XCRemoteSwiftPackageReference "SQLite.swift" */,
+				4407A15D2BAA04F30047DF93 /* XCRemoteSwiftPackageReference "unsplash-photopicker-ios" */,
 			);
 			productRefGroup = 61C355C42BA69ABA00B8FD66 /* Products */;
 			projectDirPath = "";
@@ -185,12 +206,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4407A1662BAA41A70047DF93 /* LocationView.swift in Sources */,
 				61C355C92BA69ABA00B8FD66 /* ContentView.swift in Sources */,
 				4407A1592BA6A7690047DF93 /* FocusSession.swift in Sources */,
 				61C355CB2BA69ABA00B8FD66 /* Item.swift in Sources */,
 				613381EE2BA6B38100DB71AC /* dataModel.swift in Sources */,
 				613381E02BA69EA900DB71AC /* Tables.swift in Sources */,
 				613381E52BA6A1C600DB71AC /* Route.swift in Sources */,
+				4407A1642BAA40D00047DF93 /* Utilities.swift in Sources */,
+				4407A1612BAA0F6B0047DF93 /* urlTask.swift in Sources */,
 				613381E92BA6A33D00DB71AC /* Reward.swift in Sources */,
 				613381E72BA6A29000DB71AC /* Location.swift in Sources */,
 				61C355C72BA69ABA00B8FD66 /* TripMakerApp.swift in Sources */,
@@ -402,6 +426,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		4407A15D2BAA04F30047DF93 /* XCRemoteSwiftPackageReference "unsplash-photopicker-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/unsplash/unsplash-photopicker-ios.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.3.0;
+			};
+		};
 		613381E12BA69F0800DB71AC /* XCRemoteSwiftPackageReference "SQLite.swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/stephencelis/SQLite.swift.git";
@@ -413,6 +445,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		4407A15E2BAA04F30047DF93 /* UnsplashPhotoPicker */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4407A15D2BAA04F30047DF93 /* XCRemoteSwiftPackageReference "unsplash-photopicker-ios" */;
+			productName = UnsplashPhotoPicker;
+		};
 		613381E22BA69F0800DB71AC /* SQLite */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 613381E12BA69F0800DB71AC /* XCRemoteSwiftPackageReference "SQLite.swift" */;

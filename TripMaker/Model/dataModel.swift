@@ -96,6 +96,8 @@ class DBManager {
     }
     
     
+    // MARK: Methods for Routes
+    
     /**
     - Description: Adds a new route to the database with a specified map picture.
     - Returns: The UUID of the newly created route.
@@ -110,6 +112,39 @@ class DBManager {
         return routeID
     }
     
+    
+    
+    /**
+    - Description: Retrieves the details of a specific route by routeID, including all the location IDs that belong to the route.
+    - Returns: A Route object containing the route ID, array of location IDs, and the map picture
+    */
+    func fetchRouteDetails(routeID: UUID) throws -> Route {
+        let query = routeTable.table.filter(routeTable.routeID == routeID)
+        guard let routeRecord = try db?.pluck(query) else {
+            throw NSError(domain: "Route Not Found!", code: 404, userInfo: nil)
+        }
+        
+        let mapPicture = routeRecord[routeTable.mapPicture]
+        let locationsQuery = locationTable.table.filter(locationTable.routeID == routeID)
+        let locationRecords = try db?.prepare(locationsQuery)
+        let locationIDs = locationRecords?.map { $0[locationTable.locationID] } ?? []
+        
+        return Route(routeID: routeID, locationArray: locationIDs, mapPicture: mapPicture)
+    }
+    
+    
+    /**
+    - Description: Deletes a route with given UUID from the database.
+    - Returns: void
+    */
+    func deleteRoute(routeID: UUID) throws {
+        let route = routeTable.table.filter(routeTable.routeID == routeID)
+        try db?.run(route.delete())
+    }
+    
+    
+    
+    // MARK: Methods for Location
     
     /**
     - Description: Adds a new location to an existing route identified by routeID.
@@ -164,6 +199,56 @@ class DBManager {
         return Array(locations.values)
     }
     
+    /**
+    - Description: Updates the details of an existing location identified by locationID.
+    - Returns: void
+    */
+    func updateLocation(locationID: UUID, newName: String, newRealPicture: String, newDescription: String, newIsLocked: Bool) throws {
+        let locationToUpdate = locationTable.table.filter(locationTable.locationID == locationID)
+        try db?.run(locationToUpdate.update(
+            locationTable.name <- newName,
+            locationTable.realPicture <- newRealPicture,
+            locationTable.description <- newDescription,
+            locationTable.isLocked <- newIsLocked
+        ))
+    }
+    
+    
+    /**
+    - Description: Removes an existing location from the database.
+    - Returns: void
+    */
+    func deleteLocation(locationID: UUID) throws {
+        let locationToDelete = locationTable.table.filter(locationTable.locationID == locationID)
+        try db?.run(locationToDelete.delete())
+    }
+    
+    
+    /**
+    - Description: Fetches a single location's details by locationID.
+    - Returns: A Location object containing the details of the location.
+    */
+    func fetchLocationDetails(locationID: UUID) throws -> Location {
+        let query = locationTable.table.filter(locationTable.locationID == locationID)
+        
+        guard let location = try db?.pluck(query) else {
+            throw NSError(domain: "Location Not Found!", code: 404, userInfo: nil)
+        }
+        
+        // Retrieve tags for the location
+        let tagsQuery = tagTable.table.filter(tagTable.locationID == locationID).select(tagTable.tag)
+        let tags = try db?.prepare(tagsQuery).map { $0[tagTable.tag] } ?? []
+
+        return Location(
+            name: location[locationTable.name],
+            locationID: locationID,
+            realPicture: location[locationTable.realPicture],
+            tagsArray: tags,
+            description: location[locationTable.description],
+            isLocked: location[locationTable.isLocked]
+        )
+    }
+    
     
     /**
     - Description: Updates the lock status of a specific location identified by locationID.
@@ -189,24 +274,8 @@ class DBManager {
     }
     
     
-    /**
-    - Description: Retrieves the details of a specific route by routeID, including all the location IDs that belong to the route.
-    - Returns: A Route object containing the route ID, array of location IDs, and the map picture
-    */
-    func fetchRouteDetails(routeID: UUID) throws -> Route {
-        let query = routeTable.table.filter(routeTable.routeID == routeID)
-        guard let routeRecord = try db?.pluck(query) else {
-            throw NSError(domain: "Route Not Found!", code: 404, userInfo: nil)
-        }
-        
-        let mapPicture = routeRecord[routeTable.mapPicture]
-        let locationsQuery = locationTable.table.filter(locationTable.routeID == routeID)
-        let locationRecords = try db?.prepare(locationsQuery)
-        let locationIDs = locationRecords?.map { $0[locationTable.locationID] } ?? []
-        
-        return Route(routeID: routeID, locationArray: locationIDs, mapPicture: mapPicture)
-    }
     
+    // MARK: Methods for Reward
     
     /**
     - Description: Allows a user to claim a reward. The reward identified by rewardID is associated with the user identified by userID.

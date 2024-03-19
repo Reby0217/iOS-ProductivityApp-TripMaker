@@ -96,7 +96,7 @@ class DBManager {
     }
     
     
-    // MARK: Methods for Routes
+    // MARK: Methods for Route
     
     /**
     - Description: Adds a new route to the database with a specified map picture.
@@ -278,6 +278,54 @@ class DBManager {
     // MARK: Methods for Reward
     
     /**
+    - Description: Adds a new reward to the database with a specified name and picture.
+    - Returns: The UUID of the newly created reward.
+    */
+    func addReward(name: String, picture: String) throws -> UUID {
+        let rewardID = UUID()
+        let insert = rewardTable.table.insert(
+            rewardTable.rewardID <- rewardID,
+            rewardTable.name <- name,
+            rewardTable.picture <- picture,
+            rewardTable.isClaimed <- false
+        )
+        try db?.run(insert)
+        return rewardID
+    }
+    
+    
+    /**
+    - Description: Retrieves the details of a specific reward by rewardID.
+    - Returns: A Reward object containing the details of the reward.
+    */
+    func fetchRewardDetails(rewardID: UUID) throws -> Reward {
+        let query = rewardTable.table.filter(rewardTable.rewardID == rewardID)
+        guard let reward = try db?.pluck(query) else {
+            throw NSError(domain: "Reward Not Found", code: 404, userInfo: nil)
+        }
+        return Reward(
+            rewardID: rewardID,
+            name: reward[rewardTable.name],
+            picture: reward[rewardTable.picture],
+            isClaimed: reward[rewardTable.isClaimed]
+        )
+    }
+    
+    
+    /**
+    - Description: Updates the information of an existing reward identified by rewardID.
+    - Returns: void
+    */
+    func updateReward(rewardID: UUID, newName: String, newPicture: String) throws {
+        let rewardToUpdate = rewardTable.table.filter(rewardTable.rewardID == rewardID)
+        try db?.run(rewardToUpdate.update(
+            rewardTable.name <- newName,
+            rewardTable.picture <- newPicture
+        ))
+    }
+
+    
+    /**
     - Description: Allows a user to claim a reward. The reward identified by rewardID is associated with the user identified by userID.
     - Returns: void
     */
@@ -292,10 +340,42 @@ class DBManager {
         let update = query.update(rewardTable.isClaimed <- true)
         try db?.run(update)
     }
+    
+    
+    /**
+    - Description: Fetches all rewards from the database.
+    - Returns: An array of Reward objects representing all the rewards.
+    */
+    func fetchAllRewards() throws -> [Reward] {
+        guard let rewards = try db?.prepare(rewardTable.table) else {
+            return []
+        }
+        return rewards.map { reward in
+            Reward(
+                rewardID: reward[rewardTable.rewardID],
+                name: reward[rewardTable.name],
+                picture: reward[rewardTable.picture],
+                isClaimed: reward[rewardTable.isClaimed]
+            )
+        }
+    }
 
     
     /**
-    - Description: Updates the list of locations visited during a focus session. The session is identified by sessionID.
+    - Description: Deletes a reward from the database using rewardID.
+    - Returns: void
+    */
+    func deleteReward(rewardID: UUID) throws {
+        let rewardToDelete = rewardTable.table.filter(rewardTable.rewardID == rewardID)
+        try db?.run(rewardToDelete.delete())
+    }
+    
+    
+    
+    // MARK: Methods for FocusSession
+    
+    /**
+    - Description: Updates the list of locations visited during a focus session identified by sessionID.
     - Returns: void
     */
     func updateVisitedLocations(sessionID: UUID, visitedLocationIDs: [UUID]) throws {

@@ -419,13 +419,18 @@ class DBManager {
     /**
         - Description: Deletes a focus session for a user with the specified session ID.
         - Returns: void
-    - Description: Fetches all location IDs visited during a specific focus session with given sessionID.
-    - Returns: An array of location IDs visited during the focus session. Returns an empty array if no locations are visited or in case of an error.
     */
     func deleteFocusSession(sessionID: UUID) throws {
         let sessionToDelete = focusSessionTable.table.filter(focusSessionTable.focusSessionID == sessionID)
         let delete = sessionToDelete.delete()
         try db?.run(delete)
+    }
+    
+    
+    /**
+        - Description: Fetches all location IDs visited during a specific focus session with given sessionID.
+        - Returns: An array of location IDs visited during the focus session. Returns an empty array if no locations are visited or in case of an error.
+    */
     func fetchVisitedLocationsForSession(sessionID: UUID) throws -> [UUID] {
         let locationsQuery = locationVisitedTable.table.filter(locationVisitedTable.focusSessionID == sessionID)
         let visitedLocationsRecords = try db?.prepare(locationsQuery)

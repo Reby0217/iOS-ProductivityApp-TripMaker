@@ -407,6 +407,17 @@ class DBManager {
     
     
     /**
+        - Description: Deletes a focus session for a user with the specified session ID.
+        - Returns: void
+    */
+    func deleteFocusSession(sessionID: UUID) throws {
+        let sessionToDelete = focusSessionTable.table.filter(focusSessionTable.focusSessionID == sessionID)
+        let delete = sessionToDelete.delete()
+        try db?.run(delete)
+    }
+    
+    
+    /**
     - Description: Retrieves the details of a focus session, including the start time, end time, and locations visited, identified by sessionID.
     - Returns: A FocusSession object with the details of the focus session.
     */
@@ -427,6 +438,10 @@ class DBManager {
             locationVisited: visitedLocations
         )
     }
+    
+    
+    
+    // MARK: Methods for User Profile
     
     /**
     - Description: Creates a new user profile with a username and profile image.

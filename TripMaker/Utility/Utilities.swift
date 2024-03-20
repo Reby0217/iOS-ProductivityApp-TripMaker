@@ -9,14 +9,14 @@ import Foundation
 import UIKit
 import SwiftUI
 
-func imageFromString(_ strPic: String) -> Image {
-    var picImage: UIImage?
+func imageFromString(_ strPic: String) -> Image? {
     if let picImageData = Data(base64Encoded: strPic, options: .ignoreUnknownCharacters) {
-        picImage = UIImage(data: picImageData)
+        if let picImage = UIImage(data: picImageData) {
+            let swiftUIImage = Image(uiImage: picImage)
+            return swiftUIImage
+        }
     }
-    // return picImage!
-    let swiftUIImage = Image(uiImage: picImage!)
-    return swiftUIImage
+    return nil
 }
 
 func stringFromImage(_ imagePic: UIImage) -> String {

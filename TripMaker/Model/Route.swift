@@ -9,6 +9,7 @@ import Foundation
 
 struct Route {
     let routeID: UUID
+    let name: String
     let locationArray: [UUID]
     let mapPicture: String
 }

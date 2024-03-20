@@ -8,19 +8,15 @@
 import SwiftUI
 
 struct LocationView: View {
-    @Environment(ModelData.self) var modelData
+    var location: Location?
     
     
     var body: some View {
-        if modelData.image != ""{
-            imageFromString(modelData.image)
-                .scaleEffect(0.1)
-        }
+        imageFromString(location?.realPicture ?? "")
     }
 }
 
 #Preview {
     let modelData = ModelData()
-    return LocationView()
-        .environment(modelData)
+    return LocationView(location: Location(name: "Taipei 101", locationID: UUID(), realPicture: "", tagsArray: [], description: "", isLocked: false))
 }

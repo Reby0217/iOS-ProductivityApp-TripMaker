@@ -60,9 +60,8 @@ class ModelData {
     init() {
         db = DBManager.shared
         
-        // Initiating the download with a completion handler
-        download(urlString: httpString) { imageString in
-            guard let imageString = imageString else {
+        download(urlString: httpString) { [weak self] imageString in
+            guard let self = self, let imageString = imageString else {
                 print("Failed to download image.")
                 return
             }
@@ -71,20 +70,25 @@ class ModelData {
                 self.image = imageString
                 
                 do {
-                    if let map_taiwan = UIImage(named: "taiwan-attractions-map.jpg") {
-                        let mapPictureString = stringFromImage(map_taiwan)
-                        let routeID = try self.db.addRoute(name: "Taiwan", mapPicture: mapPictureString)
-                        print("Route added with ID: \(routeID)")
-                        
-                        let locationID = try self.db.addLocationToRoute(routeID: routeID, name: "Taipei 101", realPicture: imageString, description: "Description for Taipei 101", isLocked: false)
-                        print("Location added with ID: \(locationID)")
+                    let map_taiwan = UIImage(named: "taiwan-attractions-map.jpg")
+                    guard let mapPictureString = map_taiwan.map({ stringFromImage($0) }) else {
+                        print("Failed to load or convert map image.")
+                        return
                     }
+                    
+                    let routeID = try self.db.addRoute(name: "Taiwan", mapPicture: mapPictureString)
+                    print("Route added with ID: \(routeID)")
+                    
+                    let locationID = try self.db.addLocationToRoute(routeID: routeID, name: "Taipei 101", realPicture: imageString, description: "Description for Taipei 101", isLocked: false)
+                    print("Location added with ID: \(locationID)")
+                    
                 } catch {
                     print("Database operation error: \(error)")
                 }
             }
         }
     }
+
 
 
     

@@ -10,7 +10,21 @@ import SwiftData
 
 @main
 struct TripMakerApp: App {
+    let dbManager = DBManager()
+    
     @State private var modelData = ModelData()
+    
+    init() {
+        do {
+            // Debug purpose
+            dbManager.deleteAllData()
+            
+            try dbManager.addDummyData()
+            dbManager.inspectAllTables()
+        } catch {
+            print("An error occurred while initializing dummy data: \(error)")
+        }
+    }
     
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([

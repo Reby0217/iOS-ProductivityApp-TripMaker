@@ -21,16 +21,30 @@ struct Urls: Codable {
 
 @Observable
 class ModelData {
-    var image: String?
+    let db: DBManager
+    var image: String = ""
     
-    var httpString = "https://api.unsplash.com/photos/random?query=taipei101/600x600"
-    let authString = "pPxiEaowEXFSgmLexE1QbvWaDL2AegFje6OHZbv9aHA"
+//    var httpString = "https://api.unsplash.com/photos/random?query=taipei/600x600"
+    let baseURL = "https://api.unsplash.com/photos/random?query="
+    var locationName = "Taipei101"
+    let imageSize = "/600x600"
+        
+    var httpString: String {
+        return baseURL + locationName + imageSize
+    }
+    
+//    let authString = "pPxiEaowEXFSgmLexE1QbvWaDL2AegFje6OHZbv9aHA"
+    
+    let authString = "aTMxKAZwBPS8eLOk2WRJFJMSCkTX5_zxTGiHmuhEHG0"
     
     init(){
+        db = DBManager()
+        
         _ = download(urlString: httpString)
         
-        let db = DBManager()
+//        db.inspectAllTables()
         
+        /*
         do {
             let map_taiwan = UIImage(named: "taiwan-attractions-map.jpg")
             let routeID = try db.addRoute(name: "Taiwan", mapPicture: stringFromImage(map_taiwan!))
@@ -41,6 +55,9 @@ class ModelData {
         } catch {
             print("error")
         }
+         */
+        
+
     }
     
     func download(urlString: String) -> Bool {

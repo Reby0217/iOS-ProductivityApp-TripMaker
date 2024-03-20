@@ -10,7 +10,7 @@ import SwiftData
 
 @main
 struct TripMakerApp: App {
-    let dbManager = DBManager()
+    let dbManager = DBManager.shared
     
     @State private var modelData = ModelData()
     
@@ -47,3 +47,4 @@ struct TripMakerApp: App {
         .modelContainer(sharedModelContainer)
     }
 }
+

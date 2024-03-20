@@ -38,7 +38,7 @@ class ModelData {
     let authString = "aTMxKAZwBPS8eLOk2WRJFJMSCkTX5_zxTGiHmuhEHG0"
     
     init(){
-        db = DBManager()
+        db = DBManager.shared
         
         _ = download(urlString: httpString)
         
@@ -47,8 +47,8 @@ class ModelData {
             let routeID = try db.addRoute(name: "Taiwan", mapPicture: stringFromImage(map_taiwan!))
             print("route added \(routeID)")
             if self.image != nil {
-                print("location added")
-                let locationID = try db.addLocationToRoute(routeID: routeID, name: "Taipei 101", realPicture: self.image!, description: "", isLocked: false)
+                var locationID = try db.addLocationToRoute(routeID: routeID, name: "Taipei 101", realPicture: self.image!, description: "", isLocked: false)
+                print("location added \(locationID)")
             }
         } catch {
             print("error")
@@ -87,7 +87,7 @@ class ModelData {
                             }
                         }
                     }.resume()
-                }catch{
+                } catch{
                     print(error)
                 }
             }
@@ -96,4 +96,3 @@ class ModelData {
         return true
     }
 }
-

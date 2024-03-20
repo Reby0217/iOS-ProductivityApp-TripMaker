@@ -68,33 +68,33 @@ extension DBManager {
         }
     }
     
-    func addDummyData() throws {
-        let profilePic = UIImage(named: "profilePic.jpg")!
-        let mapImage = UIImage(named: "map.jpg")!
-        let rewardImage = UIImage(named: "reward.jpg")!
-        
-        let profilePicString = stringFromImage(profilePic)
-        let mapImageString = stringFromImage(mapImage)
-        let rewardImageString = stringFromImage(rewardImage)
-        
-        let userProfileID = try createUserProfile(username: "DummyUser", image: profilePicString)
-        
-        let routeID = try addRoute(mapPicture: mapImageString)
-        
-        let modelData = ModelData()
-        let locationID = try addLocationToRoute(routeID: routeID, name: modelData.locationName, realPicture: modelData.image, description: "DummyDescription", isLocked: false)
-        
-        try addTagToLocation(locationID: locationID, tag: "DummyTag")
-        
-        let rewardID = try addReward(name: "DummyReward", picture: rewardImageString)
-        
-        try claimReward(userID: userProfileID, rewardID: rewardID)
-        
-        let focusSessionID = try createFocusSession(userID: userProfileID, startTime: Date(), duration: 3600)
-        
-        // Mark location as visited in this focus session
-        try updateVisitedLocations(sessionID: focusSessionID, visitedLocationIDs: [locationID])
-    }
+//    func addDummyData() throws {
+//        let profilePic = UIImage(named: "profilePic.jpg")!
+//        let mapImage = UIImage(named: "map.jpg")!
+//        let rewardImage = UIImage(named: "reward.jpg")!
+//        
+//        let profilePicString = stringFromImage(profilePic)
+//        let mapImageString = stringFromImage(mapImage)
+//        let rewardImageString = stringFromImage(rewardImage)
+//        
+//        let userProfileID = try createUserProfile(username: "DummyUser", image: profilePicString)
+//        
+//        let routeID = try addRoute(name: "Taiwan", mapPicture: mapImageString)
+//        
+//        let modelData = ModelData()
+//        let locationID = try addLocationToRoute(routeID: routeID, name: modelData.locationName, realPicture: modelData.image, description: "DummyDescription", isLocked: false)
+//        
+//        try addTagToLocation(locationID: locationID, tag: "DummyTag")
+//        
+//        let rewardID = try addReward(name: "DummyReward", picture: rewardImageString)
+//        
+//        try claimReward(userID: userProfileID, rewardID: rewardID)
+//        
+//        let focusSessionID = try createFocusSession(userID: userProfileID, startTime: Date(), duration: 3600)
+//        
+//        // Mark location as visited in this focus session
+//        try updateVisitedLocations(sessionID: focusSessionID, visitedLocationIDs: [locationID])
+//    }
     
     
     func inspectRouteTable() throws {

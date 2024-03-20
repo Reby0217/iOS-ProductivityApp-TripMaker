@@ -37,6 +37,7 @@ class DBManager {
     private func createTables() throws {
         try db?.run(routeTable.table.create(ifNotExists: true) { t in
             t.column(routeTable.routeID, primaryKey: true)
+            t.column(routeTable.name)
             t.column(routeTable.mapPicture)
         })
 

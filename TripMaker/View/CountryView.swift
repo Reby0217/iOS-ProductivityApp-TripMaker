@@ -22,32 +22,42 @@ struct CountryView: View {
                     .scaledToFit()
                     .frame(width: UIScreen.main.bounds.width * 0.8)
                     .padding()
-                NavigationLink {
-                    LocationView(location: (locations?[0]) ?? nil)
-                } label: {
-                    Text("Tap Me") // Button label
-                        .padding() // Add padding for better appearance
-                        .background(Color.blue) // Button background color
-                        .foregroundColor(Color.white) // Button text color
-                        .cornerRadius(8) // Button corner radius
+                if let firstLocation = locations?.first {
+                    NavigationLink {
+                        LocationView(location: firstLocation)
+                    } label: {
+                        Text("Tap Me")
+                            .padding()
+                            .background(Color.blue)
+                            .foregroundColor(Color.white)
+                            .cornerRadius(8)
+                    }
+                } else {
+                    Text("No locations available")
+                        .padding()
                 }
                 Spacer()
             }
         }
-        .onAppear{
-            let db = DBManager.shared
-            do {
-                let routeID = try db.fetchRouteIDbyName(name: routeName)
-                print(routeID)
-                let routeImage = try db.fetchRouteDetails(routeID: routeID).mapPicture
-                self.image = imageFromString(routeImage)
-                
-                let location = try db.fetchLocationsForRoute(routeID: routeID)
-                self.locations = location
-            } catch {
-                print("failed fetch route image")
+        .onAppear {
+            DispatchQueue.main.async {
+                let db = DBManager.shared
+                do {
+                    let routeID = try db.fetchRouteIDbyName(name: routeName)
+                    let routeDetails = try db.fetchRouteDetails(routeID: routeID)
+                    let locations = try db.fetchLocationsForRoute(routeID: routeID)
+                    
+                    self.image = imageFromString(routeDetails.mapPicture)
+                    self.locations = locations.isEmpty ? nil : locations
+                    
+                } catch {
+                    print("Database operation failed: \(error)")
+                }
             }
         }
+
+
+
     }
 }
 

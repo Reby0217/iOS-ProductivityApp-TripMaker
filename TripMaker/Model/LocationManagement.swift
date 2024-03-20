@@ -34,34 +34,36 @@ extension DBManager {
     - Returns: An array of Location objects, each representing a location on the route with its associated tags.
     */
     func fetchLocationsForRoute(routeID: UUID) throws -> [Location] {
-        let query = locationTable.table.join(tagTable.table, on: locationTable.locationID == tagTable.locationID)
-            .filter(locationTable.routeID == routeID)
-            .select(locationTable.table[*], tagTable.tag)
+        let query = locationTable.table
+                    .join(tagTable.table, on: locationTable.table[locationTable.locationID] == tagTable.table[tagTable.locationID])
+                    .filter(locationTable.routeID == routeID)
+                    .select(locationTable.table[*], tagTable.tag)
 
         var locations: [UUID: Location] = [:]
 
         for row in try db!.prepare(query) {
             let locationID = row[locationTable.locationID]
-            let tag = row[tagTable.tag]
-            
+            let tagsQuery = tagTable.table.where(tagTable.locationID == locationID).select(tagTable.tag)
+            let tags = try db?.prepare(tagsQuery).map { $0[tagTable.tag] } ?? []
+
             if var location = locations[locationID] {
-                location.tagsArray.append(tag)
-                locations[locationID] = location
+                location.tagsArray.append(contentsOf: tags)
             } else {
-                let location = Location(
+                locations[locationID] = Location(
                     name: row[locationTable.name],
                     locationID: locationID,
                     realPicture: row[locationTable.realPicture],
-                    tagsArray: [tag],
+                    tagsArray: tags,
                     description: row[locationTable.description],
                     isLocked: row[locationTable.isLocked]
                 )
-                locations[locationID] = location
             }
         }
-        
+
         return Array(locations.values)
     }
+
+
     
     /**
     - Description: Updates the details of an existing location identified by locationID.

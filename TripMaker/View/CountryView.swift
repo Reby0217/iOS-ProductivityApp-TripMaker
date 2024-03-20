@@ -35,15 +35,17 @@ struct CountryView: View {
             }
         }
         .onAppear{
+            print("on appear")
             let db = DBManager()
             do {
+                print(routeName)
                 let routeID = try db.fetchRouteIDbyName(name: routeName)
-                print(routeID)
+                print("country view \(routeID)")
                 let routeImage = try db.fetchRouteDetails(routeID: routeID).mapPicture
-                self.image = imageFromString(routeImage)
+                image = imageFromString(routeImage)
                 
                 let location = try db.fetchLocationsForRoute(routeID: routeID)
-                self.locations = location
+                locations = location
             } catch {
                 print("failed fetch route image")
             }

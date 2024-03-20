@@ -22,7 +22,7 @@ struct Urls: Codable {
 @Observable
 class ModelData {
     let db: DBManager
-    var image: String = ""
+    var image: String?
     
 //    var httpString = "https://api.unsplash.com/photos/random?query=taipei/600x600"
     let baseURL = "https://api.unsplash.com/photos/random?query="
@@ -42,20 +42,17 @@ class ModelData {
         
         _ = download(urlString: httpString)
         
-//        db.inspectAllTables()
-        
-        /*
         do {
             let map_taiwan = UIImage(named: "taiwan-attractions-map.jpg")
             let routeID = try db.addRoute(name: "Taiwan", mapPicture: stringFromImage(map_taiwan!))
-            print(routeID)
+            print("route added \(routeID)")
             if self.image != nil {
+                print("location added")
                 let locationID = try db.addLocationToRoute(routeID: routeID, name: "Taipei 101", realPicture: self.image!, description: "", isLocked: false)
             }
         } catch {
             print("error")
         }
-         */
         
 
     }

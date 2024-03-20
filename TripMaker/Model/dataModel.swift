@@ -137,7 +137,6 @@ class DBManager {
         guard let routeRecord = try db?.pluck(query) else {
             throw NSError(domain: "Route Not Found!", code: 404, userInfo: nil)
         }
-        
         return routeRecord[routeTable.routeID]
     }
     
@@ -682,6 +681,7 @@ extension DBManager {
         }
     }
     
+    /*
     func addDummyData() throws {
         let profilePic = UIImage(named: "profilePic.jpg")!
         let mapImage = UIImage(named: "map.jpg")!
@@ -693,7 +693,7 @@ extension DBManager {
         
         let userProfileID = try createUserProfile(username: "DummyUser", image: profilePicString)
         
-        let routeID = try addRoute(mapPicture: mapImageString)
+        let routeID = try addRoute(name: "", mapPicture: mapImageString)
         
         let modelData = ModelData()
         let locationID = try addLocationToRoute(routeID: routeID, name: modelData.locationName, realPicture: modelData.image, description: "DummyDescription", isLocked: false)
@@ -709,6 +709,7 @@ extension DBManager {
         // Mark location as visited in this focus session
         try updateVisitedLocations(sessionID: focusSessionID, visitedLocationIDs: [locationID])
     }
+     */
     
     
     func inspectRouteTable() throws {

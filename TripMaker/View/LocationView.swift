@@ -14,7 +14,7 @@ struct LocationView: View {
     var body: some View {
         if modelData.image != ""{
             imageFromString(modelData.image)
-                .scaleEffect(0.3)
+                .scaleEffect(0.1)
         }
     }
 }

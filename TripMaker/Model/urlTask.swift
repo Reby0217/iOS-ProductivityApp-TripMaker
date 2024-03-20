@@ -23,11 +23,21 @@ struct Urls: Codable {
 class ModelData {
     var image: String = ""
     
-    var httpString = "https://api.unsplash.com/photos/random?query=taipei101"
+    var httpString = "https://api.unsplash.com/photos/random?query=taipei101/600x600"
     let authString = "pPxiEaowEXFSgmLexE1QbvWaDL2AegFje6OHZbv9aHA"
     
     init(){
         _ = download(urlString: httpString)
+        
+        let db = DBManager()
+        /*
+        do {
+            let routeID = try db.addRoute(mapPicture: self.image)
+            print(routeID)
+        } catch {
+            print("error")
+        }
+         */
     }
     
     func download(urlString: String) -> Bool {

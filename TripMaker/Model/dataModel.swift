@@ -61,18 +61,6 @@ class DBManager {
             t.column(rewardTable.isClaimed)
         })
         
-        try db?.run(focusSessionTable.table.create(ifNotExists: true) { t in
-            t.column(focusSessionTable.focusSessionID, primaryKey: true)
-            t.column(focusSessionTable.startTime)
-            t.column(focusSessionTable.endTime)
-            t.foreignKey(focusSessionTable.userID, references: userProfileTable.table, userProfileTable.userID, delete: .cascade)
-        })
-        
-        try db?.run(locationVisitedTable.table.create(ifNotExists: true) { t in
-            t.foreignKey(locationVisitedTable.focusSessionID, references: focusSessionTable.table, focusSessionTable.focusSessionID, delete: .cascade)
-            t.foreignKey(locationVisitedTable.locationID, references: locationTable.table, locationTable.locationID, delete: .cascade)
-        })
-        
         try db?.run(userProfileTable.table.create(ifNotExists: true) { t in
             t.column(userProfileTable.userID, primaryKey: true)
             t.column(userProfileTable.username)
@@ -81,17 +69,41 @@ class DBManager {
             t.column(userProfileTable.weekTotal)
             t.column(userProfileTable.monthTotal)
             t.column(userProfileTable.yearTotal)
-            
         })
         
         try db?.run(userRouteTable.table.create(ifNotExists: true) { t in
+            t.column(userRouteTable.userID)
+            t.column(userRouteTable.routeID)
+            t.unique(userRouteTable.userID, userRouteTable.routeID)
+            
             t.foreignKey(userRouteTable.userID, references: userProfileTable.table, userProfileTable.userID, delete: .cascade)
             t.foreignKey(userRouteTable.routeID, references: routeTable.table, routeTable.routeID, delete: .cascade)
         })
         
         try db?.run(userRewardTable.table.create(ifNotExists: true) { t in
+            t.column(userRewardTable.userID)
+            t.column(userRewardTable.rewardID)
+            t.unique(userRewardTable.userID, userRewardTable.rewardID)
+            
             t.foreignKey(userRewardTable.userID, references: userProfileTable.table, userProfileTable.userID, delete: .cascade)
             t.foreignKey(userRewardTable.rewardID, references: rewardTable.table, rewardTable.rewardID, delete: .cascade)
+        })
+        
+        try db?.run(focusSessionTable.table.create(ifNotExists: true) { t in
+            t.column(focusSessionTable.focusSessionID, primaryKey: true)
+            t.column(focusSessionTable.userID)
+            t.column(focusSessionTable.startTime)
+            t.column(focusSessionTable.endTime)
+            t.foreignKey(focusSessionTable.userID, references: userProfileTable.table, userProfileTable.userID, delete: .cascade)
+        })
+        
+        try db?.run(locationVisitedTable.table.create(ifNotExists: true) { t in
+            t.column(locationVisitedTable.focusSessionID)
+            t.column(locationVisitedTable.locationID)
+            t.unique(locationVisitedTable.focusSessionID, locationVisitedTable.locationID)
+            
+            t.foreignKey(locationVisitedTable.focusSessionID, references: focusSessionTable.table, focusSessionTable.focusSessionID, delete: .cascade)
+            t.foreignKey(locationVisitedTable.locationID, references: locationTable.table, locationTable.locationID, delete: .cascade)
         })
     }
     

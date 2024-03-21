@@ -1,5 +1,5 @@
 //
-//  CountryView.swift
+//  TimerView.swift
 //  TripMaker
 //
 //  Created by Megan Lin on 3/19/24.
@@ -7,10 +7,10 @@
 
 import SwiftUI
 
-struct CountryView: View {
-    var routeName: String
+struct TimerView: View {
+    @State var routeName: String
     @State var image: Image?
-    @State var locations: [Location]?
+    @State var locations: [UUID]?
     
     
     var body: some View {
@@ -24,7 +24,7 @@ struct CountryView: View {
                     .padding()
                 if let firstLocation = locations?.first {
                     NavigationLink {
-                        LocationView(location: firstLocation)
+                        LocationView(locationID: firstLocation)
                     } label: {
                         Text("Tap Me")
                             .padding()
@@ -45,22 +45,18 @@ struct CountryView: View {
                 do {
                     let routeID = try db.fetchRouteIDbyName(name: routeName)
                     let routeDetails = try db.fetchRouteDetails(routeID: routeID)
-                    let locations = try db.fetchLocationsForRoute(routeID: routeID)
                     
                     self.image = imageFromString(routeDetails.mapPicture)
-                    self.locations = locations.isEmpty ? nil : locations
+                    self.locations = routeDetails.locationArray.isEmpty ? nil : routeDetails.locationArray
                     
                 } catch {
                     print("Database operation failed: \(error)")
                 }
             }
         }
-
-
-
     }
 }
 
 #Preview {
-    CountryView(routeName: "Taiwan")
+    TimerView(routeName: "Taiwan")
 }

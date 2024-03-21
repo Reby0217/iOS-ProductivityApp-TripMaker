@@ -8,15 +8,32 @@
 import SwiftUI
 
 struct LocationView: View {
-    var location: Location?
+    @State var locationID: UUID
+    @State var locationDetail: Location?
     
     
     var body: some View {
-        imageFromString(location?.realPicture ?? "")
+        ScrollView{
+            imageFromString(locationDetail?.realPicture ?? "")?
+                .resizable()
+                .scaledToFit()
+                .frame(width: UIScreen.main.bounds.width * 0.8)
+                .padding()
+        }
+        .onAppear {
+            DispatchQueue.main.async {
+                let db = DBManager.shared
+                do {
+                    self.locationDetail = try db.fetchLocationDetails(locationID: locationID)
+                } catch {
+                    print("Database operation failed: \(error)")
+                }
+            }
+        }
     }
 }
 
 #Preview {
     let modelData = ModelData()
-    return LocationView(location: Location(name: "Taipei 101", locationID: UUID(), realPicture: "", tagsArray: [], description: "", isLocked: false))
+    return LocationView(locationID: UUID())
 }

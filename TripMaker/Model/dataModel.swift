@@ -29,6 +29,8 @@ class DBManager {
             let path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
             db = try Connection("\(path)/db.sqlite3")
             try createTables()
+            deleteAllData()
+            try insertInitialData()
         } catch {
             print("Unable to initialize database: \(error)")
         }
@@ -111,5 +113,15 @@ class DBManager {
         })
     }
  
+    private func insertInitialData() throws {
+        let map_taiwan = UIImage(named: "taiwan-attractions-map.jpg")
+        guard let mapPictureString = map_taiwan.map({ stringFromImage($0) }) else {
+            print("Failed to load or convert map image.")
+            return
+        }
+        
+        let routeID = try addRoute(name: "Taiwan", mapPicture: mapPictureString)
+        print("Route added with ID: \(routeID)")
+    }
 }
 

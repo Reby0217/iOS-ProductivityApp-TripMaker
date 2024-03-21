@@ -21,6 +21,7 @@ struct Urls: Codable {
 
 @Observable
 class ModelData {
+    var finished = false
     let db: DBManager
     var image: String?
     
@@ -33,9 +34,9 @@ class ModelData {
         return baseURL + locationName + imageSize
     }
     
-//    let authString = "pPxiEaowEXFSgmLexE1QbvWaDL2AegFje6OHZbv9aHA"
+    let authString = "pPxiEaowEXFSgmLexE1QbvWaDL2AegFje6OHZbv9aHA"
     
-    let authString = "aTMxKAZwBPS8eLOk2WRJFJMSCkTX5_zxTGiHmuhEHG0"
+//    let authString = "aTMxKAZwBPS8eLOk2WRJFJMSCkTX5_zxTGiHmuhEHG0"
     
 //    init(){
 //        db = DBManager.shared
@@ -70,14 +71,7 @@ class ModelData {
                 self.image = imageString
                 
                 do {
-                    let map_taiwan = UIImage(named: "taiwan-attractions-map.jpg")
-                    guard let mapPictureString = map_taiwan.map({ stringFromImage($0) }) else {
-                        print("Failed to load or convert map image.")
-                        return
-                    }
-                    
-                    let routeID = try self.db.addRoute(name: "Taiwan", mapPicture: mapPictureString)
-                    print("Route added with ID: \(routeID)")
+                    let routeID = try self.db.fetchRouteIDbyName(name: "Taiwan")
                     
                     let locationID = try self.db.addLocationToRoute(routeID: routeID, name: "Taipei 101", realPicture: imageString, description: "Description for Taipei 101", isLocked: false)
                     print("Location added with ID: \(locationID)")
@@ -85,6 +79,8 @@ class ModelData {
                 } catch {
                     print("Database operation error: \(error)")
                 }
+                
+                self.finished = true
             }
         }
     }

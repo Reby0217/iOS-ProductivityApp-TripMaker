@@ -27,16 +27,16 @@ extension DBManager {
 
 
     /**
-        - Description: Retrieves the UUID of a specific route by name.
-        - Returns: UUID
-        */
-        func fetchRouteIDbyName(name: String) throws -> UUID {
-            let query = routeTable.table.filter(routeTable.name == name)
-            guard let routeRecord = try db?.pluck(query) else {
-                throw NSError(domain: "Route Not Found!", code: 404, userInfo: nil)
-            }
-            return routeRecord[routeTable.routeID]
+    - Description: Retrieves the UUID of a specific route by name.
+    - Returns: UUID
+    */
+    func fetchRouteIDbyName(name: String) throws -> UUID {
+        let query = routeTable.table.filter(routeTable.name == name)
+        guard let routeRecord = try db?.pluck(query) else {
+            throw NSError(domain: "Route Not Found!", code: 404, userInfo: nil)
         }
+        return routeRecord[routeTable.routeID]
+    }
 
 
     /**
@@ -58,7 +58,20 @@ extension DBManager {
         return Route(routeID: routeID, name: name, locationArray: locationIDs, mapPicture: mapPicture)
     }
 
-
+    
+    /**
+        - Description:Fetches all routes from the database.
+        - Returns: An array of UUID  representing all routes in the database.
+    */
+    func fetchAllRoutes() throws -> [UUID] {
+        guard let routes = try db?.prepare(routeTable.table) else {
+            return []
+        }
+        return routes.map { route in
+            route[routeTable.routeID]
+        }
+    }
+    
 
     /**
     - Description: Deletes a route with given UUID from the database.

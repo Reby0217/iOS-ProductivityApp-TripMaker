@@ -17,7 +17,7 @@ struct TripMakerApp: App {
     init() {
         do {
             // Debug purpose
-            dbManager.deleteAllData()
+            //dbManager.deleteAllData()
             
             //try dbManager.addDummyData()
             dbManager.inspectAllTables()

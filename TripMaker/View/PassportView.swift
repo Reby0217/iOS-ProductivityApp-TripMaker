@@ -25,7 +25,7 @@ struct PassportView: View {
             }
             .padding(.horizontal, 24)
             
-            NavigationSplitView {
+            NavigationView {
                 List {
                     ForEach(routes, id: \.self)
                     { route in
@@ -36,8 +36,6 @@ struct PassportView: View {
                         }
                     }
                 }
-            } detail: {
-                Text("Passport")
             }
         }
         

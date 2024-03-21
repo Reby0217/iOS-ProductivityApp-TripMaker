@@ -13,12 +13,13 @@ struct LocationView: View {
     
     
     var body: some View {
-        ScrollView{
+        VStack{
             imageFromString(locationDetail?.realPicture ?? "")?
                 .resizable()
                 .scaledToFit()
                 .frame(width: UIScreen.main.bounds.width * 0.8)
                 .padding()
+            Text(locationDetail?.name ?? "")
         }
         .onAppear {
             DispatchQueue.main.async {

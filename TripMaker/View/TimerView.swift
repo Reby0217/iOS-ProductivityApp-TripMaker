@@ -14,30 +14,28 @@ struct TimerView: View {
     
     
     var body: some View {
-        ScrollView {
-            VStack {
-                Spacer()
-                image?
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: UIScreen.main.bounds.width * 0.8)
-                    .padding()
-                if let firstLocation = locations?.first {
-                    NavigationLink {
-                        LocationView(locationID: firstLocation)
-                    } label: {
-                        Text("Tap Me")
-                            .padding()
-                            .background(Color.blue)
-                            .foregroundColor(Color.white)
-                            .cornerRadius(8)
-                    }
-                } else {
-                    Text("No locations available")
+        VStack {
+            Spacer()
+            image?
+                .resizable()
+                .scaledToFit()
+                .frame(width: UIScreen.main.bounds.width * 0.8)
+                .padding()
+            if let firstLocation = locations?.first {
+                NavigationLink {
+                    LocationView(locationID: firstLocation)
+                } label: {
+                    Text("Tap Me")
                         .padding()
+                        .background(Color.blue)
+                        .foregroundColor(Color.white)
+                        .cornerRadius(8)
                 }
-                Spacer()
+            } else {
+                Text("No locations available")
+                    .padding()
             }
+            Spacer()
         }
         .onAppear {
             DispatchQueue.main.async {

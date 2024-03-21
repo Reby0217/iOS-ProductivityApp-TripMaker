@@ -25,6 +25,19 @@ struct MapView: View {
             
             Spacer()
             Text("Map View")
+            
+            NavigationView {
+                NavigationLink {
+                    TimerView(routeName: "Taiwan")
+                } label: {
+                    Text("Start")
+                        .padding()
+                        .background(Color.blue)
+                        .foregroundColor(Color.white)
+                        .cornerRadius(8)
+                }
+            }
+            
             Spacer()
         }
         .padding(.horizontal, 24)

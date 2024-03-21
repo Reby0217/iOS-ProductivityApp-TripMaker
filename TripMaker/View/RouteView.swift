@@ -14,19 +14,15 @@ struct RouteView: View {
     @State var locations: [UUID] = []
     
     var body: some View {
-        NavigationSplitView {
-            List {
-                ForEach(locations, id: \.self)
-                { location in
-                    NavigationLink {
-                        LocationView(locationID: location)
-                    } label: {
-                        LocationRowView(locationID: location)
-                    }
+        List {
+            ForEach(locations, id: \.self)
+            { location in
+                NavigationLink {
+                    LocationView(locationID: location)
+                } label: {
+                    LocationRowView(locationID: location)
                 }
             }
-        } detail: {
-            Text("Route")
         }
         .onAppear {
             DispatchQueue.main.async {

@@ -26,9 +26,15 @@ struct MapView: View {
             .padding(.horizontal)
             
             Spacer()
-            Text("Map View")
             
-            NavigationView {
+            
+            NavigationSplitView {
+                Image(uiImage:UIImage(named: "world_map.jpg")!)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: UIScreen.main.bounds.width * 0.8)
+                    .padding()
+                
                 NavigationLink {
                     TimerView(routeName: "Taiwan")
                 } label: {
@@ -38,12 +44,15 @@ struct MapView: View {
                         .foregroundColor(Color.white)
                         .cornerRadius(8)
                 }
+            } detail: {
+                
             }
             
             Spacer()
         }
         .padding(.horizontal, 24)
     }
+    
 }
 
 #Preview {

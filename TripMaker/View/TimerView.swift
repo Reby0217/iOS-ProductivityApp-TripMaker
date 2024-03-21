@@ -21,6 +21,7 @@ struct TimerView: View {
                 .scaledToFit()
                 .frame(width: UIScreen.main.bounds.width * 0.8)
                 .padding()
+            /*
             if let route = routeID {
                 NavigationLink {
                     RouteView(routeID: route)
@@ -35,6 +36,7 @@ struct TimerView: View {
                 Text("No locations available")
                     .padding()
             }
+             */
             Spacer()
         }
         .onAppear {

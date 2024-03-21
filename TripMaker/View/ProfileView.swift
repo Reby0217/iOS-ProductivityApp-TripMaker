@@ -63,7 +63,7 @@ struct ProfileView: View {
                                 .frame(width: 80, height: 80)
                                 .overlay(
                                     RoundedRectangle(cornerRadius: 150)
-                                        .stroke(.purple.opacity(0.7), lineWidth: 6)
+                                        .stroke(.purple.opacity(0.5), lineWidth: 6)
                                 )
                                 .cornerRadius(150)
                                 .padding(.top, 20)

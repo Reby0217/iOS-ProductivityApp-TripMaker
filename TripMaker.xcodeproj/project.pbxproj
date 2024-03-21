@@ -43,6 +43,7 @@
 		61DDB61B2BABD3A300A8D1EE /* SideMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DDB6162BABD3A200A8D1EE /* SideMenuView.swift */; };
 		61DDB61D2BABD3C900A8D1EE /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DDB61C2BABD3C900A8D1EE /* MapView.swift */; };
 		61DDB61F2BABD3D000A8D1EE /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DDB61E2BABD3D000A8D1EE /* ProfileView.swift */; };
+		61DDB6212BABEF0B00A8D1EE /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DDB6202BABEF0B00A8D1EE /* Constants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -81,6 +82,7 @@
 		61DDB6162BABD3A200A8D1EE /* SideMenuView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideMenuView.swift; sourceTree = "<group>"; };
 		61DDB61C2BABD3C900A8D1EE /* MapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		61DDB61E2BABD3D000A8D1EE /* ProfileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		61DDB6202BABEF0B00A8D1EE /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,6 +102,7 @@
 			isa = PBXGroup;
 			children = (
 				4407A1632BAA40D00047DF93 /* Utilities.swift */,
+				61DDB6202BABEF0B00A8D1EE /* Constants.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -294,6 +297,7 @@
 				613381E92BA6A33D00DB71AC /* Reward.swift in Sources */,
 				6193591E2BAAA67400541BC2 /* RouteManagement.swift in Sources */,
 				61DDB6192BABD3A300A8D1EE /* ProfileHeaderView.swift in Sources */,
+				61DDB6212BABEF0B00A8D1EE /* Constants.swift in Sources */,
 				4407A1762BABE9680047DF93 /* StatsView.swift in Sources */,
 				61DDB61F2BABD3D000A8D1EE /* ProfileView.swift in Sources */,
 				613381E72BA6A29000DB71AC /* Location.swift in Sources */,

@@ -10,26 +10,50 @@ import SwiftData
 
 struct ContentView: View {
     @State var routes: [UUID] = initData()
-
+    
+    @State var presentSideMenu = false
+    @State var selectedSideMenuTab = 0
+    
     var body: some View {
-        NavigationSplitView {
-            List {
-                ForEach(routes, id: \.self)
-                { route in
-                    NavigationLink {
-                        RouteView(routeID: route)
-                    } label: {
-                        RouteRowView(routeID: route)
-                    }
-                }
+        ZStack{
+            TabView(selection: $selectedSideMenuTab) {
+                MapView(presentSideMenu: $presentSideMenu)
+                    .tag(0)
+//                StatsView(presentSideMenu: $presentSideMenu)
+//                    .tag(1)
+                ProfileView(presentSideMenu: $presentSideMenu)
+                    .tag(2)
+//                PassportView(presentSideMenu: $presentSideMenu)
+//                    .tag(3)
+//                RankingView(presentSideMenu: $presentSideMenu)
+//                    .tag(4)
             }
-        } detail: {
-            Text("Passport")
-        }
-        .onAppear{
-            print("refresh")
+            
+            SideMenu(isShowing: $presentSideMenu, content: AnyView(SideMenuView(selectedTab: $selectedSideMenuTab, presentSideMenu: $presentSideMenu)))
         }
     }
+    
+    
+
+//    var body: some View {
+//        NavigationSplitView {
+//            List {
+//                ForEach(routes, id: \.self)
+//                { route in
+//                    NavigationLink {
+//                        RouteView(routeID: route)
+//                    } label: {
+//                        RouteRowView(routeID: route)
+//                    }
+//                }
+//            }
+//        } detail: {
+//            Text("Passport")
+//        }
+//        .onAppear{
+//            print("refresh")
+//        }
+//    }
 }
 
 func initData() -> [UUID] {

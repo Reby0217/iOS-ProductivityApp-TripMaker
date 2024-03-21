@@ -20,14 +20,14 @@ struct ContentView: View {
             TabView(selection: $selectedSideMenuTab) {
                 MapView(presentSideMenu: $presentSideMenu)
                     .tag(0)
-//                StatsView(presentSideMenu: $presentSideMenu)
-//                    .tag(1)
+                StatsView(presentSideMenu: $presentSideMenu)
+                    .tag(1)
                 ProfileView(presentSideMenu: $presentSideMenu)
                     .tag(2)
                 PassportView(presentSideMenu: $presentSideMenu)
                     .tag(3)
-//                RankingView(presentSideMenu: $presentSideMenu)
-//                    .tag(4)
+                RankingView(presentSideMenu: $presentSideMenu)
+                    .tag(4)
             }
             
             SideMenu(isShowing: $presentSideMenu, content: AnyView(SideMenuView(selectedTab: $selectedSideMenuTab, presentSideMenu: $presentSideMenu)))

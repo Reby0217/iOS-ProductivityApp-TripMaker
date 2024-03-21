@@ -59,8 +59,14 @@ struct ProfileView: View {
                         VStack {
                             imageFromString(reward.picture)?
                                 .resizable()
-                                .scaledToFit()
+                                .aspectRatio(contentMode: .fill)
                                 .frame(width: 80, height: 80)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 150)
+                                        .stroke(.purple.opacity(0.7), lineWidth: 6)
+                                )
+                                .cornerRadius(150)
+                                .padding(.top, 20)
                                 .padding(.bottom, 1)
                             Text(reward.name)
                                 .font(Font.custom("Optima", size: 14))

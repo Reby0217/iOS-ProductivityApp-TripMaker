@@ -10,7 +10,7 @@ import SwiftUI
 struct TimerView: View {
     @State var routeName: String
     @State var image: Image?
-    @State var locations: [UUID]?
+    @State var routeID: UUID?
     
     
     var body: some View {
@@ -21,9 +21,9 @@ struct TimerView: View {
                 .scaledToFit()
                 .frame(width: UIScreen.main.bounds.width * 0.8)
                 .padding()
-            if let firstLocation = locations?.first {
+            if let route = routeID {
                 NavigationLink {
-                    LocationView(locationID: firstLocation)
+                    RouteView(routeID: route)
                 } label: {
                     Text("Tap Me")
                         .padding()
@@ -42,10 +42,10 @@ struct TimerView: View {
                 let db = DBManager.shared
                 do {
                     let routeID = try db.fetchRouteIDbyName(name: routeName)
-                    let routeDetails = try db.fetchRouteDetails(routeID: routeID)
+                    self.routeID = routeID
                     
+                    let routeDetails = try db.fetchRouteDetails(routeID: routeID)
                     self.image = imageFromString(routeDetails.mapPicture)
-                    self.locations = routeDetails.locationArray.isEmpty ? nil : routeDetails.locationArray
                     
                 } catch {
                     print("Database operation failed: \(error)")

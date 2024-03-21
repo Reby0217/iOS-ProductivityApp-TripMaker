@@ -44,6 +44,7 @@
 		61DDB61D2BABD3C900A8D1EE /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DDB61C2BABD3C900A8D1EE /* MapView.swift */; };
 		61DDB61F2BABD3D000A8D1EE /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DDB61E2BABD3D000A8D1EE /* ProfileView.swift */; };
 		61DDB6212BABEF0B00A8D1EE /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DDB6202BABEF0B00A8D1EE /* Constants.swift */; };
+		61DDB6232BABFD9D00A8D1EE /* BarChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DDB6222BABFD9D00A8D1EE /* BarChartView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -83,6 +84,7 @@
 		61DDB61C2BABD3C900A8D1EE /* MapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		61DDB61E2BABD3D000A8D1EE /* ProfileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		61DDB6202BABEF0B00A8D1EE /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		61DDB6222BABFD9D00A8D1EE /* BarChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarChartView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -143,6 +145,7 @@
 				4407A16F2BABBC550047DF93 /* LocationRowView.swift */,
 				61DDB61C2BABD3C900A8D1EE /* MapView.swift */,
 				61DDB61E2BABD3D000A8D1EE /* ProfileView.swift */,
+				61DDB6222BABFD9D00A8D1EE /* BarChartView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -281,6 +284,7 @@
 				61DDB6182BABD3A300A8D1EE /* MenuOptionView.swift in Sources */,
 				619359262BAAA68A00541BC2 /* UserProfileManagement.swift in Sources */,
 				4407A1742BABCEFD0047DF93 /* PassportView.swift in Sources */,
+				61DDB6232BABFD9D00A8D1EE /* BarChartView.swift in Sources */,
 				619359202BAAA67C00541BC2 /* LocationManagement.swift in Sources */,
 				61C355CB2BA69ABA00B8FD66 /* Item.swift in Sources */,
 				613381EE2BA6B38100DB71AC /* dataModel.swift in Sources */,

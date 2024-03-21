@@ -11,17 +11,19 @@ struct MapView: View {
     @Binding var presentSideMenu: Bool
     
     var body: some View {
-        VStack{
-            HStack{
-                Button{
-                    presentSideMenu.toggle()
-                } label: {
+        VStack(alignment: .leading, spacing: 20) {
+            HStack {
+                Button(action: {
+                    self.presentSideMenu.toggle()
+                }) {
                     Image(systemName: "list.bullet")
                         .resizable()
+                        .scaledToFit()
                         .frame(width: 28, height: 24)
                 }
                 Spacer()
             }
+            .padding(.horizontal)
             
             Spacer()
             Text("Map View")

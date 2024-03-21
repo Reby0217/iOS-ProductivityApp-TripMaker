@@ -28,6 +28,31 @@ extension DBManager {
     
     
     /**
+        - Description: Fetches a single reward identified by its UUID.
+        - Returns: A Reward object if found, otherwise nil.
+        */
+    func fetchReward(by rewardID: UUID) -> Reward? {
+        do {
+            let query = rewardTable.table.filter(rewardTable.rewardID == rewardID)
+            if let rewardRow = try db?.pluck(query) {
+                return Reward(
+                    rewardID: rewardRow[rewardTable.rewardID],
+                    name: rewardRow[rewardTable.name],
+                    picture: rewardRow[rewardTable.picture],
+                    isClaimed: rewardRow[rewardTable.isClaimed]
+                )
+            } else {
+                print("No reward found with the given ID.")
+                return nil
+            }
+        } catch {
+            print("Database error: \(error)")
+            return nil
+        }
+    }
+    
+    
+    /**
     - Description: Retrieves the details of a specific reward by rewardID.
     - Returns: A Reward object containing the details of the reward.
     */

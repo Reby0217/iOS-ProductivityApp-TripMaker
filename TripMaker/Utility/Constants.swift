@@ -8,21 +8,21 @@
 import Foundation
 import UIKit
 
+let rewardImage = UIImage(named: "reward.png")!
+let rewardImageString = stringFromImage(rewardImage)
+let dummyRewards = [
+    Reward(rewardID: UUID(), name: "First Reward", picture: rewardImageString, isClaimed: true)
+]
+
 let dummyUserProfile = UserProfile(
     userID: UUID(),
     username: "Snow White",
     image: "profilePic",
     routeArray: [],
     focusSession: [],
-    dayTotal: 0,
-    weekTotal: 0,
-    monthTotal: 0,
-    yearTotal: 0,
-    rewardsArray: []
+    dayTotal: 5,
+    weekTotal: 40,
+    monthTotal: 200,
+    yearTotal: 3600,
+    rewardsArray: dummyRewards.map{ $0.rewardID }
 )
-
-let rewardImage = UIImage(named: "reward.png")!
-let rewardImageString = stringFromImage(rewardImage)
-let dummyRewards = [
-    Reward(rewardID: UUID(), name: "FirstReward", picture: rewardImageString, isClaimed: true)
-]

@@ -18,7 +18,7 @@ struct StatsView: View {
                 } label: {
                     Image(systemName: "list.bullet")
                         .resizable()
-                        .frame(width: 24, height: 20)
+                        .frame(width: 28, height: 24)
                 }
                 Spacer()
             }

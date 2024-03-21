@@ -8,23 +8,39 @@
 import SwiftUI
 
 struct PassportView: View {
+    @Binding var presentSideMenu: Bool
     @State var routes: [UUID] = []
     
     var body: some View {
-        NavigationSplitView {
-            List {
-                ForEach(routes, id: \.self)
-                { route in
-                    NavigationLink {
-                        RouteView(routeID: route)
-                    } label: {
-                        RouteRowView(routeID: route)
+        VStack{
+            HStack{
+                Button{
+                    presentSideMenu.toggle()
+                } label: {
+                    Image(systemName: "list.bullet")
+                        .resizable()
+                        .frame(width: 24, height: 20)
+                }
+                Spacer()
+            }
+            .padding(.horizontal, 24)
+            
+            NavigationSplitView {
+                List {
+                    ForEach(routes, id: \.self)
+                    { route in
+                        NavigationLink {
+                            RouteView(routeID: route)
+                        } label: {
+                            RouteRowView(routeID: route)
+                        }
                     }
                 }
+            } detail: {
+                Text("Passport")
             }
-        } detail: {
-            Text("Passport")
         }
+        
         .onAppear {
             print("passport view")
             DispatchQueue.main.async {
@@ -40,5 +56,5 @@ struct PassportView: View {
 }
 
 #Preview {
-    PassportView()
+    PassportView(presentSideMenu: .constant(true))
 }

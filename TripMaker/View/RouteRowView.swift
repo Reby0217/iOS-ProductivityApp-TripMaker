@@ -12,7 +12,14 @@ struct RouteRowView: View {
     @State var routeDetail: Route?
     
     var body: some View {
-        Text(routeDetail?.name ?? "")
+        HStack {
+            getStamp()?
+                .resizable()
+                .scaledToFit()
+                .frame(width: UIScreen.main.bounds.width * 0.4)
+                .padding()
+            Text(routeDetail?.name ?? "")
+        }
         
         .onAppear {
             DispatchQueue.main.async {
@@ -25,6 +32,14 @@ struct RouteRowView: View {
             }
         }
     }
+    
+    func getStamp() -> Image? {
+        if routeDetail != nil {
+            return Image(uiImage:UIImage(named: (routeDetail?.name ?? "") + "-stamp.jpg")!)
+        }
+        return nil
+    }
+    
 }
 
 #Preview {

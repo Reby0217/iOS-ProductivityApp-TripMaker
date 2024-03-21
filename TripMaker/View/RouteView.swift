@@ -26,7 +26,7 @@ struct RouteView: View {
                 }
             }
         } detail: {
-            Text("Passport")
+            Text("Route")
         }
         .onAppear {
             DispatchQueue.main.async {

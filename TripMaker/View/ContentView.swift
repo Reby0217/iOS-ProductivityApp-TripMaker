@@ -30,7 +30,7 @@ struct ContentView: View {
                     .tag(4)
             }
             
-            SideMenu(isShowing: $presentSideMenu, content: AnyView(SideMenuView(selectedTab: $selectedSideMenuTab, presentSideMenu: $presentSideMenu)))
+            SideMenu(isShowing: $presentSideMenu, content: AnyView(SideMenuView(selectedTab: $selectedSideMenuTab, showSideMenu: $presentSideMenu)))
         }
     }
     

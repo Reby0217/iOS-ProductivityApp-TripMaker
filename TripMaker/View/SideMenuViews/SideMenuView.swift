@@ -29,7 +29,7 @@ enum SideMenuRowType: Int, CaseIterable{
         }
     }
     
-    var iconName: String {
+    var imageIcon: String {
         switch self {
         case .map:
             return "globe.americas.fill"
@@ -50,7 +50,7 @@ enum SideMenuRowType: Int, CaseIterable{
 struct SideMenuView: View {
     
     @Binding var selectedTab: Int
-    @Binding var presentSideMenu: Bool
+    @Binding var showSideMenu: Bool
     
     var body: some View {
         HStack {
@@ -70,11 +70,11 @@ struct SideMenuView: View {
                     ForEach(SideMenuRowType.allCases, id: \.self) { row in
                         MenuOptionView(
                             isSelected: selectedTab == row.rawValue,
-                            imageName: row.iconName,
+                            imageName: row.imageIcon,
                             title: row.title,
                             action: {
                                 selectedTab = row.rawValue
-                                presentSideMenu.toggle()
+                                showSideMenu.toggle()
                             }
                         )
                     }
@@ -99,5 +99,5 @@ struct SideMenuView: View {
 
 
 #Preview {
-    SideMenuView(selectedTab: .constant(0), presentSideMenu: .constant(true))
+    SideMenuView(selectedTab: .constant(0), showSideMenu: .constant(true))
 }

@@ -11,7 +11,7 @@ import UIKit
 let rewardImage = UIImage(named: "reward.png")!
 let rewardImageString = stringFromImage(rewardImage)
 let dummyRewards = [
-    Reward(rewardID: UUID(), name: "First Reward", picture: rewardImageString, isClaimed: true)
+    Reward(name: "First Reward", picture: rewardImageString, isClaimed: true)
 ]
 
 let dummyUserProfile = UserProfile(
@@ -24,5 +24,5 @@ let dummyUserProfile = UserProfile(
     weekTotal: 40,
     monthTotal: 200,
     yearTotal: 3600,
-    rewardsArray: dummyRewards.map{ $0.rewardID }
+    rewardsArray: dummyRewards.map{ $0.name }
 )

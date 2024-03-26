@@ -10,7 +10,6 @@ import SwiftUI
 struct TimerView: View {
     @State var routeName: String
     @State var image: Image?
-    @State var routeID: UUID?
     
     
     var body: some View {
@@ -43,14 +42,12 @@ struct TimerView: View {
             DispatchQueue.main.async {
                 let db = DBManager.shared
                 do {
-                    let routeID = try db.fetchRouteIDbyName(name: routeName)
-                    self.routeID = routeID
                     
-                    let routeDetails = try db.fetchRouteDetails(routeID: routeID)
+                    let routeDetails = try db.fetchRouteDetails(route: routeName)
                     self.image = imageFromString(routeDetails.mapPicture)
                     
                 } catch {
-                    print("Database operation failed: \(error)")
+                    print("Timer View Database operation failed: \(error)")
                 }
             }
         }

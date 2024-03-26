@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct RouteRowView: View {
-    @State var routeID: UUID
+    @State var route: String
     @State var routeDetail: Route?
     
     var body: some View {
@@ -25,9 +25,9 @@ struct RouteRowView: View {
             DispatchQueue.main.async {
                 let db = DBManager.shared
                 do {
-                    self.routeDetail = try db.fetchRouteDetails(routeID: routeID)
+                    self.routeDetail = try db.fetchRouteDetails(route: route)
                 } catch {
-                    print("Database operation failed: \(error)")
+                    print("Route Row View Database operation failed: \(error)")
                 }
             }
         }
@@ -43,5 +43,5 @@ struct RouteRowView: View {
 }
 
 #Preview {
-    RouteRowView(routeID: UUID())
+    RouteRowView(route: "Taiwan")
 }

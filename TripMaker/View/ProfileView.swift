@@ -55,7 +55,7 @@ struct ProfileView: View {
                         .padding(.leading)
 
                     // Rewards list
-                    ForEach(dummyRewards, id: \.rewardID) { reward in
+                    ForEach(dummyRewards, id: \.name) { reward in
                         VStack {
                             imageFromString(reward.picture)?
                                 .resizable()

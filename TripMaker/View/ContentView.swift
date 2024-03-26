@@ -9,7 +9,7 @@ import SwiftUI
 import SwiftData
 
 struct ContentView: View {
-    @State var routes: [UUID] = initData()
+    @State var routes: [String] = initData()
     
     @State var presentSideMenu = false
     @State var selectedSideMenuTab = 0
@@ -57,8 +57,8 @@ struct ContentView: View {
 //    }
 }
 
-func initData() -> [UUID] {
-    var routes: [UUID] = []
+func initData() -> [String] {
+    var routes: [String] = []
     
     print("called")
     let db = DBManager.shared
@@ -66,7 +66,7 @@ func initData() -> [UUID] {
         routes = try db.fetchAllRoutes()
         print(routes)
     } catch {
-        print("Database operation failed: \(error)")
+        print("Content View Database operation failed: \(error)")
     }
     return routes
 }

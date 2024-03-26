@@ -9,7 +9,7 @@ import SwiftUI
 
 struct PassportView: View {
     @Binding var presentSideMenu: Bool
-    @State var routes: [UUID] = []
+    @State var routes: [String] = []
     
     var body: some View {
         VStack{
@@ -30,9 +30,9 @@ struct PassportView: View {
                     ForEach(routes, id: \.self)
                     { route in
                         NavigationLink {
-                            RouteView(routeID: route)
+                            RouteView(route: route)
                         } label: {
-                            RouteRowView(routeID: route)
+                            RouteRowView(route: route)
                         }
                     }
                 }
@@ -46,7 +46,7 @@ struct PassportView: View {
                 do {
                     self.routes = try db.fetchAllRoutes()
                 } catch {
-                    print("Database operation failed: \(error)")
+                    print("Passport View Database operation failed: \(error)")
                 }
             }
         }

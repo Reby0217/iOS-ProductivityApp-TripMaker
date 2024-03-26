@@ -8,19 +8,19 @@
 import SwiftUI
 
 struct RouteView: View {
-    @State var routeID: UUID
+    @State var route: String
     @State var image: Image?
     @State var routeDetail: Route?
-    @State var locations: [UUID] = []
+    @State var locations: [String] = []
     
     var body: some View {
         List {
             ForEach(locations, id: \.self)
             { location in
                 NavigationLink {
-                    LocationView(locationID: location)
+                    LocationView(location: location)
                 } label: {
-                    LocationRowView(locationID: location)
+                    LocationRowView(location: location)
                 }
             }
         }
@@ -28,10 +28,10 @@ struct RouteView: View {
             DispatchQueue.main.async {
                 let db = DBManager.shared
                 do {
-                    self.routeDetail = try db.fetchRouteDetails(routeID: routeID)
-                    self.locations = self.routeDetail?.locationArray ?? []
+                    self.routeDetail = try db.fetchRouteDetails(route: route)
+                    self.locations = self.routeDetail?.locationNames ?? []
                 } catch {
-                    print("Database operation failed: \(error)")
+                    print("Route View Database operation failed: \(error)")
                 }
             }
         }
@@ -39,5 +39,5 @@ struct RouteView: View {
 }
 
 #Preview {
-    RouteView(routeID: UUID())
+    RouteView(route: "Taiwan")
 }

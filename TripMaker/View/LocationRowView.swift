@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct LocationRowView: View {
-    @State var locationID: UUID
+    @State var location: String
     @State var locationDetail: Location?
     
     var body: some View {
@@ -24,9 +24,9 @@ struct LocationRowView: View {
                 DispatchQueue.main.async {
                     let db = DBManager.shared
                     do {
-                        self.locationDetail = try db.fetchLocationDetails(locationID: locationID)
+                        self.locationDetail = try db.fetchLocationDetails(name: location)
                     } catch {
-                        print("Database operation failed: \(error)")
+                        print("Location Row View Database operation failed: \(error)")
                     }
                 }
             }
@@ -34,5 +34,5 @@ struct LocationRowView: View {
 }
 
 #Preview {
-    LocationRowView(locationID: UUID())
+    LocationRowView(location: "Taipei 101")
 }

@@ -44,7 +44,7 @@ extension DBManager {
     
     /**
         - Description:Fetches all routes from the database.
-        - Returns: An array of UUID  representing all routes in the database.
+        - Returns: An array of String  representing all routes in the database.
     */
     func fetchAllRoutes() throws -> [String] {
         guard let routes = try db?.prepare(routeTable.table) else {

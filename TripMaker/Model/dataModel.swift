@@ -38,31 +38,27 @@ class DBManager {
 
     private func createTables() throws {
         try db?.run(routeTable.table.create(ifNotExists: true) { t in
-            t.column(routeTable.routeID, primaryKey: true)
-            t.column(routeTable.name)
+            t.column(routeTable.name, primaryKey: true)
             t.column(routeTable.mapPicture)
         })
 
         try db?.run(locationTable.table.create(ifNotExists: true) { t in
-            t.column(locationTable.locationID, primaryKey: true)
-            t.column(locationTable.routeID)
-            t.column(locationTable.name)
+            t.column(locationTable.route)
+            t.column(locationTable.name, primaryKey: true)
             t.column(locationTable.realPicture)
             t.column(locationTable.description)
             t.column(locationTable.isLocked)
-            t.foreignKey(locationTable.routeID, references: routeTable.table, routeTable.routeID, delete: .cascade)
+            t.foreignKey(locationTable.route, references: routeTable.table, routeTable.name, delete: .cascade)
         })
 
         try db?.run(tagTable.table.create(ifNotExists: true) { t in
-            t.column(tagTable.tagID, primaryKey: true)
-            t.column(tagTable.locationID)
-            t.column(tagTable.tag)
-            t.foreignKey(tagTable.locationID, references: locationTable.table, locationTable.locationID, delete: .cascade)
+            t.column(tagTable.location)
+            t.column(tagTable.tag, primaryKey: true)
+            t.foreignKey(tagTable.location, references: locationTable.table, locationTable.name, delete: .cascade)
         })
 
         try db?.run(rewardTable.table.create(ifNotExists: true) { t in
-            t.column(rewardTable.rewardID, primaryKey: true)
-            t.column(rewardTable.name)
+            t.column(rewardTable.name, primaryKey: true)
             t.column(rewardTable.picture)
             t.column(rewardTable.isClaimed)
         })
@@ -79,20 +75,20 @@ class DBManager {
         
         try db?.run(userRouteTable.table.create(ifNotExists: true) { t in
             t.column(userRouteTable.userID)
-            t.column(userRouteTable.routeID)
-            t.unique(userRouteTable.userID, userRouteTable.routeID)
+            t.column(userRouteTable.route)
+            t.unique(userRouteTable.userID, userRouteTable.route)
             
             t.foreignKey(userRouteTable.userID, references: userProfileTable.table, userProfileTable.userID, delete: .cascade)
-            t.foreignKey(userRouteTable.routeID, references: routeTable.table, routeTable.routeID, delete: .cascade)
+            t.foreignKey(userRouteTable.route, references: routeTable.table, routeTable.name, delete: .cascade)
         })
         
         try db?.run(userRewardTable.table.create(ifNotExists: true) { t in
             t.column(userRewardTable.userID)
-            t.column(userRewardTable.rewardID)
-            t.unique(userRewardTable.userID, userRewardTable.rewardID)
+            t.column(userRewardTable.reward)
+            t.unique(userRewardTable.userID, userRewardTable.reward)
             
             t.foreignKey(userRewardTable.userID, references: userProfileTable.table, userProfileTable.userID, delete: .cascade)
-            t.foreignKey(userRewardTable.rewardID, references: rewardTable.table, rewardTable.rewardID, delete: .cascade)
+            t.foreignKey(userRewardTable.reward, references: rewardTable.table, rewardTable.name, delete: .cascade)
         })
         
         try db?.run(focusSessionTable.table.create(ifNotExists: true) { t in
@@ -105,11 +101,11 @@ class DBManager {
         
         try db?.run(locationVisitedTable.table.create(ifNotExists: true) { t in
             t.column(locationVisitedTable.focusSessionID)
-            t.column(locationVisitedTable.locationID)
-            t.unique(locationVisitedTable.focusSessionID, locationVisitedTable.locationID)
+            t.column(locationVisitedTable.location)
+            t.unique(locationVisitedTable.focusSessionID, locationVisitedTable.location)
             
             t.foreignKey(locationVisitedTable.focusSessionID, references: focusSessionTable.table, focusSessionTable.focusSessionID, delete: .cascade)
-            t.foreignKey(locationVisitedTable.locationID, references: locationTable.table, locationTable.locationID, delete: .cascade)
+            t.foreignKey(locationVisitedTable.location, references: locationTable.table, locationTable.name, delete: .cascade)
         })
     }
  

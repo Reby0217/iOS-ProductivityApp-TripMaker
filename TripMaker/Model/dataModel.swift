@@ -27,7 +27,7 @@ class DBManager {
     private init() {
         do {
             let path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
-//            print("\(path)/db.sqlite3")
+            print("\(path)/db.sqlite3")
             db = try Connection("\(path)/db.sqlite3")
             try createTables()
             deleteAllData()

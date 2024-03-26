@@ -63,6 +63,9 @@ class ModelData {
                 
                 do {
                     try self.db.addLocationToRoute(routeName: "Taiwan", name: self.locationName, realPicture: self.image!, description: self.locationDescription, isLocked: false)
+                    try self.db.addTagToLocation(name: self.locationName, tag: "Engineering Marvel")
+                    try self.db.addTagToLocation(name: self.locationName, tag: "Cultural Hub")
+                    
                     print("Location added with name: \(self.locationName)")
                 } catch {
                     print("Database operation error: \(error)")

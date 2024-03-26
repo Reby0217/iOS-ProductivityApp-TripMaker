@@ -110,32 +110,24 @@ class DBManager {
     }
  
     private func insertInitialData() throws {
-        let map_taiwan = UIImage(named: "taiwan-attractions-map.jpg")
-        guard let mapPictureString = map_taiwan.map({ stringFromImage($0) }) else {
-            print("Failed to load or convert map image.")
-            return
-        }
-        
-        let routeID = try addRoute(name: "Taiwan", mapPicture: mapPictureString)
-        print("Route added with ID: \(routeID)")
-        
-        
-        guard let profilePic = UIImage(named: "profilePic.jpg"),
+        guard let map_taiwan = UIImage(named: "taiwan-attractions-map.jpg"),
+              let profilePic = UIImage(named: "profilePic.jpg"),
               let rewardImage = UIImage(named: "reward.png") else {
             print("Failed to load initial images.")
             return
         }
         
+        let mapPictureString = stringFromImage(map_taiwan)
         let profilePicString = stringFromImage(profilePic)
         let rewardImageString = stringFromImage(rewardImage)
-       
-        let userID = try createUserProfile(username: "Snow White", image: profilePicString)
-        print("User profile added with ID: \(userID)")
         
-        let rewardName = "First Reward"
-        let rewardID = try addReward(name: rewardName, picture: rewardImageString)
-        try claimReward(userID: userID, rewardID: rewardID)
-        print("Reward '\(rewardName)' added with ID: \(rewardID)")
+        try addRoute(name: "Taiwan", mapPicture: mapPictureString)
+        
+        let userID = try createUserProfile(username: "Snow White", image: profilePicString)
+        
+        try addReward(name: "First Reward", picture: rewardImageString)
+        
+        try claimReward(userID: userID, rewardName: "First Reward")
     }
 }
 

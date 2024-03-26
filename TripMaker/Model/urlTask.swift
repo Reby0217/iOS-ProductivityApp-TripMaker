@@ -38,143 +38,76 @@ class ModelData {
     
 //    let authString = "aTMxKAZwBPS8eLOk2WRJFJMSCkTX5_zxTGiHmuhEHG0"
     
-//    init(){
-//        db = DBManager.shared
-//        
-//        _ = download(urlString: httpString)
-//        
-//        do {
-//            let map_taiwan = UIImage(named: "taiwan-attractions-map.jpg")
-//            let routeID = try db.addRoute(name: "Taiwan", mapPicture: stringFromImage(map_taiwan!))
-//            print("route added \(routeID)")
-//            if self.image != nil {
-//                var locationID = try db.addLocationToRoute(routeID: routeID, name: "Taipei 101", realPicture: self.image!, description: "", isLocked: false)
-//                print("location added \(locationID)")
-//            }
-//        } catch {
-//            print("error")
-//        }
-//        
-//
-//    }
-    
     init() {
-        db = DBManager.shared
-        
-        download(urlString: httpString) { [weak self] imageString in
-            guard let self = self, let imageString = imageString else {
-                print("Failed to download image.")
-                return
-            }
-            
-            DispatchQueue.main.async {
-                self.image = imageString
-                
-                do {
-                    let routeID = try self.db.fetchRouteIDbyName(name: "Taiwan")
-                    
-                    let locationID = try self.db.addLocationToRoute(routeID: routeID, name: "Taipei 101", realPicture: imageString, description: "Description for Taipei 101", isLocked: false)
-                    print("Location added with ID: \(locationID)")
-                    
-                } catch {
-                    print("Database operation error: \(error)")
-                }
-                
-                self.finished = true
-            }
-        }
-    }
+          db = DBManager.shared
+          
+          download(urlString: httpString) { [weak self] imageString in
+              guard let self = self, let imageString = imageString else {
+                  print("Failed to download image.")
+                  return
+              }
+              
+              DispatchQueue.main.async {
+                  self.image = imageString
+                  
+                  do {
+                      try self.db.addRoute(name: self.locationName, mapPicture: imageString)
+                      print("Location added with name: \(self.locationName)")
+                  } catch {
+                      print("Database operation error: \(error)")
+                  }
+                  
+                  self.finished = true
+              }
+          }
+      }
 
-
-
-    
-//    func download(urlString: String) -> Bool {
-//        
-//        let url = URL(string: urlString)
-//        var req = URLRequest(url: url!)
-//        let session = URLSession.shared
-//        
-//        req.httpMethod = "GET"
-//        req.setValue("Client-ID \(authString)", forHTTPHeaderField: "Authorization")
-//        req.setValue("application/json", forHTTPHeaderField: "Content-Type")
-//        
-//
-//        session.downloadTask(with: req) { (data, response, error) in
-//            if let error = error {
-//                print("Error: \(error)")
-//            }else if let response = response as? HTTPURLResponse, let data = data, let data_ = try? Data(contentsOf: data) {
-//                print("Status Code: \(response.statusCode)")
-//                do{
-//                    let decoder = JSONDecoder()
-//                    print(String(describing: data_))
-//                    let picInfo = try decoder.decode(ImageInfo.self, from: data_)
-//                    print(picInfo)
-//                    session.downloadTask(with: picInfo.urls.rawUrl) {
-//                        loc, resp, err in
-//                        if let loc = loc, let d = try? Data(contentsOf: loc)
-//                        {
-//                            if let im = UIImage(data:d) {
-//                                self.image = stringFromImage(im)
-//                            }
-//                        }
-//                    }.resume()
-//                } catch{
-//                    print(error)
-//                }
-//            }
-//        }.resume()
-//        
-//        return true
-//    }
-    
-    
     func download(urlString: String, completion: @escaping (String?) -> Void) {
         guard let url = URL(string: urlString) else {
             print("Invalid URL.")
             completion(nil)
             return
         }
-        var req = URLRequest(url: url)
-        req.httpMethod = "GET"
-        req.setValue("Client-ID \(authString)", forHTTPHeaderField: "Authorization")
-        req.setValue("application/json", forHTTPHeaderField: "Content-Type")
-
-        let session = URLSession.shared
-        session.dataTask(with: req) { (data, response, error) in
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.setValue("Client-ID \(authString)", forHTTPHeaderField: "Authorization")
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        URLSession.shared.dataTask(with: request) { data, response, error in
             if let error = error {
                 print("Error occurred during download: \(error.localizedDescription)")
                 completion(nil)
                 return
             }
-
+            
             guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
                 print("Invalid response from server.")
                 completion(nil)
                 return
             }
-
+            
             guard let data = data else {
                 print("No data received from server.")
                 completion(nil)
                 return
             }
-
+            
             do {
                 let decoder = JSONDecoder()
                 let picInfo = try decoder.decode(ImageInfo.self, from: data)
-                session.dataTask(with: picInfo.urls.rawUrl) { locData, locResponse, locError in
+                URLSession.shared.dataTask(with: picInfo.urls.rawUrl) { locData, locResponse, locError in
                     if let locError = locError {
                         print("Error occurred during image download: \(locError.localizedDescription)")
                         completion(nil)
                         return
                     }
-
+                    
                     guard let locData = locData, let image = UIImage(data: locData) else {
                         print("Failed to convert image data.")
                         completion(nil)
                         return
                     }
-
+                    
                     let imageString = stringFromImage(image)
                     completion(imageString)
                 }.resume()
@@ -184,5 +117,4 @@ class ModelData {
             }
         }.resume()
     }
-
 }

@@ -21,7 +21,7 @@ struct Location {
     let isLocked: Bool
 }
 
-struct Reward {
+struct Reward: Hashable {
     let name: String // Primary key and unique
     let picture: String
     let isClaimed: Bool

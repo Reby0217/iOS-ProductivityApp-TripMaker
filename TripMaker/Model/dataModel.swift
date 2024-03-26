@@ -112,7 +112,8 @@ class DBManager {
     private func insertInitialData() throws {
         guard let map_taiwan = UIImage(named: "taiwan-attractions-map.jpg"),
               let profilePic = UIImage(named: "profilePic.jpg"),
-              let rewardImage = UIImage(named: "reward.png") else {
+              let rewardImage = UIImage(named: "reward.png"),
+              let rewardImage1 = UIImage(named: "reward1.png") else {
             print("Failed to load initial images.")
             return
         }
@@ -120,14 +121,17 @@ class DBManager {
         let mapPictureString = stringFromImage(map_taiwan)
         let profilePicString = stringFromImage(profilePic)
         let rewardImageString = stringFromImage(rewardImage)
+        let secondRewardImageStr = stringFromImage(rewardImage1)
         
         try addRoute(name: "Taiwan", mapPicture: mapPictureString)
         
         let userID = try createUserProfile(username: "Snow White", image: profilePicString)
         
         try addReward(name: "First Reward", picture: rewardImageString)
+        try addReward(name: "Second Reward", picture: secondRewardImageStr)
         
         try claimReward(userID: userID, rewardName: "First Reward")
+        try claimReward(userID: userID, rewardName: "Second Reward")
     }
 }
 

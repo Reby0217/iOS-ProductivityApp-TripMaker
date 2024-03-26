@@ -10,6 +10,7 @@ import SwiftUI
 struct ProfileView: View {
     @Binding var presentSideMenu: Bool
     @State private var userProfile: UserProfile?
+    @State private var userRewards: [Reward] = []
 
     let dbManager = DBManager.shared
 
@@ -56,28 +57,33 @@ struct ProfileView: View {
                             .font(.title)
                     }
                     
-                    // Achievements section aligned left
+                    // Achievements section
                     Text("My Achievements")
                         .font(Font.custom("Noteworthy", size: 28))
                         .padding(.leading)
                     
-                    ForEach(dummyRewards, id: \.name) { reward in
-                        VStack {
-                            imageFromString(reward.picture)?
-                                .resizable()
-                                .aspectRatio(contentMode: .fill)
-                                .frame(width: 80, height: 80)
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 150)
-                                        .stroke(.purple.opacity(0.5), lineWidth: 6)
-                                )
-                                .cornerRadius(150)
-                                .padding(.top, 20)
-                                .padding(.bottom, 1)
-                            Text(reward.name)
-                                .font(Font.custom("Optima", size: 14))
+                    ForEach(userRewards.chunked(into: 3), id: \.self) { rowRewards in
+                        HStack {
+                            ForEach(rowRewards, id: \.name) { reward in
+                                VStack {
+                                    imageFromString(reward.picture)?
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fill)
+                                        .frame(width: 80, height: 80)
+                                        .overlay(
+                                            RoundedRectangle(cornerRadius: 150)
+                                                .stroke(.purple.opacity(0.5), lineWidth: 6)
+                                        )
+                                        .cornerRadius(150)
+                                        .padding(.top, 20)
+                                        .padding(.bottom, 1)
+                                    Text(reward.name)
+                                        .font(Font.custom("Optima", size: 14))
+                                }
+                            }
                         }
                     }
+                    
                     .padding(.leading)
                 }
                 .padding(.horizontal)
@@ -92,6 +98,14 @@ struct ProfileView: View {
         do {
             if let fetchedUserProfile = try dbManager.fetchUserProfileByUsername(username: "Snow White") {
                 self.userProfile = fetchedUserProfile
+                self.userRewards = fetchedUserProfile.rewardsArray.compactMap { rewardName in
+                    do {
+                        return try dbManager.fetchRewardDetails(name: rewardName)
+                    } catch {
+                        print("Error fetching reward details for \(rewardName): \(error)")
+                        return nil
+                    }
+                }
             } else {
                 print("User profile not found.")
             }
@@ -100,6 +114,15 @@ struct ProfileView: View {
         }
     }
 }
+
+extension Array {
+    func chunked(into size: Int) -> [[Element]] {
+        stride(from: 0, to: count, by: size).map {
+            Array(self[$0 ..< Swift.min($0 + size, count)])
+        }
+    }
+}
+
 
 #Preview {
     ProfileView(presentSideMenu: .constant(true))

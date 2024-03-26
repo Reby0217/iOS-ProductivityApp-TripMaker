@@ -8,15 +8,13 @@
 import Foundation
 
 struct Route {
-    let routeID: UUID
-    let name: String
-    let locationArray: [UUID]
+    let name: String // Primary key
+    let locationNames: [String] // Array of Location names
     let mapPicture: String
 }
 
 struct Location {
-    let name: String
-    let locationID: UUID
+    let name: String // Primary key and unique
     let realPicture: String
     var tagsArray: [String]
     let description: String
@@ -24,8 +22,7 @@ struct Location {
 }
 
 struct Reward {
-    let rewardID: UUID
-    let name: String
+    let name: String // Primary key and unique
     let picture: String
     let isClaimed: Bool
 }
@@ -41,11 +38,11 @@ struct UserProfile {
     let userID: UUID
     let username: String
     let image: String
-    let routeArray: [UUID]
+    let routeArray: [String] // Route names
     let focusSession: [UUID]
     let dayTotal: Int
     let weekTotal: Int
     let monthTotal: Int
     let yearTotal: Int
-    let rewardsArray: [UUID]
+    let rewardsArray: [String] // Reward names
 }

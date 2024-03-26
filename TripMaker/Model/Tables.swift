@@ -10,8 +10,7 @@ import SQLite
 
 struct RouteTable {
     let table = Table("routes")
-    let routeID = Expression<UUID>("routeID") // primary key
-    let name = Expression<String>("name")
+    let name = Expression<String>("name") // primary key
     let mapPicture = Expression<String>("mapPicture")
 }
 

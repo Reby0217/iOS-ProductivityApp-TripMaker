@@ -19,6 +19,10 @@ struct Urls: Codable {
     }
 }
 
+struct WikipediaResponse: Decodable {
+    let extract: String
+}
+
 @Observable
 class ModelData {
     var finished = false
@@ -36,31 +40,36 @@ class ModelData {
     
     let authString = "pPxiEaowEXFSgmLexE1QbvWaDL2AegFje6OHZbv9aHA"
     
+    let wikiBaseURL = "https://en.wikipedia.org/api/rest_v1/page/summary/"
+    
+    
 //    let authString = "aTMxKAZwBPS8eLOk2WRJFJMSCkTX5_zxTGiHmuhEHG0"
     
     init() {
-          db = DBManager.shared
-          
-          download(urlString: httpString) { [weak self] imageString in
-              guard let self = self, let imageString = imageString else {
-                  print("Failed to download image.")
-                  return
-              }
-              
-              DispatchQueue.main.async {
-                  self.image = imageString
-                  
-                  do {
-                      try self.db.addLocationToRoute(routeName: "Taiwan", name: self.locationName, realPicture: self.image!, description: "", isLocked: false)
-                      print("Location added with name: \(self.locationName)")
-                  } catch {
-                      print("Database operation error: \(error)")
-                  }
-                  
-                  self.finished = true
-              }
-          }
-      }
+        db = DBManager.shared
+        
+        download(urlString: httpString) { [weak self] imageString in
+            guard let self = self, let imageString = imageString else {
+                print("Failed to download image.")
+                return
+            }
+            
+            DispatchQueue.main.async {
+                self.image = imageString
+                
+                do {
+                    try self.db.addLocationToRoute(routeName: "Taiwan", name: self.locationName, realPicture: self.image!, description: "", isLocked: false)
+                    print("Location added with name: \(self.locationName)")
+                } catch {
+                    print("Database operation error: \(error)")
+                }
+                
+                self.finished = true
+            }
+        }
+        
+        fetchLocationDescription(for: "Taipei 101")
+    }
 
     func download(urlString: String, completion: @escaping (String?) -> Void) {
         guard let url = URL(string: urlString) else {
@@ -117,4 +126,47 @@ class ModelData {
             }
         }.resume()
     }
+    
+    func fetchLocationDescription(for title: String) {
+        let formattedTitle = title.replacingOccurrences(of: " ", with: "_")
+        let entireUrl = wikiBaseURL + formattedTitle
+        
+        guard let url = URL(string: entireUrl) else {
+            print("Invalid URL.")
+            return
+        }
+        
+        let task = URLSession.shared.dataTask(with: url) { data, response, error in
+            if let error = error {
+                print("Error occurred during download: \(error.localizedDescription)")
+                return
+            }
+            
+            guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+                print("Invalid response from server.")
+                return
+            }
+            
+            guard let data = data else {
+                print("No data received from server.")
+                return
+            }
+            
+            do {
+                let decoder = JSONDecoder()
+                let wikiResponse = try decoder.decode(WikipediaResponse.self, from: data)
+                let sentencesArray = wikiResponse.extract.components(separatedBy: ". ").prefix(3)
+                var sentences = sentencesArray.joined(separator: ". ")
+                if let lastSentence = sentencesArray.last, !lastSentence.hasSuffix(".") {
+                    sentences += "."
+                }
+                print("Description for \(title)")
+                print(sentences)
+            } catch {
+                print("Error during decode JSON: \(error.localizedDescription)")
+            }
+        }
+        task.resume()
+    }
+    
 }

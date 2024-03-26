@@ -128,7 +128,7 @@ extension DBManager {
         let query = rewardTable.table
         let rewards = try db?.prepare(query)
         for reward in rewards! {
-            print("Reward ID: \(reward[rewardTable.name]), Name: \(reward[rewardTable.name]), Is Claimed: \(reward[rewardTable.isClaimed])\n")
+            print("Reward Name: \(reward[rewardTable.name]), Is Claimed: \(reward[rewardTable.isClaimed])\n")
             
 //            print("Picture: \(reward[rewardTable.picture])\n")
         }

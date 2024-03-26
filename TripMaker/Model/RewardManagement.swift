@@ -86,7 +86,6 @@ extension DBManager {
     - Returns: void
     */
     func claimReward(userID: UUID, rewardName: String) throws {
-        // Note: This function assumes userRewardTable has been updated to reflect the name-based schema.
         let insert = userRewardTable.table.insert(
             userRewardTable.userID <- userID,
             userRewardTable.reward <- rewardName

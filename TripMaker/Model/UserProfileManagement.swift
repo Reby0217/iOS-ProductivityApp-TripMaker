@@ -93,6 +93,35 @@ extension DBManager {
         )
     }
     
+    /**
+     - Description: Fetches a user profile by username.
+     - Returns: A UserProfile object containing the user's profile details and associated data, or nil if the user is not found.
+     */
+     func fetchUserProfileByUsername(username: String) throws -> UserProfile? {
+         let query = userProfileTable.table.filter(userProfileTable.username == username)
+         guard let user = try db?.pluck(query) else {
+             throw NSError(domain: "User Not Found!", code: 404, userInfo: nil)
+         }
+
+         let userID = user[userProfileTable.userID]
+         let routeNames = try fetchRoutesForUser(userID: userID)
+         let focusSessionIDs = try fetchFocusSessionsForUser(userID: userID)
+         let rewardNames = try fetchRewardsForUser(userID: userID)
+
+         return UserProfile(
+             userID: userID,
+             username: username,
+             image: user[userProfileTable.image],
+             routeArray: routeNames,
+             focusSession: focusSessionIDs,
+             dayTotal: user[userProfileTable.dayTotal],
+             weekTotal: user[userProfileTable.weekTotal],
+             monthTotal: user[userProfileTable.monthTotal],
+             yearTotal: user[userProfileTable.yearTotal],
+             rewardsArray: rewardNames
+         )
+     }
+    
     
     /**
     - Description: Fetches the user's statistics, including the total focus time over days, weeks, months, and years for the user identified by userID.

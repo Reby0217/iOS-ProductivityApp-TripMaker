@@ -9,7 +9,10 @@ import SwiftUI
 
 struct ProfileView: View {
     @Binding var presentSideMenu: Bool
-    
+    @State private var userProfile: UserProfile?
+
+    let dbManager = DBManager.shared
+
     var body: some View {
         ZStack {
             LinearGradient(gradient: Gradient(colors: [Color.blue.opacity(0.3), Color.purple.opacity(0.3), Color.pink.opacity(0.3)]), startPoint: .topLeading, endPoint: .bottomTrailing)
@@ -29,32 +32,35 @@ struct ProfileView: View {
                         Spacer()
                     }
                     .padding(.horizontal)
-
                     
-                    VStack {
-                        Image(dummyUserProfile.image)
-                            .resizable()
-                            .aspectRatio(contentMode: .fill)
-                            .frame(width: 150, height: 150)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 150)
-                                    .stroke(.purple.opacity(0.7), lineWidth: 6)
-                            )
-                            .cornerRadius(150)
-                            .padding(.top, 20)
-                        Text(dummyUserProfile.username)
+                    if let userProfile = userProfile {
+                        VStack {
+                            imageFromString(userProfile.image)?
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                                .frame(width: 150, height: 150)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 150)
+                                        .stroke(.purple.opacity(0.7), lineWidth: 6)
+                                )
+                                .cornerRadius(150)
+                                .padding(.top, 20)
+                            Text(userProfile.username)
+                                .font(.title)
+                                .fontWeight(.bold)
+                        }
+                        .frame(maxWidth: .infinity)
+                        .padding(.bottom, 20)
+                    } else {
+                        Text("Loading profile...")
                             .font(.title)
-                            .fontWeight(.bold)
                     }
-                    .frame(maxWidth: .infinity)
-                    .padding(.bottom, 20)
                     
                     // Achievements section aligned left
                     Text("My Achievements")
                         .font(Font.custom("Noteworthy", size: 28))
                         .padding(.leading)
-
-                    // Rewards list
+                    
                     ForEach(dummyRewards, id: \.name) { reward in
                         VStack {
                             imageFromString(reward.picture)?
@@ -76,6 +82,21 @@ struct ProfileView: View {
                 }
                 .padding(.horizontal)
             }
+        }
+        .onAppear {
+            fetchUserProfile()
+        }
+    }
+    
+    private func fetchUserProfile() {
+        do {
+            if let fetchedUserProfile = try dbManager.fetchUserProfileByUsername(username: "Snow White") {
+                self.userProfile = fetchedUserProfile
+            } else {
+                print("User profile not found.")
+            }
+        } catch {
+            print("Error fetching user profile: \(error)")
         }
     }
 }

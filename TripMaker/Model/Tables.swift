@@ -16,9 +16,8 @@ struct RouteTable {
 
 struct LocationTable {
     let table = Table("locations")
-    let locationID = Expression<UUID>("locationID")
-    let routeID = Expression<UUID>("routeID") // foreign key
-    let name = Expression<String>("name")
+    let route = Expression<String>("route") // foreign key
+    let name = Expression<String>("name") // primary key
     let realPicture = Expression<String>("realPicture")
     let description = Expression<String>("description")
     let isLocked = Expression<Bool>("isLocked")
@@ -26,15 +25,13 @@ struct LocationTable {
 
 struct TagTable {
     let table = Table("tags")
-    let tagID = Expression<UUID>("tagID") // primary key
-    let locationID = Expression<UUID>("locationID") // foreign key
-    let tag = Expression<String>("tag")
+    let location = Expression<String>("location") // foreign key
+    let tag = Expression<String>("tag") // primary key
 }
 
 struct RewardTable {
     let table = Table("rewards")
-    let rewardID = Expression<UUID>("rewardID") // primary key
-    let name = Expression<String>("name")
+    let name = Expression<String>("name") // primary key
     let picture = Expression<String>("picture")
     let isClaimed = Expression<Bool>("isClaimed")
 }
@@ -50,7 +47,7 @@ struct FocusSessionTable {
 struct LocationVisitedTable {
     let table = Table("locationVisited")
     let focusSessionID = Expression<UUID>("focusSessionID") // foreign key
-    let locationID = Expression<UUID>("locationID") // foreign key
+    let location = Expression<String>("location") // foreign key
 }
 
 struct UserProfileTable {
@@ -67,11 +64,11 @@ struct UserProfileTable {
 struct UserRouteTable {
     let table = Table("userRoute")
     let userID = Expression<UUID>("userID") // foreign key
-    let routeID = Expression<UUID>("routeID") // foreign key
+    let route = Expression<String>("route") // foreign key
 }
 
 struct UserRewardTable {
     let table = Table("userRewards")
     let userID = Expression<UUID>("userID") // foreign key
-    let rewardID = Expression<UUID>("rewardID") // foreign key
+    let reward = Expression<String>("reward") // foreign key
 }

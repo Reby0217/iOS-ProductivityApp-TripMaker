@@ -42,11 +42,15 @@ class ModelData {
     
     let wikiBaseURL = "https://en.wikipedia.org/api/rest_v1/page/summary/"
     
+    var locationDescription = ""
+    
     
 //    let authString = "aTMxKAZwBPS8eLOk2WRJFJMSCkTX5_zxTGiHmuhEHG0"
     
     init() {
         db = DBManager.shared
+        
+        fetchLocationDescription(for: "Taipei 101")
         
         download(urlString: httpString) { [weak self] imageString in
             guard let self = self, let imageString = imageString else {
@@ -58,7 +62,7 @@ class ModelData {
                 self.image = imageString
                 
                 do {
-                    try self.db.addLocationToRoute(routeName: "Taiwan", name: self.locationName, realPicture: self.image!, description: "", isLocked: false)
+                    try self.db.addLocationToRoute(routeName: "Taiwan", name: self.locationName, realPicture: self.image!, description: self.locationDescription, isLocked: false)
                     print("Location added with name: \(self.locationName)")
                 } catch {
                     print("Database operation error: \(error)")
@@ -68,7 +72,6 @@ class ModelData {
             }
         }
         
-        fetchLocationDescription(for: "Taipei 101")
     }
 
     func download(urlString: String, completion: @escaping (String?) -> Void) {
@@ -160,7 +163,10 @@ class ModelData {
                 if let lastSentence = sentencesArray.last, !lastSentence.hasSuffix(".") {
                     sentences += "."
                 }
-                print("Description for \(title)")
+                
+                self.locationDescription = sentences
+                
+                print("\nDescription for \(title):")
                 print(sentences)
             } catch {
                 print("Error during decode JSON: \(error.localizedDescription)")

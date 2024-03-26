@@ -101,7 +101,7 @@ extension DBManager {
         let query = routeTable.table
         let routes = try db?.prepare(query)
         for route in routes! {
-            print("Route ID: \(route[routeTable.routeID])\n")
+            print("Route ID: \(route[routeTable.name])\n")
 //            print("Map Picture: \(route[routeTable.mapPicture])")
         }
     }
@@ -110,7 +110,7 @@ extension DBManager {
         let query = locationTable.table
         let locations = try db?.prepare(query)
         for location in locations! {
-            print("Location ID: \(location[locationTable.locationID]), Name: \(location[locationTable.name]), Description: \(location[locationTable.description]), Is Locked: \(location[locationTable.isLocked])\n")
+            print("Location ID: \(location[locationTable.name]), Name: \(location[locationTable.name]), Description: \(location[locationTable.description]), Is Locked: \(location[locationTable.isLocked])\n")
             
             print("Real Picture: \(location[locationTable.realPicture]),")
         }
@@ -120,7 +120,7 @@ extension DBManager {
         let query = tagTable.table
         let tags = try db?.prepare(query)
         for tag in tags! {
-            print("Tag ID: \(tag[tagTable.tagID]), Location ID: \(tag[tagTable.locationID]), Tag: \(tag[tagTable.tag])")
+            print("Tag ID: \(tag[tagTable.tag]), Location ID: \(tag[tagTable.location]), Tag: \(tag[tagTable.tag])")
         }
     }
     
@@ -128,7 +128,7 @@ extension DBManager {
         let query = rewardTable.table
         let rewards = try db?.prepare(query)
         for reward in rewards! {
-            print("Reward ID: \(reward[rewardTable.rewardID]), Name: \(reward[rewardTable.name]), Is Claimed: \(reward[rewardTable.isClaimed])\n")
+            print("Reward ID: \(reward[rewardTable.name]), Name: \(reward[rewardTable.name]), Is Claimed: \(reward[rewardTable.isClaimed])\n")
             
 //            print("Picture: \(reward[rewardTable.picture])\n")
         }
@@ -146,7 +146,7 @@ extension DBManager {
         let query = locationVisitedTable.table
         let visitedLocations = try db?.prepare(query)
         for visited in visitedLocations! {
-            print("Focus Session ID: \(visited[locationVisitedTable.focusSessionID]), Location ID: \(visited[locationVisitedTable.locationID])")
+            print("Focus Session ID: \(visited[locationVisitedTable.focusSessionID]), Location ID: \(visited[locationVisitedTable.location])")
         }
     }
     

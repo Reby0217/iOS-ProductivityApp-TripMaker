@@ -13,11 +13,11 @@ extension DBManager {
     - Description: Updates the list of locations visited during a focus session identified by sessionID.
     - Returns: void
     */
-    func updateVisitedLocations(sessionID: UUID, visitedLocationIDs: [UUID]) throws {
-        for locationID in visitedLocationIDs {
+    func updateVisitedLocations(sessionID: UUID, visitedLocations: [String]) throws {
+        for location in visitedLocations {
             let insert = locationVisitedTable.table.insert(
                 locationVisitedTable.focusSessionID <- sessionID,
-                locationVisitedTable.locationID <- locationID
+                locationVisitedTable.location <- location
             )
             try db?.run(insert)
         }
@@ -53,13 +53,13 @@ extension DBManager {
     
     
     /**
-        - Description: Fetches all location IDs visited during a specific focus session with given sessionID.
-        - Returns: An array of location IDs visited during the focus session. Returns an empty array if no locations are visited or in case of an error.
+        - Description: Fetches all locations visited during a specific focus session with given sessionID.
+        - Returns: An array of locations visited during the focus session. Returns an empty array if no locations are visited or in case of an error.
     */
-    func fetchVisitedLocationsForSession(sessionID: UUID) throws -> [UUID] {
+    func fetchVisitedLocationsForSession(sessionID: UUID) throws -> [String] {
         let locationsQuery = locationVisitedTable.table.filter(locationVisitedTable.focusSessionID == sessionID)
         let visitedLocationsRecords = try db?.prepare(locationsQuery)
-        return visitedLocationsRecords?.map { $0[locationVisitedTable.locationID] } ?? []
+        return visitedLocationsRecords?.map { $0[locationVisitedTable.location] } ?? []
     }
     
     

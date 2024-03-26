@@ -31,7 +31,7 @@ struct FocusSession {
     let ID: UUID
     let startTime: Date
     let endTime: Date
-    let locationVisited: [UUID]
+    let locationVisited: [String]
 }
 
 struct UserProfile {

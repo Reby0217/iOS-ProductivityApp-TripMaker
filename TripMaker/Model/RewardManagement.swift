@@ -12,37 +12,32 @@ extension DBManager {
     
     /**
     - Description: Adds a new reward to the database with a specified name and picture.
-    - Returns: The UUID of the newly created reward.
+    - Returns: void (Previously returned UUID, now unnecessary as name is the unique identifier)
     */
-    func addReward(name: String, picture: String) throws -> UUID {
-        let rewardID = UUID()
+    func addReward(name: String, picture: String, isClaimed: Bool = false) throws {
         let insert = rewardTable.table.insert(
-            rewardTable.rewardID <- rewardID,
             rewardTable.name <- name,
             rewardTable.picture <- picture,
-            rewardTable.isClaimed <- false
+            rewardTable.isClaimed <- isClaimed
         )
         try db?.run(insert)
-        return rewardID
     }
     
-    
     /**
-        - Description: Fetches a single reward identified by its UUID.
-        - Returns: A Reward object if found, otherwise nil.
-        */
-    func fetchReward(by rewardID: UUID) -> Reward? {
+    - Description: Fetches a single reward identified by its name.
+    - Returns: A Reward object if found, otherwise nil.
+    */
+    func fetchReward(by name: String) -> Reward? {
         do {
-            let query = rewardTable.table.filter(rewardTable.rewardID == rewardID)
+            let query = rewardTable.table.filter(rewardTable.name == name)
             if let rewardRow = try db?.pluck(query) {
                 return Reward(
-                    rewardID: rewardRow[rewardTable.rewardID],
                     name: rewardRow[rewardTable.name],
                     picture: rewardRow[rewardTable.picture],
                     isClaimed: rewardRow[rewardTable.isClaimed]
                 )
             } else {
-                print("No reward found with the given ID.")
+                print("No reward found with the given name.")
                 return nil
             }
         } catch {
@@ -51,54 +46,55 @@ extension DBManager {
         }
     }
     
-    
     /**
-    - Description: Retrieves the details of a specific reward by rewardID.
+    - Description: Retrieves the details of a specific reward by name.
     - Returns: A Reward object containing the details of the reward.
     */
-    func fetchRewardDetails(rewardID: UUID) throws -> Reward {
-        let query = rewardTable.table.filter(rewardTable.rewardID == rewardID)
+    func fetchRewardDetails(name: String) throws -> Reward {
+        let query = rewardTable.table.filter(rewardTable.name == name)
         guard let reward = try db?.pluck(query) else {
             throw NSError(domain: "Reward Not Found", code: 404, userInfo: nil)
         }
         return Reward(
-            rewardID: rewardID,
-            name: reward[rewardTable.name],
+            name: name,
             picture: reward[rewardTable.picture],
             isClaimed: reward[rewardTable.isClaimed]
         )
     }
     
-    
     /**
-    - Description: Updates the information of an existing reward identified by rewardID.
+    - Description: Updates the information of an existing reward identified by name.
     - Returns: void
     */
-    func updateReward(rewardID: UUID, newName: String, newPicture: String) throws {
-        let rewardToUpdate = rewardTable.table.filter(rewardTable.rewardID == rewardID)
-        try db?.run(rewardToUpdate.update(
-            rewardTable.name <- newName,
-            rewardTable.picture <- newPicture
-        ))
+    func updateReward(name: String, newName: String? = nil, newPicture: String? = nil, isClaimed: Bool? = nil) throws {
+        let rewardToUpdate = rewardTable.table.filter(rewardTable.name == name)
+        var setters: [SQLite.Setter] = []
+        if let newName = newName {
+            setters.append(rewardTable.name <- newName)
+        }
+        if let newPicture = newPicture {
+            setters.append(rewardTable.picture <- newPicture)
+        }
+        if let isClaimed = isClaimed {
+            setters.append(rewardTable.isClaimed <- isClaimed)
+        }
+        try db?.run(rewardToUpdate.update(setters))
     }
-
     
     /**
-    - Description: Allows a user to claim a reward. The reward identified by rewardID is associated with the user identified by userID.
+    - Description: Allows a user to claim a reward identified by name.
     - Returns: void
     */
-    func claimReward(userID: UUID, rewardID: UUID) throws {
+    func claimReward(userID: UUID, rewardName: String) throws {
+        // Note: This function assumes userRewardTable has been updated to reflect the name-based schema.
         let insert = userRewardTable.table.insert(
             userRewardTable.userID <- userID,
-            userRewardTable.rewardID <- rewardID
+            userRewardTable.reward <- rewardName
         )
         try db?.run(insert)
         
-        let query = rewardTable.table.filter(rewardTable.rewardID == rewardID)
-        let update = query.update(rewardTable.isClaimed <- true)
-        try db?.run(update)
+        try updateReward(name: rewardName, isClaimed: true)
     }
-    
     
     /**
     - Description: Fetches all rewards from the database.
@@ -108,25 +104,16 @@ extension DBManager {
         guard let rewards = try db?.prepare(rewardTable.table) else {
             return []
         }
-        return rewards.map { reward in
-            Reward(
-                rewardID: reward[rewardTable.rewardID],
-                name: reward[rewardTable.name],
-                picture: reward[rewardTable.picture],
-                isClaimed: reward[rewardTable.isClaimed]
-            )
-        }
+        return rewards.map { Reward(name: $0[rewardTable.name], picture: $0[rewardTable.picture], isClaimed: $0[rewardTable.isClaimed]) }
     }
-
     
     /**
-    - Description: Deletes a reward from the database using rewardID.
+    - Description: Deletes a reward from the database using its name.
     - Returns: void
     */
-    func deleteReward(rewardID: UUID) throws {
-        let rewardToDelete = rewardTable.table.filter(rewardTable.rewardID == rewardID)
+    func deleteReward(name: String) throws {
+        let rewardToDelete = rewardTable.table.filter(rewardTable.name == name)
         try db?.run(rewardToDelete.delete())
     }
-    
-    
 }
+

@@ -11,66 +11,65 @@ import SQLite
 extension DBManager {
     
     /**
-    - Description: Adds a new location to an existing route identified by routeID.
-    - Returns: A UUID that uniquely identifies the newly added location.
-    */
-    func addLocationToRoute(routeID: UUID, name: String, realPicture: String, description: String, isLocked: Bool) throws -> UUID {
-        let locationID = UUID()
+     - Description: Adds a new location to an existing route identified by route name.
+     - Returns: The name of the newly added location as it's the primary key.
+     */
+    func addLocationToRoute(routeName: String, name: String, realPicture: String, description: String, isLocked: Bool) throws {
         let insert = locationTable.table.insert(
-            locationTable.locationID <- locationID,
-            locationTable.routeID <- routeID,
+            locationTable.route <- routeName,
             locationTable.name <- name,
             locationTable.realPicture <- realPicture,
             locationTable.description <- description,
             locationTable.isLocked <- isLocked
         )
         try db?.run(insert)
-        return locationID
     }
     
-    
     /**
-    - Description: Retrieves all locations associated with a given route ID, including their tags.
-    - Returns: An array of Location objects, each representing a location on the route with its associated tags.
-    */
-    func fetchLocationsForRoute(routeID: UUID) throws -> [Location] {
+     - Description: Retrieves all locations associated with a given route name.
+     - Returns: An array of Location objects, each representing a location on the route with its associated tags.
+     */
+    func fetchLocationsForRoute(routeName: String) throws -> [Location] {
         let query = locationTable.table
-                    .join(tagTable.table, on: locationTable.table[locationTable.locationID] == tagTable.table[tagTable.locationID])
-                    .filter(locationTable.routeID == routeID)
-                    .select(locationTable.table[*], tagTable.tag)
-
-        var locations: [UUID: Location] = [:]
-
+            .join(tagTable.table, on: locationTable.name == tagTable.location)
+            .filter(locationTable.route == routeName)
+            .select(locationTable.table[*], tagTable.tag)
+        
+        var locations: [String: Location] = [:]
+        
         for row in try db!.prepare(query) {
-            let locationID = row[locationTable.locationID]
-            let tagsQuery = tagTable.table.where(tagTable.locationID == locationID).select(tagTable.tag)
+            let locationName = row[locationTable.name]
+            let tagsQuery = tagTable.table.where(tagTable.location == locationName).select(tagTable.tag)
             let tags = try db?.prepare(tagsQuery).map { $0[tagTable.tag] } ?? []
-
-            if var location = locations[locationID] {
-                location.tagsArray.append(contentsOf: tags)
-            } else {
-                locations[locationID] = Location(
-                    name: row[locationTable.name],
-                    locationID: locationID,
-                    realPicture: row[locationTable.realPicture],
-                    tagsArray: tags,
-                    description: row[locationTable.description],
-                    isLocked: row[locationTable.isLocked]
-                )
-            }
+            
+            locations[locationName] = Location(
+                name: locationName,
+                realPicture: row[locationTable.realPicture],
+                tagsArray: tags,
+                description: row[locationTable.description],
+                isLocked: row[locationTable.isLocked]
+            )
         }
-
+        
         return Array(locations.values)
     }
-
-
     
     /**
-    - Description: Updates the details of an existing location identified by locationID.
-    - Returns: void
-    */
-    func updateLocation(locationID: UUID, newName: String, newRealPicture: String, newDescription: String, newIsLocked: Bool) throws {
-        let locationToUpdate = locationTable.table.filter(locationTable.locationID == locationID)
+     - Description: Fetches all tags associated with a specific location by its name.
+     - Returns: An array of strings representing the tags associated with the location.
+     */
+    func fetchTagsForLocation(name: String) throws -> [String] {
+        let tagsQuery = tagTable.table.filter(tagTable.location == name).select(tagTable.tag)
+        let tagsRecords = try db?.prepare(tagsQuery)
+        return tagsRecords?.map { $0[tagTable.tag] } ?? []
+    }
+    
+    /**
+     - Description: Updates the details of an existing location identified by name.
+     - Returns: void
+     */
+    func updateLocation(name: String, newName: String, newRealPicture: String, newDescription: String, newIsLocked: Bool) throws {
+        let locationToUpdate = locationTable.table.filter(locationTable.name == name)
         try db?.run(locationToUpdate.update(
             locationTable.name <- newName,
             locationTable.realPicture <- newRealPicture,
@@ -79,44 +78,31 @@ extension DBManager {
         ))
     }
     
-    
     /**
-    - Description: Removes an existing location from the database.
-    - Returns: void
-    */
-    func deleteLocation(locationID: UUID) throws {
-        let locationToDelete = locationTable.table.filter(locationTable.locationID == locationID)
+     - Description: Removes an existing location from the database identified by name.
+     - Returns: void
+     */
+    func deleteLocation(name: String) throws {
+        let locationToDelete = locationTable.table.filter(locationTable.name == name)
         try db?.run(locationToDelete.delete())
     }
     
     
     /**
-    - Description: Fetches all tags associated with a specific location.
-    - Returns: An array of strings representing the tags associated with the location. Returns an empty array if no tags are found or in case of an error.
-    */
-    func fetchTagsForLocation(locationID: UUID) throws -> [String] {
-        let tagsQuery = tagTable.table.filter(tagTable.locationID == locationID).select(tagTable.tag)
-        let tagsRecords = try db?.prepare(tagsQuery)
-        return tagsRecords?.map { $0[tagTable.tag] } ?? []
-    }
-    
-    
-    /**
-    - Description: Fetches a single location's details by locationID.
+    - Description: Fetches a single location's details by location name.
     - Returns: A Location object containing the details of the location.
     */
-    func fetchLocationDetails(locationID: UUID) throws -> Location {
-        let query = locationTable.table.filter(locationTable.locationID == locationID)
+    func fetchLocationDetails(name: String) throws -> Location {
+        let query = locationTable.table.filter(locationTable.name == name)
         
         guard let location = try db?.pluck(query) else {
             throw NSError(domain: "Location Not Found!", code: 404, userInfo: nil)
         }
         
-        let tags = try fetchTagsForLocation(locationID: locationID)
-
+        let tags = try fetchTagsForLocation(name: name)
+        
         return Location(
-            name: location[locationTable.name],
-            locationID: locationID,
+            name: name,
             realPicture: location[locationTable.realPicture],
             tagsArray: tags,
             description: location[locationTable.description],
@@ -124,29 +110,26 @@ extension DBManager {
         )
     }
     
-    
     /**
-    - Description: Updates the lock status of a specific location identified by locationID.
+    - Description: Updates the lock status of a specific location identified by location name.
     - Returns: void
     */
-    func updateLocationLockStatus(locationID: UUID, isLocked: Bool) throws {
-        let location = locationTable.table.filter(locationTable.locationID == locationID)
+    func updateLocationLockStatus(name: String, isLocked: Bool) throws {
+        let location = locationTable.table.filter(locationTable.name == name)
         try db?.run(location.update(locationTable.isLocked <- isLocked))
     }
     
     
     /**
-    - Description: Adds a new tag to a location. The tag is associated with the location identified by locationID.
+    - Description: Adds a new tag to a location. The tag is associated with the location identified by location name.
     - Returns: void
     */
-    func addTagToLocation(locationID: UUID, tag: String) throws {
+    func addTagToLocation(name: String, tag: String) throws {
         let insert = tagTable.table.insert(
-            tagTable.tagID <- UUID(),
-            tagTable.locationID <- locationID,
+            tagTable.location <- name,
             tagTable.tag <- tag
         )
         try db?.run(insert)
     }
-    
-    
+
 }

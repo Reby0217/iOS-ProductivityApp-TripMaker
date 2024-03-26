@@ -34,10 +34,11 @@ extension DBManager {
     - Description: Fetches all route IDs associated with a given user with specified userID.
     - Returns: An array of UUIDs representing the route IDs associated with the user. Returns an empty array if no routes are found or in case of an error.
     */
-    func fetchRoutesForUser(userID: UUID) throws -> [UUID] {
-        let routesQuery = userRouteTable.table.filter(userRouteTable.userID == userID)
-        let routesRecords = try db?.prepare(routesQuery)
-        return routesRecords?.map { $0[userRouteTable.routeID] } ?? []
+    func fetchRoutesForUser(userID: UUID) throws -> [String] {
+        let joinQuery = userRouteTable.table.join(routeTable.table, on: userRouteTable.route == routeTable.name)
+        let filteredQuery = joinQuery.filter(userRouteTable.userID == userID)
+        let routes = try db?.prepare(filteredQuery)
+        return routes?.map { $0[routeTable.name] } ?? []
     }
     
     
@@ -46,9 +47,9 @@ extension DBManager {
     - Returns: An array of UUIDs of the focus sessions associated with the user. An empty array is returned if the user has no focus sessions or in case of an error.
     */
     func fetchFocusSessionsForUser(userID: UUID) throws -> [UUID] {
-        let focusSessionQuery = focusSessionTable.table.filter(focusSessionTable.userID == userID)
-        let focusSessionRecords = try db?.prepare(focusSessionQuery)
-        return focusSessionRecords?.map { $0[focusSessionTable.focusSessionID] } ?? []
+        let query = focusSessionTable.table.filter(focusSessionTable.userID == userID).select(focusSessionTable.focusSessionID)
+        let sessions = try db?.prepare(query)
+        return sessions?.map { $0[focusSessionTable.focusSessionID] } ?? []
     }
     
     
@@ -56,10 +57,11 @@ extension DBManager {
     - Description: Obtains all reward IDs claimed by a user with specified userID.
     - Returns: An array of UUIDs for the rewards claimed by the user. If the user has not claimed any rewards or in case of an error, an empty array is returned.
     */
-    func fetchRewardsForUser(userID: UUID) throws -> [UUID] {
-        let rewardsQuery = userRewardTable.table.filter(userRewardTable.userID == userID)
-        let rewardsRecords = try db?.prepare(rewardsQuery)
-        return rewardsRecords?.map { $0[userRewardTable.rewardID] } ?? []
+    func fetchRewardsForUser(userID: UUID) throws -> [String] {
+        let joinQuery = userRewardTable.table.join(rewardTable.table, on: userRewardTable.reward == rewardTable.name)
+        let filteredQuery = joinQuery.filter(userRewardTable.userID == userID)
+        let rewards = try db?.prepare(filteredQuery)
+        return rewards?.map { $0[rewardTable.name] } ?? []
     }
     
     
@@ -73,21 +75,21 @@ extension DBManager {
             throw NSError(domain: "User Not Found!", code: 404, userInfo: nil)
         }
         
-        let routeArray = try fetchRoutesForUser(userID: userID)
-        let focusSessionArray = try fetchFocusSessionsForUser(userID: userID)
-        let rewardsArray = try fetchRewardsForUser(userID: userID)
+        let routeNames = try fetchRoutesForUser(userID: userID)
+        let focusSessionIDs = try fetchFocusSessionsForUser(userID: userID)
+        let rewardNames = try fetchRewardsForUser(userID: userID)
         
         return UserProfile(
             userID: userID,
             username: user[userProfileTable.username],
             image: user[userProfileTable.image],
-            routeArray: routeArray,
-            focusSession: focusSessionArray,
+            routeArray: routeNames,
+            focusSession: focusSessionIDs,
             dayTotal: user[userProfileTable.dayTotal],
             weekTotal: user[userProfileTable.weekTotal],
             monthTotal: user[userProfileTable.monthTotal],
             yearTotal: user[userProfileTable.yearTotal],
-            rewardsArray: rewardsArray
+            rewardsArray: rewardNames
         )
     }
     
@@ -114,10 +116,10 @@ extension DBManager {
     - Description: Records a user's trip by associating a user with a route.
     - Returns: void
     */
-    func recordUserTrip(userID: UUID, routeID: UUID) throws {
+    func recordUserTrip(userID: UUID, routeName: String) throws {
         let insert = userRouteTable.table.insert(
             userRouteTable.userID <- userID,
-            userRouteTable.routeID <- routeID
+            userRouteTable.route <- routeName
         )
         try db?.run(insert)
     }

@@ -35,6 +35,7 @@ struct RouteRowView: View {
     
     func getStamp() -> Image? {
         if routeDetail != nil {
+            print("Route Row View \(routeDetail?.name)")
             return Image(uiImage:UIImage(named: (routeDetail?.name ?? "") + "-stamp.jpg")!)
         }
         return nil

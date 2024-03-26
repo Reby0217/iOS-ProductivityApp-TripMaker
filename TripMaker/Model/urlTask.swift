@@ -51,7 +51,7 @@ class ModelData {
                   self.image = imageString
                   
                   do {
-                      try self.db.addRoute(name: self.locationName, mapPicture: imageString)
+                      try self.db.addLocationToRoute(routeName: "Taiwan", name: self.locationName, realPicture: self.image!, description: "", isLocked: false)
                       print("Location added with name: \(self.locationName)")
                   } catch {
                       print("Database operation error: \(error)")

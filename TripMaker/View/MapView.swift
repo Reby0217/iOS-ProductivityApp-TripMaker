@@ -13,6 +13,7 @@ struct MapView: View {
     @State private var selectedMinutes = 0
     @State private var selectedSeconds = 0
     @State private var isTimePickerShown = false
+    let lightGreen = Color(UIColor(red: 0, green: 0.8, blue: 0.3, alpha: 0.8))
 
     var body: some View {
         NavigationSplitView {
@@ -81,12 +82,13 @@ struct MapView: View {
                 } label: {
                     Text("Start")
                         .padding()
-                        .background(Color.blue)
+                        .background(lightGreen)
                         .foregroundColor(Color.white)
                         .cornerRadius(8)
                         .font(Font.custom("Papyrus", size: 25))
-                        .tint(.green)
                 }
+                
+                
                 .padding(.bottom)
                 
            

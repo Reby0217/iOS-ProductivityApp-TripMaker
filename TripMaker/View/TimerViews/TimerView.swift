@@ -67,5 +67,5 @@ struct TimerView: View {
 }
 
 #Preview {
-    TimerView(routeName: "Taiwan", totalTime: 730)
+    TimerView(routeName: "Taiwan", totalTime: 5)
 }

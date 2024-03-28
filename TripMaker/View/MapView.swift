@@ -78,7 +78,8 @@ struct MapView: View {
                 Spacer()
                 
                 NavigationLink {
-                    TimerView(routeName: "Taiwan")
+                    let totalTime = TimeInterval((selectedHours * 3600) + (selectedMinutes * 60) + selectedSeconds)
+                    TimerView(routeName: "Taiwan", totalTime: totalTime)
                 } label: {
                     Text("Start")
                         .padding()

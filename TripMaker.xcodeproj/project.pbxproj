@@ -30,6 +30,7 @@
 		619359222BAAA68200541BC2 /* RewardManagement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619359212BAAA68200541BC2 /* RewardManagement.swift */; };
 		619359242BAAA68600541BC2 /* FocusSessionManagement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619359232BAAA68600541BC2 /* FocusSessionManagement.swift */; };
 		619359262BAAA68A00541BC2 /* UserProfileManagement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619359252BAAA68A00541BC2 /* UserProfileManagement.swift */; };
+		6197B38B2BB5107700C8944F /* TimePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6197B38A2BB5107700C8944F /* TimePickerView.swift */; };
 		61C355C72BA69ABA00B8FD66 /* TripMakerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61C355C62BA69ABA00B8FD66 /* TripMakerApp.swift */; };
 		61C355C92BA69ABA00B8FD66 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61C355C82BA69ABA00B8FD66 /* ContentView.swift */; };
 		61C355CB2BA69ABA00B8FD66 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61C355CA2BA69ABA00B8FD66 /* Item.swift */; };
@@ -67,6 +68,7 @@
 		619359212BAAA68200541BC2 /* RewardManagement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RewardManagement.swift; sourceTree = "<group>"; };
 		619359232BAAA68600541BC2 /* FocusSessionManagement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FocusSessionManagement.swift; sourceTree = "<group>"; };
 		619359252BAAA68A00541BC2 /* UserProfileManagement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfileManagement.swift; sourceTree = "<group>"; };
+		6197B38A2BB5107700C8944F /* TimePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimePickerView.swift; sourceTree = "<group>"; };
 		61C355C32BA69ABA00B8FD66 /* TripMaker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TripMaker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		61C355C62BA69ABA00B8FD66 /* TripMakerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripMakerApp.swift; sourceTree = "<group>"; };
 		61C355C82BA69ABA00B8FD66 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -148,6 +150,7 @@
 				61DDB61C2BABD3C900A8D1EE /* MapView.swift */,
 				61DDB61E2BABD3D000A8D1EE /* ProfileView.swift */,
 				61DDB6222BABFD9D00A8D1EE /* BarChartView.swift */,
+				6197B38A2BB5107700C8944F /* TimePickerView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -310,6 +313,7 @@
 				619359222BAAA68200541BC2 /* RewardManagement.swift in Sources */,
 				61C355C72BA69ABA00B8FD66 /* TripMakerApp.swift in Sources */,
 				4407A16C2BABB10E0047DF93 /* RouteView.swift in Sources */,
+				6197B38B2BB5107700C8944F /* TimePickerView.swift in Sources */,
 				4407A16E2BABB4170047DF93 /* RouteRowView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

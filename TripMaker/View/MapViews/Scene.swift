@@ -14,12 +14,14 @@ class MapScene: SKScene {
     var initialScaleX: CGFloat!
     var initialScaleY: CGFloat!
     var lastTouchPosition: CGPoint? // Store the last touch position
+    var annotations: [SKNode] = []
+    
     
     var background: SKSpriteNode!
     
     override func didMove(to view: SKView) {
         // Add background image
-        scene?.size = CGSize(width: 350, height: 300)
+        scene?.size = CGSize(width: 380, height: 300)
         print("init again")
         
         background = SKSpriteNode(imageNamed: "world_map.jpg")
@@ -29,6 +31,10 @@ class MapScene: SKScene {
         initialScaleY = background.yScale
         background.zPosition = -1
         addChild(background)
+        
+        let recognizer = UITapGestureRecognizer(target: self, action: #selector(tap(_:)))
+        view.addGestureRecognizer(recognizer)
+        
         //print("set background ", background)
         isUserInteractionEnabled = true
         
@@ -42,6 +48,7 @@ class MapScene: SKScene {
            
            // Store the touch position
            lastTouchPosition = touch.location(in: self)
+        print("in touches")
        }
        
        override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -53,11 +60,10 @@ class MapScene: SKScene {
            let deltaX = newTouchPosition.x - lastTouchPosition.x
            let deltaY = newTouchPosition.y - lastTouchPosition.y
            
-           let minX = -background.size.width / 2 + 350
+           let minX = -background.size.width / 2 + 380
            let maxX = background.size.width / 2
            let minY = -background.size.height / 2 + 300
            let maxY = background.size.height / 2
-           print(minX, maxX)
            
            background.position.x = max(minX, min(maxX, background.position.x + deltaX))
            background.position.y = max(minY, min(maxY, background.position.y + deltaY))
@@ -81,8 +87,8 @@ class MapScene: SKScene {
         // Set the scale of the background node
         let scaleFactor = 1 - (1 - newScale) * 0.05
         print(scaleFactor)
-        initialScaleX = max(0.23, min(1, initialScaleX * scaleFactor))
-        initialScaleY = max(0.26, min(1, initialScaleY * scaleFactor))
+        initialScaleX = max(0.23, min(0.8, initialScaleX * scaleFactor))
+        initialScaleY = max(0.26, min(0.8, initialScaleY * scaleFactor))
 
         background.xScale = initialScaleX
         background.yScale = initialScaleY
@@ -90,5 +96,25 @@ class MapScene: SKScene {
         //background.setScale(minScale)
         print(self.background)
         print("scale success ", self.background.xScale, self.background.yScale)
+    }
+    
+    @objc func tap(_ recognizer: UIGestureRecognizer) {
+        print("in")
+        let viewLocation = recognizer.location(in: self.view)
+        print(viewLocation)
+        let sceneLocation = convertPoint(fromView: viewLocation)
+        print(sceneLocation)
+            
+        for annot in annotations {
+            print(annot.frame)
+            if annot.contains(sceneLocation) {
+                print("scale?")
+                let scale = SKAction.scale(to: 0.1, duration: 0.5)
+                annot.run(scale)
+            } else {
+                let scale = SKAction.scale(to: 0.05, duration: 0.5)
+                annot.run(scale)
+            }
+        }
     }
 }

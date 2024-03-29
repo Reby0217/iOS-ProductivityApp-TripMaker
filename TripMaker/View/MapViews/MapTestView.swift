@@ -17,7 +17,7 @@ struct MapTestView: View {
     var body: some View {
         SpriteView(scene: mapScene)
             .ignoresSafeArea()
-            .frame(width: 350, height: 300) // Set the size of the map view
+            .frame(width: 380, height: 300) // Set the size of the map view
             .gesture(MagnificationGesture().onChanged { scale in
                 // Handle zooming in and out
                 

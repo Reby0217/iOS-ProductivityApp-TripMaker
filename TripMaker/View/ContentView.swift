@@ -18,7 +18,7 @@ struct ContentView: View {
     var body: some View {
         ZStack{
             TabView(selection: $selectedSideMenuTab) {
-                MapView(presentSideMenu: $presentSideMenu)
+                MapTestView(presentSideMenu: $presentSideMenu)
                     .tag(0)
                 StatsView(presentSideMenu: $presentSideMenu)
                     .tag(1)

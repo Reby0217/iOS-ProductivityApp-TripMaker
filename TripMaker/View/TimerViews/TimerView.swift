@@ -12,12 +12,14 @@ struct TimerView: View {
     var routeName: String
     var totalTime: TimeInterval
     @Environment(\.presentationMode) var presentationMode
+    @Environment(\.dismiss) var dismiss
     @State private var timeRemaining: TimeInterval
     @State private var cancelTimeRemaining: Int
     @State private var showCancelButton = true
     @State private var image: Image?
     @State private var timerSubscription: Cancellable?
     @State private var cancelTimerSubscription: Cancellable?
+    @State private var showBackButton = false
 
     init(routeName: String, totalTime: TimeInterval) {
         self.routeName = routeName
@@ -51,7 +53,17 @@ struct TimerView: View {
                 .background(Color.lightGray)
                 .foregroundColor(Color.gray)
                 .cornerRadius(10)
+                .opacity(showCancelButton ? 1 : 0)
             }
+//            if showBackButton {
+//                Button("Back to Map") {
+//                    dismiss()
+//                }
+//                .padding()
+//                .background(Color.blue)
+//                .foregroundColor(Color.white)
+//                .cornerRadius(10)
+//            }
         }
         .onAppear {
             self.startTimer()
@@ -62,13 +74,16 @@ struct TimerView: View {
             self.timerSubscription?.cancel()
             self.cancelTimerSubscription?.cancel()
         }
+        .navigationBarBackButtonHidden(!showBackButton)
     }
+
 
     private func startTimer() {
         self.timerSubscription = Timer.publish(every: 1, on: .main, in: .common).autoconnect().sink { _ in
             if self.timeRemaining > 0 {
                 self.timeRemaining -= 1
             } else {
+                self.showBackButton = true
                 self.timerSubscription?.cancel()
             }
         }

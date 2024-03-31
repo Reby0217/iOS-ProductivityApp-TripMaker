@@ -13,10 +13,11 @@ struct MapView: View {
     @State private var selectedMinutes = 0
     @State private var selectedSeconds = 0
     @State private var isTimePickerShown = false
-    let lightGreen = Color(UIColor(red: 0, green: 0.8, blue: 0.3, alpha: 0.8))
+    @State private var isNavigatingToTimer = false
+    let lightGreen = Color(UIColor(red: 0, green: 0.8, blue: 0.35, alpha: 0.8))
 
     var body: some View {
-        NavigationSplitView {
+        NavigationStack {
             VStack {
                 HStack {
                     Button(action: {
@@ -34,26 +35,26 @@ struct MapView: View {
                 Spacer()
                 
                 Image(uiImage: UIImage(named: "world_map.jpg")!)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: UIScreen.main.bounds.width * 0.8)
-                    .padding()
-                
-                Text("Set Focus Session Time")
-                    .padding(.horizontal)
-                    .font(Font.custom("Noteworthy", size: 26))
-                    .padding(.bottom, -15)
-                
-                // Time display and toggle button
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: UIScreen.main.bounds.width * 0.8)
+                                    .padding()
+                                
+                                Text("Set Focus Session Time")
+                                    .padding(.horizontal)
+                                    .font(Font.custom("Noteworthy", size: 26))
+                                    .padding(.bottom, -15)
+                                
+                                // Time display and toggle button
                 HStack {
                     Spacer()
                     
                     Text("\(selectedHours)h \(selectedMinutes)m \(selectedSeconds)s")
                         .font(Font.custom("Noteworthy", size: 26))
                         .padding(.horizontal)
-
                     
-
+                    
+                    
                     Button(action: {
                         withAnimation {
                             self.isTimePickerShown.toggle()
@@ -66,39 +67,31 @@ struct MapView: View {
                             .tint(.green)
                     }
                 }
-                
-                
 
+                .padding()
+                
                 if isTimePickerShown {
                     TimePickerView(selectedHours: $selectedHours, selectedMinutes: $selectedMinutes, selectedSeconds: $selectedSeconds)
-    //                    .transition(.slide)
                         .transition(.opacity)
                 }
                 
                 Spacer()
                 
-                NavigationLink {
-                    let totalTime = TimeInterval((selectedHours * 3600) + (selectedMinutes * 60) + selectedSeconds)
-                    TimerView(routeName: "Taiwan", totalTime: totalTime)
-                } label: {
-                    Text("Start")
-                        .padding()
-                        .background(lightGreen)
-                        .foregroundColor(Color.white)
-                        .cornerRadius(8)
-                        .font(Font.custom("Papyrus", size: 25))
+                Button("Start") {
+                    isNavigatingToTimer = true
                 }
-                
-                
+                .buttonStyle(.borderedProminent)
+                .controlSize(.large)
                 .padding(.bottom)
-                
-           
+                .tint(lightGreen)
             }
-            .padding(.horizontal, 24)
-        } detail: {
-            
+            .navigationDestination(isPresented: $isNavigatingToTimer) {
+                TimerView(
+                    routeName: "Taiwan",
+                    totalTime: TimeInterval((selectedHours * 3600) + (selectedMinutes * 60) + selectedSeconds)
+                )
+            }
         }
-        
     }
 }
 

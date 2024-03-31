@@ -39,6 +39,7 @@ struct UserProfile {
     let username: String
     let image: String
     let routeArray: [String] // Route names
+    
     let focusSession: [UUID]
     let dayTotalTime: String
     let weekTotalTime: String

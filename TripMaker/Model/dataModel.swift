@@ -15,6 +15,7 @@ class DBManager {
     var db: Connection?
 
     let routeTable = RouteTable()
+    
     let locationTable = LocationTable()
     let tagTable = TagTable()
     let rewardTable = RewardTable()

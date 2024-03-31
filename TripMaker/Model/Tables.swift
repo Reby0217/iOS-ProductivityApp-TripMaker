@@ -55,10 +55,10 @@ struct UserProfileTable {
     let userID = Expression<UUID>("userID") // primary key
     let username = Expression<String>("username")
     let image = Expression<String>("image")
-    let dayTotal = Expression<Int>("dayTotal")
-    let weekTotal = Expression<Int>("weekTotal")
-    let monthTotal = Expression<Int>("monthTotal")
-    let yearTotal = Expression<Int>("yearTotal")
+    let dayTotalTime = Expression<String>("dayTotalTime")
+    let weekTotalTime = Expression<String>("weekTotalTime")
+    let monthTotalTime = Expression<String>("monthTotalTime")
+    let yearTotalTime = Expression<String>("yearTotalTime")
 }
 
 struct UserRouteTable {

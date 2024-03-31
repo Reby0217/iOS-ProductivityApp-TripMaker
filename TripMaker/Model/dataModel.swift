@@ -68,10 +68,10 @@ class DBManager {
             t.column(userProfileTable.userID, primaryKey: true)
             t.column(userProfileTable.username)
             t.column(userProfileTable.image)
-            t.column(userProfileTable.dayTotal)
-            t.column(userProfileTable.weekTotal)
-            t.column(userProfileTable.monthTotal)
-            t.column(userProfileTable.yearTotal)
+            t.column(userProfileTable.dayTotalTime)
+            t.column(userProfileTable.weekTotalTime)
+            t.column(userProfileTable.monthTotalTime)
+            t.column(userProfileTable.yearTotalTime)
         })
         
         try db?.run(userRouteTable.table.create(ifNotExists: true) { t in

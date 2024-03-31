@@ -9,10 +9,13 @@ import SwiftUI
 import Combine
 
 struct TimerView: View {
+    let dbManager = DBManager.shared
+    
     var routeName: String
     var totalTime: TimeInterval
     @Environment(\.presentationMode) var presentationMode
     @Environment(\.dismiss) var dismiss
+    
     @State private var timeRemaining: TimeInterval
     @State private var cancelTimeRemaining: Int
     @State private var showCancelButton = true
@@ -20,6 +23,9 @@ struct TimerView: View {
     @State private var timerSubscription: Cancellable?
     @State private var cancelTimerSubscription: Cancellable?
     @State private var showBackButton = false
+    
+    @State private var focusSessionID: UUID?
+    @State private var userID: UUID?
 
     init(routeName: String, totalTime: TimeInterval) {
         self.routeName = routeName
@@ -66,6 +72,7 @@ struct TimerView: View {
 //            }
         }
         .onAppear {
+            fetchUserID()
             self.startTimer()
             self.startCancelTimer()
             self.loadImage()
@@ -79,12 +86,56 @@ struct TimerView: View {
 
 
     private func startTimer() {
+        let newSessionID = UUID() // Create a new UUID for this focus session
+        self.focusSessionID = newSessionID
+        
         self.timerSubscription = Timer.publish(every: 1, on: .main, in: .common).autoconnect().sink { _ in
             if self.timeRemaining > 0 {
                 self.timeRemaining -= 1
             } else {
                 self.showBackButton = true
                 self.timerSubscription?.cancel()
+                
+                // The timer has finished, so save the focus session to the database
+                if let userID = userID {
+                    do {
+                        let newSessionID = try self.dbManager.createFocusSession(
+                            userID: userID,
+                            startTime: Date().addingTimeInterval(-self.totalTime),
+                            duration: self.totalTime
+                        )
+                        self.focusSessionID = newSessionID
+                        self.showBackButton = true
+                        print("Save focus session with ID \(newSessionID)")
+                        
+                        // Update user stats
+                        do {
+                            try dbManager.updateUserStats(userID: userID, focusTime: self.totalTime)
+                        } catch {
+                            print("Failed to update user stats: \(error)")
+                        }
+                        
+                    } catch {
+                        print("Failed to save focus session: \(error)")
+                    }
+                } else {
+                    print("User ID is nil.")
+                }
+                
+                
+            }
+        }
+    }
+    
+    private func fetchUserID() {
+        DispatchQueue.main.async {
+            let username = "Snow White"
+            do {
+                if let userProfile = try dbManager.fetchUserProfileByUsername(username: username) {
+                    self.userID = userProfile.userID
+                }
+            } catch {
+                print("Failed to fetch user profile for '\(username)': \(error)")
             }
         }
     }
@@ -102,15 +153,15 @@ struct TimerView: View {
     
     private func loadImage() {
         DispatchQueue.main.async {
-            let db = DBManager.shared
             do {
-                let routeDetails = try db.fetchRouteDetails(route: routeName)
-                self.image = Image(uiImage: UIImage(named: routeDetails.mapPicture) ?? UIImage())
+                let routeDetails = try dbManager.fetchRouteDetails(route: routeName)
+                self.image = imageFromString(routeDetails.mapPicture)
             } catch {
                 print("Timer View Database operation failed: \(error)")
             }
         }
     }
+
 }
 
 #Preview {

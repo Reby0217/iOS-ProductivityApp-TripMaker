@@ -69,11 +69,6 @@ struct MapTestView: View {
                     
                 }
                 .frame(height: 400)
-                .popover(isPresented: .constant(true), attachmentAnchor: .point(UnitPoint(x: 300,y: 200)), arrowEdge: Edge.leading){
-                    RoutePopover(route: "Taiwan")
-                        .frame(width: 300, height: 400)
-                        .presentationCompactAdaptation(.none)
-                }
                 Spacer()
             }
         }
@@ -81,6 +76,5 @@ struct MapTestView: View {
 }
 
 #Preview {
-    //MapTestView(scene: Scene(size: CGSize(width: 300, height: 400)))
     MapTestView(presentSideMenu: .constant(true))
 }

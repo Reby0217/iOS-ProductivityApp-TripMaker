@@ -142,7 +142,6 @@ class MapScene: SKScene {
     }
     
     @objc func tap(_ recognizer: UIGestureRecognizer) {
-        print("in")
         let viewLocation = recognizer.location(in: self.view)
         print(viewLocation)
         let sceneLocation = convertPoint(fromView: viewLocation)
@@ -155,13 +154,42 @@ class MapScene: SKScene {
                 annot.selected.toggle()
                 if annot.selected {
                     annot.annotationTapped()
+                    showPopover(route: annot.route, node: annot)
                 } else {
                     annot.annotationUntapped()
                 }
             } else {
-                annot.selected = false
                 annot.annotationUntapped()
             }
         }
+    }
+    
+    private func showPopover(route: String, node: AnnotationNode) {
+        guard let sceneView = self.scene?.view else { return }
+        
+        let popoverView = RoutePopover(scene: (self.scene as! MapScene), node: node, route: route)
+        let popoverSize = CGSize(width: 200, height: 200) // Adjust size as needed
+            
+                
+        // Calculate the popover position
+        let popoverOrigin = CGPoint(x: 100, y: 50)
+                
+        // Present the popover view using a SwiftUI hosting controller
+        let hostingController = UIHostingController(rootView: popoverView)
+        hostingController.view.frame = CGRect(origin: popoverOrigin, size: popoverSize)
+        hostingController.view.tag = 123
+        
+        sceneView.addSubview(hostingController.view)
+    }
+    
+    func dismissPopover(node: AnnotationNode) {
+        guard let sceneView = self.scene?.view else { return }
+        
+        // Find the popover view using its unique tag
+        if let popoverView = sceneView.viewWithTag(123) {
+            // Remove the popover view from its superview
+            popoverView.removeFromSuperview()
+        }
+        node.annotationUntapped()
     }
 }

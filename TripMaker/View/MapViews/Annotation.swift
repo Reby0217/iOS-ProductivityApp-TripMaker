@@ -34,7 +34,7 @@ class AnnotationNode: SKNode {
         
         // Create tag label
         let tagLabel = SKLabelNode(text: routeName)
-        tagLabel.fontName = "Arial"
+        tagLabel.fontName = "Arial-BoldMT"
         tagLabel.fontSize = 250
         tagLabel.fontColor = .black
         tagLabel.position = CGPoint(x: 0, y: 420) // Position above the pin
@@ -64,36 +64,17 @@ class AnnotationNode: SKNode {
     func annotationTapped() {
         // Handle the tap event here
         print("Annotation tapped!")
-        let scale = SKAction.scale(to: min(self.scale * 1.7, 0.13), duration: 0.3)
+        let scale = SKAction.scale(to: min(self.scale * 1.7, 0.13), duration: 0.2)
         self.run(scale)
-        //showPopover()
     }
     
     func annotationUntapped() {
         // Handle the tap event here
-        print("Annotation tapped!")
-        let scale = SKAction.scale(to: self.scale, duration: 0.3)
+        print("Annotation untapped!")
+        selected = false
+        let scale = SKAction.scale(to: self.scale, duration: 0.2)
         self.run(scale)
     }
-    
-    private func showPopover() {
-            // Show a popover or perform any action when the annotation is tapped
-            // For example, you can use SwiftUI to present a popover
-            let contentView = RoutePopover(route: route)
-                    .frame(width: 300, height: 400)
-                    .presentationCompactAdaptation(.none)
-            let hostingController = UIHostingController(rootView: contentView)
-            let sceneView = self.scene?.view as? SKView
-            hostingController.modalPresentationStyle = .popover
-            hostingController.preferredContentSize = CGSize(width: 200, height: 100)
-            
-            if let popoverController = hostingController.popoverPresentationController {
-                popoverController.sourceView = sceneView
-                popoverController.sourceRect = CGRect(x: position.x, y: position.y, width: 1, height: 1)
-                popoverController.permittedArrowDirections = []
-                sceneView?.window?.rootViewController?.present(hostingController, animated: true, completion: nil)
-            }
-        }
 }
 
 extension MapScene {

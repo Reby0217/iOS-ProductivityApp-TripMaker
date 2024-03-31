@@ -7,10 +7,32 @@
 
 import SwiftUI
 
+
 struct RoutePopover: View {
+    var scene: MapScene!
+    var node: AnnotationNode!
+    
     var route: String
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        NavigationView{
+            
+            VStack {
+                Text(route)
+                
+                Spacer()
+            }
+            
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button(action: {
+                            scene.dismissPopover(node: node)
+                        }, label: {
+                            Label("", systemImage: "xmark.square")
+                        })
+                    }
+                }
+        }
     }
 }
 

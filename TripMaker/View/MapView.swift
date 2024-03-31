@@ -35,17 +35,16 @@ struct MapView: View {
                 Spacer()
                 
                 Image(uiImage: UIImage(named: "world_map.jpg")!)
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: UIScreen.main.bounds.width * 0.8)
-                                    .padding()
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: UIScreen.main.bounds.width * 0.8)
+                    .padding()
                                 
-                                Text("Set Focus Session Time")
-                                    .padding(.horizontal)
-                                    .font(Font.custom("Noteworthy", size: 26))
-                                    .padding(.bottom, -15)
+                Text("Set Focus Session Time")
+                    .padding(.horizontal)
+                    .font(Font.custom("Noteworthy", size: 26))
+                    .padding(.bottom, -15)
                                 
-                                // Time display and toggle button
                 HStack {
                     Spacer()
                     

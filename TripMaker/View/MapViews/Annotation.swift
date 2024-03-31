@@ -7,20 +7,51 @@
 
 import Foundation
 import SpriteKit
+import SwiftUI
 
 // Custom annotation node representing a pin on the map
 class AnnotationNode: SKNode {
+    var selected = false
+    var scale = 0.05
+    var route: String!
+    var relativePosition: (x: CGFloat, y: CGFloat)!
     
-    init(imageNamed: String) {
+    init(imageNamed: String, routeName: String, pos: (CGFloat, CGFloat)) {
         super.init()
+        route = routeName
+        relativePosition = pos
+        
+        // Create a container node for the pin and tag
+        let container = SKNode()
         
         let pinSprite = SKSpriteNode(imageNamed: imageNamed)
         
         //let pinSprite = SKSpriteNode(imageNamed: imageNamed)
-        addChild(pinSprite)
+        container.addChild(pinSprite)
         
         // Offset the pin so it points to the correct position
         pinSprite.position = CGPoint(x: 0, y: 10)
+        
+        // Create tag label
+        let tagLabel = SKLabelNode(text: routeName)
+        tagLabel.fontName = "Arial"
+        tagLabel.fontSize = 250
+        tagLabel.fontColor = .black
+        tagLabel.position = CGPoint(x: 0, y: 420) // Position above the pin
+        
+        // Create a rectangle frame behind the tag label
+        let frameSize = CGSize(width: tagLabel.frame.width + 300, height: tagLabel.frame.height + 220)
+        let frameRect = CGRect(origin: CGPoint(x: -frameSize.width / 2, y: -(frameSize.height - tagLabel.frame.height) / 2), size: frameSize)
+        let frameNode = SKShapeNode(rect: frameRect, cornerRadius: 5)
+        frameNode.fillColor = .white
+        frameNode.strokeColor = .black
+        frameNode.zPosition = -1
+        tagLabel.addChild(frameNode)
+        
+        container.addChild(tagLabel)
+                
+        // Add the container node to the annotation node
+        addChild(container)
         
         pinSprite.isUserInteractionEnabled = true
     }
@@ -30,25 +61,54 @@ class AnnotationNode: SKNode {
     }
     
     // Define the function to handle the tap event
-    @objc func annotationTapped() {
+    func annotationTapped() {
         // Handle the tap event here
         print("Annotation tapped!")
+        let scale = SKAction.scale(to: min(self.scale * 1.7, 0.13), duration: 0.3)
+        self.run(scale)
+        //showPopover()
     }
+    
+    func annotationUntapped() {
+        // Handle the tap event here
+        print("Annotation tapped!")
+        let scale = SKAction.scale(to: self.scale, duration: 0.3)
+        self.run(scale)
+    }
+    
+    private func showPopover() {
+            // Show a popover or perform any action when the annotation is tapped
+            // For example, you can use SwiftUI to present a popover
+            let contentView = RoutePopover(route: route)
+                    .frame(width: 300, height: 400)
+                    .presentationCompactAdaptation(.none)
+            let hostingController = UIHostingController(rootView: contentView)
+            let sceneView = self.scene?.view as? SKView
+            hostingController.modalPresentationStyle = .popover
+            hostingController.preferredContentSize = CGSize(width: 200, height: 100)
+            
+            if let popoverController = hostingController.popoverPresentationController {
+                popoverController.sourceView = sceneView
+                popoverController.sourceRect = CGRect(x: position.x, y: position.y, width: 1, height: 1)
+                popoverController.permittedArrowDirections = []
+                sceneView?.window?.rootViewController?.present(hostingController, animated: true, completion: nil)
+            }
+        }
 }
 
 extension MapScene {
     func addAnnotations() {
         // Create and add annotation nodes
-        let annotation1 = AnnotationNode(imageNamed: "pin.jpg")
+        let annotation1 = AnnotationNode(imageNamed: "pin.jpg", routeName: "Test", pos: (100 - frame.size.width / 2, 100 - frame.size.height / 2))
         annotation1.setScale(0.05)
         annotation1.position = CGPoint(x: 100, y: 100)
         addChild(annotation1)
         annotation1.isUserInteractionEnabled = true
         annotations.append(annotation1)
             
-        let annotation2 = AnnotationNode(imageNamed: "pin.jpg")
+        let annotation2 = AnnotationNode(imageNamed: "pin.jpg", routeName: "Taiwan", pos: (340 - frame.size.width / 2, 177 - frame.size.height / 2))
         annotation2.setScale(0.05)
-        annotation2.position = CGPoint(x: 310, y: 170)
+        annotation2.position = CGPoint(x: 340, y: 177)
         addChild(annotation2)
         annotation2.isUserInteractionEnabled = true
         annotations.append(annotation2)

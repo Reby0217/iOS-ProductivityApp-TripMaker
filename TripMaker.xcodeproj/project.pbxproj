@@ -27,6 +27,7 @@
 		4407A1962BB625580047DF93 /* MapTestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4407A1952BB625580047DF93 /* MapTestView.swift */; };
 		4407A1982BB625910047DF93 /* Scene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4407A1972BB625910047DF93 /* Scene.swift */; };
 		4407A19A2BB6490A0047DF93 /* Annotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4407A1992BB6490A0047DF93 /* Annotation.swift */; };
+		44DFB17D2BB9EDF500597D6C /* RoutePopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44DFB17C2BB9EDF500597D6C /* RoutePopover.swift */; };
 		613381E02BA69EA900DB71AC /* Tables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613381DF2BA69EA900DB71AC /* Tables.swift */; };
 		613381E32BA69F0800DB71AC /* SQLite in Frameworks */ = {isa = PBXBuildFile; productRef = 613381E22BA69F0800DB71AC /* SQLite */; };
 		613381EE2BA6B38100DB71AC /* dataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613381ED2BA6B38100DB71AC /* dataModel.swift */; };
@@ -71,6 +72,7 @@
 		4407A1952BB625580047DF93 /* MapTestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapTestView.swift; sourceTree = "<group>"; };
 		4407A1972BB625910047DF93 /* Scene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scene.swift; sourceTree = "<group>"; };
 		4407A1992BB6490A0047DF93 /* Annotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Annotation.swift; sourceTree = "<group>"; };
+		44DFB17C2BB9EDF500597D6C /* RoutePopover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutePopover.swift; sourceTree = "<group>"; };
 		613381DF2BA69EA900DB71AC /* Tables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tables.swift; sourceTree = "<group>"; };
 		613381ED2BA6B38100DB71AC /* dataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dataModel.swift; sourceTree = "<group>"; };
 		6193591B2BAAA66900541BC2 /* TableManagement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableManagement.swift; sourceTree = "<group>"; };
@@ -132,6 +134,7 @@
 				4407A18B2BB5B1ED0047DF93 /* CustomMapView.swift */,
 				4407A1952BB625580047DF93 /* MapTestView.swift */,
 				4407A1992BB6490A0047DF93 /* Annotation.swift */,
+				44DFB17C2BB9EDF500597D6C /* RoutePopover.swift */,
 				4407A1972BB625910047DF93 /* Scene.swift */,
 				4407A18D2BB5B2EE0047DF93 /* CustomMapOverlay.swift */,
 			);
@@ -341,6 +344,7 @@
 				4407A19A2BB6490A0047DF93 /* Annotation.swift in Sources */,
 				61C355C72BA69ABA00B8FD66 /* TripMakerApp.swift in Sources */,
 				4407A1962BB625580047DF93 /* MapTestView.swift in Sources */,
+				44DFB17D2BB9EDF500597D6C /* RoutePopover.swift in Sources */,
 				4407A16C2BABB10E0047DF93 /* RouteView.swift in Sources */,
 				4407A16E2BABB4170047DF93 /* RouteRowView.swift in Sources */,
 			);

@@ -11,8 +11,9 @@ import SpriteKit
 
 
 class MapScene: SKScene {
+    var scale = 0.3
     var lastTouchPosition: CGPoint? // Store the last touch position
-    var annotations: [SKNode] = []
+    var annotations: [AnnotationNode] = []
     
     
     var background: SKSpriteNode!
@@ -20,13 +21,13 @@ class MapScene: SKScene {
     
     override func didMove(to view: SKView) {
         // Add background image
-        scene?.size = CGSize(width: 380, height: 300)
+        scene?.size = CGSize(width: 390, height: 310)
         print("init again")
         
         background = SKSpriteNode(imageNamed: "world_map.jpg")
         background.position = CGPoint(x: view.frame.width / 2, y: view.frame.height / 2)
         //background.scale(to: self.size) // Scale the background to fit the scene
-        background.setScale(0.26)
+        background.setScale(scale)
         background.zPosition = -1
         addChild(background)
         
@@ -63,11 +64,23 @@ class MapScene: SKScene {
            let maxX = background.size.width / 2
            let minY = -background.size.height / 2 + frame.size.height
            let maxY = background.size.height / 2
+           //let newPosition = CGPoint(x: max(minX, min(maxX, background.position.x + deltaX)), y: max(minY, min(maxY, background.position.y + deltaY)))
+           
+           //let moveAction = SKAction.move(to: newPosition, duration: 0.1)
+           //background.run(moveAction)
            
            background.position.x = max(minX, min(maxX, background.position.x + deltaX))
            background.position.y = max(minY, min(maxY, background.position.y + deltaY))
            
            print(background.position)
+           
+           for annot in annotations {
+               let newPosX = (background.xScale / 0.3) * annot.relativePosition.x + background.position.x
+               let newPosY = (background.yScale / 0.3) * annot.relativePosition.y + background.position.y
+               let newPosition = CGPoint(x: newPosX, y: newPosY)
+               let moveAction = SKAction.move(to: newPosition, duration: 0.01)
+               annot.run(moveAction)
+           }
            
            // Update the last touch position
            self.lastTouchPosition = newTouchPosition
@@ -96,9 +109,6 @@ class MapScene: SKScene {
         let newPosition = CGPoint(x: newPosX, y: newPosY)
         print(background)
         print("scale: ", newScale)
-        print("minX: ", minX, "; maxX: ", maxX)
-        print("new position: ", newPosX, newPosY)
-        print("old position: ", background.position)
 
         // Create the move action to adjust the position
         let moveAction = SKAction.move(to: newPosition, duration: 0.3)
@@ -110,14 +120,25 @@ class MapScene: SKScene {
         background.run(groupAction)
         
         
-        
         for annot in annotations {
-            let scale = SKAction.scale(to: max(min(newScale / 0.26 * 0.05, 0.1), 0.05), duration: 0.3)
-            annot.run(scale)
+            let scale = max(min(newScale / scale * 0.05, 0.1), 0.05)
+            let scaleAction = SKAction.scale(to: scale, duration: 0.3)
+            annot.scale = scale
+            
+            let newPosX_a = (newScale / 0.3) * annot.relativePosition.x + newPosX
+            let newPosY_a = (newScale / 0.3) * annot.relativePosition.y + newPosY
+            let newPosition = CGPoint(x: newPosX_a, y: newPosY_a)
+            let moveAction = SKAction.move(to: newPosition, duration: 0.3)
+            
+            // Group the scaling and moving actions
+            let groupAction = SKAction.group([scaleAction, moveAction])
+
+            // Run the group action on the background node
+            annot.run(groupAction)
         }
         
-        print(self.background)
-        print("scale success ", self.background.xScale, self.background.yScale)
+        //print(self.background)
+        //print("scale success ", self.background.xScale, self.background.yScale)
     }
     
     @objc func tap(_ recognizer: UIGestureRecognizer) {
@@ -131,12 +152,15 @@ class MapScene: SKScene {
             print(annot.frame)
             print(annot)
             if annot.contains(sceneLocation) {
-                print("scale?")
-                let scale = SKAction.scale(to: 0.1, duration: 0.5)
-                annot.run(scale)
+                annot.selected.toggle()
+                if annot.selected {
+                    annot.annotationTapped()
+                } else {
+                    annot.annotationUntapped()
+                }
             } else {
-                let scale = SKAction.scale(to: 0.05, duration: 0.5)
-                annot.run(scale)
+                annot.selected = false
+                annot.annotationUntapped()
             }
         }
     }

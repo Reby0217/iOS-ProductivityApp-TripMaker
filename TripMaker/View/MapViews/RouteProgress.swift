@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct RouteProgress: View {
-    var routeCompletions: [Double] = [0, 0.1, 0.35, 0.6, 0.8, 1.0]
+    let routeCompletions: [Double] = [0, 0.15, 0.4, 0.65, 0.85, 1.0]
     @State var currentProgress: Double = 0
     
         
@@ -19,14 +19,14 @@ struct RouteProgress: View {
             // Background image
             Image("taiwan-attractions-map")
                 .resizable()
+                .frame(width: 400, height: 500)
                 .scaledToFit()
                 
             // Curved progress bar
             GeometryReader { geometry in
-                let startPoint = CGPoint(x: geometry.size.width - 70, y: geometry.size.height - 570)
-                let endPoint = CGPoint(x: geometry.size.width - 210, y: geometry.size.height - 160)
-                //let controlPoint = CGPoint(x: geometry.size.width - 340, y: geometry.size.height - 360)
-                let controlPoint = calculateControlPoint(start: startPoint, end: endPoint, factor: 230)
+                let startPoint = CGPoint(x: geometry.size.width - 70, y: geometry.size.height - 440)
+                let endPoint = CGPoint(x: geometry.size.width - 215, y: geometry.size.height - 50)
+                let controlPoint = calculateControlPoint(start: startPoint, end: endPoint, factor: 200)
                 
                 Path { path in
                     // Define the path of the route
@@ -38,14 +38,15 @@ struct RouteProgress: View {
                 .stroke(Color.gray.opacity(0.8), lineWidth: 10)
                 
             }
+            .frame(width: 400, height: 500)
             
             var currentPoint = CGPoint(x: 330, y: 185)
             ForEach(0..<Int(currentProgress*1000 + 1)){ index in
                 GeometryReader { geometry in
 
-                    let startPoint = CGPoint(x: geometry.size.width - 70, y: geometry.size.height - 570)
-                    let endPoint = CGPoint(x: geometry.size.width - 210, y: geometry.size.height - 160)
-                    let controlPoint = calculateControlPoint(start: startPoint, end: endPoint, factor: 230)
+                    let startPoint = CGPoint(x: geometry.size.width - 70, y: geometry.size.height - 440)
+                    let endPoint = CGPoint(x: geometry.size.width - 215, y: geometry.size.height - 50)
+                    let controlPoint = calculateControlPoint(start: startPoint, end: endPoint, factor: 200)
                     
                     
                     Path { path in
@@ -69,19 +70,17 @@ struct RouteProgress: View {
                         }
                     }
                     .stroke(Color.purple, lineWidth: 8)
-                    
-                    
                 }
+                .frame(width: 400, height: 500)
             }
             
             
             // Draw circles for each progress value
             ForEach(routeCompletions.indices, id: \.self) { index in
                 GeometryReader { geometry in
-                    let startPoint = CGPoint(x: geometry.size.width - 70, y: geometry.size.height - 570)
-                    let endPoint = CGPoint(x: geometry.size.width - 210, y: geometry.size.height - 160)
-                    //let controlPoint = CGPoint(x: geometry.size.width - 340, y: geometry.size.height - 360)
-                    let controlPoint = calculateControlPoint(start: startPoint, end: endPoint, factor: 230)
+                    let startPoint = CGPoint(x: geometry.size.width - 70, y: geometry.size.height - 440)
+                    let endPoint = CGPoint(x: geometry.size.width - 215, y: geometry.size.height - 50)
+                    let controlPoint = calculateControlPoint(start: startPoint, end: endPoint, factor: 200)
                     
                     Circle()
                         .fill(Color.white)
@@ -91,6 +90,7 @@ struct RouteProgress: View {
                             endPoint: endPoint,
                             progress: self.routeCompletions[index]))
                 }
+                .frame(width: 400, height: 500)
             }
         }
     }

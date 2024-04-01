@@ -10,6 +10,12 @@ import SwiftUI
 struct RouteProgress: View {
     let routeCompletions: [Double] = [0, 0.15, 0.4, 0.65, 0.85, 1.0]
     @State var currentProgress: Double = 0
+    @State var width: CGFloat = 400
+    @State var height: CGFloat = 500
+    
+    var startPoint: (CGPoint) {CGPoint(x: width - 70, y: height - 440)}
+    var endPoint: (CGPoint) {CGPoint(x: width - 215, y: height - 50)}
+    var controlPoint: (CGPoint) {calculateControlPoint(start: startPoint, end: endPoint, factor: 200)}
     
         
     var body: some View {
@@ -24,9 +30,6 @@ struct RouteProgress: View {
                 
             // Curved progress bar
             GeometryReader { geometry in
-                let startPoint = CGPoint(x: geometry.size.width - 70, y: geometry.size.height - 440)
-                let endPoint = CGPoint(x: geometry.size.width - 215, y: geometry.size.height - 50)
-                let controlPoint = calculateControlPoint(start: startPoint, end: endPoint, factor: 200)
                 
                 Path { path in
                     // Define the path of the route
@@ -38,17 +41,13 @@ struct RouteProgress: View {
                 .stroke(Color.gray.opacity(0.8), lineWidth: 10)
                 
             }
-            .frame(width: 400, height: 500)
+            .frame(width: width, height: height)
             
             var currentPoint = CGPoint(x: 0, y: 0)
-            var point = CGPoint(x: 0, y: 0)
+            //var point_ = CGPoint(x: 0, y: 0)
+            
             ForEach(0..<Int(currentProgress*1000 + 1)){ index in
                 GeometryReader { geometry in
-
-                    let startPoint = CGPoint(x: geometry.size.width - 70, y: geometry.size.height - 440)
-                    let endPoint = CGPoint(x: geometry.size.width - 215, y: geometry.size.height - 50)
-                    let controlPoint = calculateControlPoint(start: startPoint, end: endPoint, factor: 200)
-                    
                     
                     Path { path in
                         // Define the path of the route
@@ -60,11 +59,7 @@ struct RouteProgress: View {
                         if index == 0 || index == Int(currentProgress*1000) {
                             currentPoint = newEndPoint
                             
-                            if index == Int(currentProgress*1000) {
-                                point = newEndPoint
-                            }
                         } else {
-                            
                             
                             let newControlPoint = calculateControlPoint(start: currentPoint, end: newEndPoint, factor: 1)
                             path.move(to: currentPoint) // Start point
@@ -83,10 +78,6 @@ struct RouteProgress: View {
             // Draw circles for each progress value
             ForEach(routeCompletions.indices, id: \.self) { index in
                 GeometryReader { geometry in
-                    let startPoint = CGPoint(x: geometry.size.width - 70, y: geometry.size.height - 440)
-                    let endPoint = CGPoint(x: geometry.size.width - 215, y: geometry.size.height - 50)
-                    let controlPoint = calculateControlPoint(start: startPoint, end: endPoint, factor: 200)
-                    
                     Circle()
                         .fill(Color.white)
                         .frame(width: 15, height: 15)
@@ -95,14 +86,17 @@ struct RouteProgress: View {
                             endPoint: endPoint,
                             progress: self.routeCompletions[index]))
                 }
-                .frame(width: 400, height: 500)
+                .frame(width: width, height: height)
             }
             
+            let pos = pointOnQuadraticBezier(startPoint: startPoint,
+                 controlPoint: controlPoint,
+                 endPoint: endPoint,
+                progress: currentProgress)
             LottieView(animationFileName: "WalkingAnimation", loopMode: .loop, flip: true)
-                .position(CGPoint(x: point.x, y: point.y - 50))
                 .scaleEffect(0.1)
-                //.position(CGPoint(x: point.x, y: point.y))
-                //.frame(width: 400, height: 500)
+                .position(x: pos.x, y: pos.y - 50)
+                .frame(width: width, height: height)
                     
         }
     }

@@ -26,6 +26,9 @@
 		4407A19A2BB6490A0047DF93 /* Annotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4407A1992BB6490A0047DF93 /* Annotation.swift */; };
 		44DFB17D2BB9EDF500597D6C /* RoutePopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44DFB17C2BB9EDF500597D6C /* RoutePopover.swift */; };
 		44DFB1812BBA4AE600597D6C /* RouteProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44DFB1802BBA4AE600597D6C /* RouteProgress.swift */; };
+		44DFB1842BBB0F6800597D6C /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 44DFB1832BBB0F6800597D6C /* Lottie */; };
+		44DFB1862BBB0FB500597D6C /* WalkingAnimation.json in Resources */ = {isa = PBXBuildFile; fileRef = 44DFB1852BBB0FB500597D6C /* WalkingAnimation.json */; };
+		44DFB1882BBB0FF300597D6C /* LottieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44DFB1872BBB0FF300597D6C /* LottieView.swift */; };
 		613381E02BA69EA900DB71AC /* Tables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613381DF2BA69EA900DB71AC /* Tables.swift */; };
 		613381E32BA69F0800DB71AC /* SQLite in Frameworks */ = {isa = PBXBuildFile; productRef = 613381E22BA69F0800DB71AC /* SQLite */; };
 		613381EE2BA6B38100DB71AC /* dataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613381ED2BA6B38100DB71AC /* dataModel.swift */; };
@@ -69,6 +72,8 @@
 		4407A1992BB6490A0047DF93 /* Annotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Annotation.swift; sourceTree = "<group>"; };
 		44DFB17C2BB9EDF500597D6C /* RoutePopover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutePopover.swift; sourceTree = "<group>"; };
 		44DFB1802BBA4AE600597D6C /* RouteProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteProgress.swift; sourceTree = "<group>"; };
+		44DFB1852BBB0FB500597D6C /* WalkingAnimation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = WalkingAnimation.json; sourceTree = "<group>"; };
+		44DFB1872BBB0FF300597D6C /* LottieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieView.swift; sourceTree = "<group>"; };
 		613381DF2BA69EA900DB71AC /* Tables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tables.swift; sourceTree = "<group>"; };
 		613381ED2BA6B38100DB71AC /* dataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dataModel.swift; sourceTree = "<group>"; };
 		6193591B2BAAA66900541BC2 /* TableManagement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableManagement.swift; sourceTree = "<group>"; };
@@ -100,6 +105,7 @@
 			files = (
 				613381E32BA69F0800DB71AC /* SQLite in Frameworks */,
 				4407A15F2BAA04F30047DF93 /* UnsplashPhotoPicker in Frameworks */,
+				44DFB1842BBB0F6800597D6C /* Lottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -171,6 +177,7 @@
 				61DDB61C2BABD3C900A8D1EE /* MapView.swift */,
 				61DDB61E2BABD3D000A8D1EE /* ProfileView.swift */,
 				61DDB6222BABFD9D00A8D1EE /* BarChartView.swift */,
+				44DFB1872BBB0FF300597D6C /* LottieView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -200,6 +207,7 @@
 				61C355C62BA69ABA00B8FD66 /* TripMakerApp.swift */,
 				61C355CA2BA69ABA00B8FD66 /* Item.swift */,
 				61C355CC2BA69ABB00B8FD66 /* Assets.xcassets */,
+				44DFB1852BBB0FB500597D6C /* WalkingAnimation.json */,
 				61C355CE2BA69ABB00B8FD66 /* Preview Content */,
 			);
 			path = TripMaker;
@@ -243,6 +251,7 @@
 			packageProductDependencies = (
 				613381E22BA69F0800DB71AC /* SQLite */,
 				4407A15E2BAA04F30047DF93 /* UnsplashPhotoPicker */,
+				44DFB1832BBB0F6800597D6C /* Lottie */,
 			);
 			productName = TripMaker;
 			productReference = 61C355C32BA69ABA00B8FD66 /* TripMaker.app */;
@@ -275,6 +284,7 @@
 			packageReferences = (
 				613381E12BA69F0800DB71AC /* XCRemoteSwiftPackageReference "SQLite.swift" */,
 				4407A15D2BAA04F30047DF93 /* XCRemoteSwiftPackageReference "unsplash-photopicker-ios" */,
+				44DFB1822BBB0F6700597D6C /* XCRemoteSwiftPackageReference "lottie-ios" */,
 			);
 			productRefGroup = 61C355C42BA69ABA00B8FD66 /* Products */;
 			projectDirPath = "";
@@ -291,6 +301,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				61C355D02BA69ABB00B8FD66 /* Preview Assets.xcassets in Resources */,
+				44DFB1862BBB0FB500597D6C /* WalkingAnimation.json in Resources */,
 				61C355CD2BA69ABB00B8FD66 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -303,6 +314,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4407A1662BAA41A70047DF93 /* LocationView.swift in Sources */,
+				44DFB1882BBB0FF300597D6C /* LottieView.swift in Sources */,
 				61C355C92BA69ABA00B8FD66 /* ContentView.swift in Sources */,
 				61DDB61A2BABD3A300A8D1EE /* SideMenu.swift in Sources */,
 				61DDB6182BABD3A300A8D1EE /* MenuOptionView.swift in Sources */,
@@ -554,6 +566,14 @@
 				minimumVersion = 1.3.0;
 			};
 		};
+		44DFB1822BBB0F6700597D6C /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-ios.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.4.1;
+			};
+		};
 		613381E12BA69F0800DB71AC /* XCRemoteSwiftPackageReference "SQLite.swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/stephencelis/SQLite.swift.git";
@@ -569,6 +589,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 4407A15D2BAA04F30047DF93 /* XCRemoteSwiftPackageReference "unsplash-photopicker-ios" */;
 			productName = UnsplashPhotoPicker;
+		};
+		44DFB1832BBB0F6800597D6C /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 44DFB1822BBB0F6700597D6C /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			productName = Lottie;
 		};
 		613381E22BA69F0800DB71AC /* SQLite */ = {
 			isa = XCSwiftPackageProductDependency;

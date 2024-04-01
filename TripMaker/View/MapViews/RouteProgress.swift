@@ -40,7 +40,8 @@ struct RouteProgress: View {
             }
             .frame(width: 400, height: 500)
             
-            var currentPoint = CGPoint(x: 330, y: 185)
+            var currentPoint = CGPoint(x: 0, y: 0)
+            var point = CGPoint(x: 0, y: 0)
             ForEach(0..<Int(currentProgress*1000 + 1)){ index in
                 GeometryReader { geometry in
 
@@ -58,6 +59,10 @@ struct RouteProgress: View {
                         
                         if index == 0 || index == Int(currentProgress*1000) {
                             currentPoint = newEndPoint
+                            
+                            if index == Int(currentProgress*1000) {
+                                point = newEndPoint
+                            }
                         } else {
                             
                             
@@ -92,6 +97,13 @@ struct RouteProgress: View {
                 }
                 .frame(width: 400, height: 500)
             }
+            
+            LottieView(animationFileName: "WalkingAnimation", loopMode: .loop, flip: true)
+                .position(CGPoint(x: point.x, y: point.y - 50))
+                .scaleEffect(0.1)
+                //.position(CGPoint(x: point.x, y: point.y))
+                //.frame(width: 400, height: 500)
+                    
         }
     }
     

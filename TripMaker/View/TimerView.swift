@@ -15,11 +15,10 @@ struct TimerView: View {
     var body: some View {
         VStack {
             Spacer()
-            image?
-                .resizable()
-                .scaledToFit()
-                .frame(width: UIScreen.main.bounds.width * 0.8)
-                .padding()
+            RouteProgress()
+                //.frame(width: UIScreen.main.bounds.width * 0.8)
+                //.scaledToFit()
+                //.padding()
             /*
             if let route = routeID {
                 NavigationLink {

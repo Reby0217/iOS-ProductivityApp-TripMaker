@@ -28,7 +28,7 @@ struct BarChartView: View {
             }
             .frame(height: 200)
             .padding(.trailing, 5)
-            .padding(.bottom, 20)
+            .padding(.bottom, 10)
 
             // Separator line
             Rectangle()

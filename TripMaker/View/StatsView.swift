@@ -6,10 +6,17 @@
 //
 
 import SwiftUI
+import Combine
 
 struct StatsView: View {
     @Binding var presentSideMenu: Bool
     @State private var timeframeSelection: Int = 0
+    @State private var dayStats: [CGFloat] = []
+    @State private var weekStats: [CGFloat] = []
+    @State private var yearStats: [CGFloat] = []
+
+    let dbManager = DBManager.shared
+    let username = "Snow White"
 
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
@@ -25,7 +32,7 @@ struct StatsView: View {
                 Spacer()
             }
             .padding(.horizontal)
-            
+
             VStack(alignment: .leading) {
                 HStack {
                     Spacer()
@@ -34,6 +41,7 @@ struct StatsView: View {
                         .padding(.bottom, 10)
                     Spacer()
                 }
+                
                 HStack {
                     Spacer()
                     Picker("Timeframe", selection: $timeframeSelection) {
@@ -44,49 +52,97 @@ struct StatsView: View {
                     .pickerStyle(SegmentedPickerStyle())
                     .frame(width: 250)
                     .padding()
-                    
                     Spacer()
                 }
-                 
+
 
                 HStack {
                     Spacer()
-                    BarChartView(data: getChartData(), labels: getLabels(), maxValue: getMaxValue())
-                        .frame(height: 200)
-                        .padding(.top, 50)
+                    BarChartView(
+                        data: getChartData(),
+                        labels: getLabels(),
+                        maxValue: getMaxValue()
+                    )
+                    .frame(height: 200)
+                    .padding(.top, 50)
                     Spacer()
                 }
             }
             Spacer()
         }
+        .onAppear {
+            fetchUserStats()
+        }
     }
 
-    func getChartData() -> [CGFloat] {
+    private func fetchUserStats() {
+        do {
+            if let userProfile = try dbManager.fetchUserProfileByUsername(username: username) {
+                let userID = userProfile.userID
+                let focusSessions = try dbManager.fetchFocusSessionsForUser(userID: userID)
+                let today = Calendar.current.startOfDay(for: Date())
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "HH"
+
+                var dailyData = Array(repeating: CGFloat(0), count: 24)
+                var weeklyData = Array(repeating: CGFloat(0), count: 7)
+                var yearlyData = Array(repeating: CGFloat(0), count: 12)
+
+                for session in focusSessions {
+                    let sessionDetails = try dbManager.fetchFocusSessionDetails(sessionID: session)
+                    let startTime = sessionDetails.startTime
+                    let endTime = sessionDetails.endTime
+                    let duration = CGFloat(endTime.timeIntervalSince(startTime) / 60) // Convert to minutes
+
+                    if Calendar.current.isDate(startTime, inSameDayAs: today) {
+                        let hourIndex = Int(dateFormatter.string(from: startTime))!
+                        dailyData[hourIndex] += duration
+                    }
+
+                    let weekDay = Calendar.current.component(.weekday, from: startTime) - 1
+                    weeklyData[weekDay] += duration
+
+                    let month = Calendar.current.component(.month, from: startTime) - 1
+                    yearlyData[month] += duration
+                }
+
+                dayStats = dailyData
+                weekStats = weeklyData
+                yearStats = yearlyData
+            } else {
+                print("User profile not found.")
+            }
+        } catch {
+            print("Error fetching user stats: \(error)")
+        }
+    }
+
+    private func getChartData() -> [CGFloat] {
         switch timeframeSelection {
-        case 0: // Day
-            return [5, 8, 3, 6, 1,3,5,7,7,1,8,4,0,0,0,0,2,4,0,0,0,0,0,0]
-        case 1: // Week
-            return [8, 5, 7, 6, 8, 1, 5, 10]
-        case 2: // Year
-            return [200, 250, 225, 275, 300, 232, 155, 222, 111, 332, 241, 88]
+        case 0:
+            return dayStats
+        case 1:
+            return weekStats
+        case 2:
+            return yearStats
         default:
             return []
         }
     }
 
-    func getMaxValue() -> CGFloat {
+    private func getMaxValue() -> CGFloat {
         let data = getChartData()
-        return data.max() ?? 10
+        return data.max() ?? 1
     }
-    
-    func getLabels() -> [String] {
+
+    private func getLabels() -> [String] {
         switch timeframeSelection {
         case 0:
-            return (0..<24).map { String(format: "%02d:00", $0) }
+            return (0..<24).map { "\($0):00" }
         case 1:
-            return ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
+            return Calendar.current.shortWeekdaySymbols
         case 2:
-            return ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+            return Calendar.current.shortMonthSymbols
         default:
             return []
         }

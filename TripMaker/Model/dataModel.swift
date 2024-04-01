@@ -133,6 +133,30 @@ class DBManager {
         
         try claimReward(userID: userID, rewardName: "First Reward")
         try claimReward(userID: userID, rewardName: "Second Reward")
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        let todayDate = dateFormatter.string(from: Date())
+            
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        
+        let sessionTimes = [
+//            ("2024-03-01 03:00:00", "2024-03-01 09:35:00"),
+//            ("2024-04-01 10:15:00", "2024-04-01 12:45:00"),
+//            ("2024-04-01 14:00:00", "2024-04-01 15:00:00"),
+//            ("2024-04-02 11:00:00", "2024-04-02 12:00:00"),
+//            ("2024-04-03 16:34:00", "2024-04-03 17:00:00"),
+            ("\(todayDate) 00:00:00", "\(todayDate) 01:00:00"),
+            ("\(todayDate) 02:00:00", "\(todayDate) 02:35:00"),
+            ("\(todayDate) 21:00:00", "\(todayDate) 21:42:27")
+        ]
+        
+        for (start, end) in sessionTimes {
+            if let startTime = dateFormatter.date(from: start),
+               let endTime = dateFormatter.date(from: end) {
+                let _ = try createFocusSession(userID: userID, startTime: startTime, duration: endTime.timeIntervalSince(startTime))
+            }
+        }
     }
 }
 

@@ -11,12 +11,13 @@ struct BarChartView: View {
     var data: [CGFloat]
     var labels: [String]
     var maxValue: CGFloat
+    @State private var selectedBarIndex: Int? = nil
 
     var body: some View {
-        let yAxisLabels = calculateYAxisLabels(from: maxValue).reversed()
+        let safeMaxValue = max(maxValue, 1)
+        let yAxisLabels = calculateYAxisLabels(from: safeMaxValue).reversed()
 
         HStack(alignment: .bottom) {
-            // Y-axis
             VStack {
                 ForEach(yAxisLabels, id: \.self) { label in
                     Text(label)
@@ -30,13 +31,11 @@ struct BarChartView: View {
             .padding(.trailing, 5)
             .padding(.bottom, 10)
 
-            // Separator line
             Rectangle()
                 .frame(width: 1, height: 200)
                 .foregroundColor(Color.gray)
                 .padding(.bottom, 32)
 
-            // Bar chart with ScrollView
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(alignment: .bottom, spacing: 8) {
                     ForEach(Array(zip(labels.indices, data)), id: \.0) { index, value in
@@ -44,8 +43,15 @@ struct BarChartView: View {
                             ZStack(alignment: .bottom) {
                                 Capsule().frame(width: 20, height: 200)
                                     .foregroundColor(Color(.systemGray5))
-                                Capsule().frame(width: 20, height: (value / maxValue) * 200)
-                                    .foregroundColor(Color.blue)
+                                VStack {
+                                    Text("\(String(format: "%.1f", value))")
+                                        .font(.caption)
+                                        .frame(height: 20)
+                                        .padding(.bottom, -5)
+                                        .foregroundColor(Color.black.opacity(0.8))
+                                    Capsule().frame(width: 20, height: value / safeMaxValue * 200)
+                                        .foregroundColor(Color.green)
+                                }
                             }
                             Text(labels[index])
                                 .frame(width: 50)
@@ -61,9 +67,11 @@ struct BarChartView: View {
     }
 
     func calculateYAxisLabels(from maxValue: CGFloat) -> [String] {
-        let step = maxValue / 5
-        return stride(from: 0, through: maxValue, by: step).map {
-            String(format: "%.0f", $0)
+        if maxValue <= 1 {
+            return ["0", "0.2", "0.4", "0.6", "0.8", "1.0"]
+        } else {
+            let step = maxValue / 5
+            return stride(from: 0, through: maxValue, by: step).map { String(format: "%.1f", $0) }
         }
     }
 }

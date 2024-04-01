@@ -17,7 +17,7 @@ struct MapTestView: View {
         
     var body: some View {
         ZStack {
-            Color(red: 0.7137255,green: 0.8627451, blue: 0.81176471).edgesIgnoringSafeArea(.all)
+            //Color(red: 0.7137255,green: 0.8627451, blue: 0.81176471).edgesIgnoringSafeArea(.all)
             
 
                 
@@ -39,12 +39,12 @@ struct MapTestView: View {
                 
                 NavigationSplitView {
                     ZStack {
-                        Color(red: 0.7137255,green: 0.8627451, blue: 0.81176471).edgesIgnoringSafeArea(.all)
+                        //Color(red: 0.7137255,green: 0.8627451, blue: 0.81176471).edgesIgnoringSafeArea(.all)
                         
                         VStack {
                             SpriteView(scene: mapScene ?? SKScene())
                                 .ignoresSafeArea()
-                                .frame(width: 390, height: 310) // Set the size of the map view
+                                .frame(width: 400, height: 310) // Set the size of the map view
                                 .gesture(MagnificationGesture().onChanged { scale in
                                     // Handle zooming in and out
                                     
@@ -52,8 +52,9 @@ struct MapTestView: View {
                                     
                                     currentScale = scale
                                 })
-                                .background(Color.clear)
                                 .padding(.top, 30)
+                                .padding(.bottom, 30)
+                                .background(Color(red: 0.7137255,green: 0.8627451, blue: 0.81176471).edgesIgnoringSafeArea(.all))
                             
                             Spacer()
                             

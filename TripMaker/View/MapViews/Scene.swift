@@ -24,7 +24,7 @@ class MapScene: SKScene {
     init(selectedRoute: Binding<String>, currentScale: Binding<CGFloat>) {
         self._selectedRoute = selectedRoute // Initialize the binding property
         self._currentScale = currentScale
-        super.init(size: CGSize(width: 390, height: 310))
+        super.init(size: CGSize(width: 400, height: 310))
             
         // Other setup for the SKScene
     }

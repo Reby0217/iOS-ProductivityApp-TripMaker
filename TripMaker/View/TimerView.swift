@@ -16,25 +16,10 @@ struct TimerView: View {
         VStack {
             
             RouteProgress(currentProgress: 0.3)
-                .frame(width: 400, height: 500)
+                .frame(width: 400, height: 400)
                 //.scaledToFit()
-                //.padding()
-            /*
-            if let route = routeID {
-                NavigationLink {
-                    RouteView(routeID: route)
-                } label: {
-                    Text("Tap Me")
-                        .padding()
-                        .background(Color.blue)
-                        .foregroundColor(Color.white)
-                        .cornerRadius(8)
-                }
-            } else {
-                Text("No locations available")
-                    .padding()
-            }
-             */
+                .padding()
+            
             Spacer()
         }
         .onAppear {

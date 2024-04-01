@@ -12,6 +12,8 @@ struct RouteProgress: View {
         
         var body: some View {
             ZStack {
+                Color(hex: 0xc9dedb).edgesIgnoringSafeArea(.all)
+                
                 // Background image
                 Image("taiwan-attractions-map")
                     .resizable()
@@ -21,7 +23,7 @@ struct RouteProgress: View {
                 GeometryReader { geometry in
                     Path { path in
                         // Define the path of the route
-                        path.move(to: CGPoint(x: geometry.size.width - 70, y: geometry.size.height - 550)) // Start point
+                        path.move(to: CGPoint(x: geometry.size.width - 70, y: geometry.size.height - 570)) // Start point
                         let controlPoint = CGPoint(x: geometry.size.width - 340, y: geometry.size.height - 360)
                         
                         path.addQuadCurve(to: CGPoint(x: geometry.size.width - 210, y: geometry.size.height - 160), control: controlPoint) // Curve
@@ -35,7 +37,7 @@ struct RouteProgress: View {
                         Circle()
                             .fill(Color.white)
                             .frame(width: 15, height: 15)
-                            .position(self.pointOnQuadraticBezier(startPoint: CGPoint(x: geometry.size.width - 70, y: geometry.size.height - 550),
+                            .position(self.pointOnQuadraticBezier(startPoint: CGPoint(x: geometry.size.width - 70, y: geometry.size.height - 570),
                                 controlPoint: CGPoint(x: geometry.size.width - 340, y: geometry.size.height - 360),
                                 endPoint: CGPoint(x: geometry.size.width - 210, y: geometry.size.height - 160),
                                 progress: Double(self.routeCompletions[index])))

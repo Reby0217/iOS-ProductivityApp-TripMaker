@@ -34,8 +34,8 @@ class AnnotationNode: SKNode {
         
         // Create tag label
         let tagLabel = SKLabelNode(text: routeName)
-        tagLabel.fontName = "Arial-BoldMT"
-        tagLabel.fontSize = 250
+        tagLabel.fontName = "Bradley Hand"
+        tagLabel.fontSize = 300
         tagLabel.fontColor = .black
         tagLabel.position = CGPoint(x: 0, y: 420) // Position above the pin
         

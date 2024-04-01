@@ -190,11 +190,11 @@ class MapScene: SKScene {
         guard let sceneView = self.scene?.view else { return }
         
         let popoverView = RoutePopover(scene: (self.scene as! MapScene), node: node, route: route)
-        let popoverSize = CGSize(width: 250, height: 200) // Adjust size as needed
+        let popoverSize = CGSize(width: 250, height: 250) // Adjust size as needed
             
                 
         // Calculate the popover position
-        let popoverOrigin = CGPoint(x: 70, y: 55)
+        let popoverOrigin = CGPoint(x: 75, y: 30)
                 
         // Present the popover view using a SwiftUI hosting controller
         let hostingController = UIHostingController(rootView: popoverView)

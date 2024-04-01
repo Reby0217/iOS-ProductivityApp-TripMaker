@@ -18,33 +18,42 @@ struct RoutePopover: View {
     var body: some View {
         NavigationView{
             
-            VStack {
+            VStack (spacing: 10){
                 Text(route)
+                    .font(.custom("Bradley Hand", size: 22))
+                    //.padding(.top, 15)
                 
                 Spacer()
                 
-                Text("some description ...")
+                Image("map")
+                    .resizable()
+                    .frame(width: 100, height: 100)
+                    .scaledToFit()
+
+                Text("Total Time: 10hrs")
+                    .font(.custom("Bradley Hand", size: 18))
                 
-                Spacer()
                 Spacer()
                 
                 Button(action: {
                     isSelected = true
                     scene.selectRoute(route: route)
+                    
                 }, label: {
-                    //Label("Select", systemImage: "xmark.square")
                     if isSelected {
                         Text("Select")
-                            .padding(.vertical, 10)
+                            //.padding(.vertical, 10)
                             .frame(width: 100)
                             .background(Color.gray.opacity(0.3))
                     } else {
                         Text("Select")
-                            .padding(.vertical, 10)
+                            //.padding(.vertical, 10)
                             .frame(width: 100)
                     }
                 })
-                .padding(.bottom, 20)
+                .padding(.bottom, 25)
+                
+                Spacer()
             }
             
                 .toolbar {

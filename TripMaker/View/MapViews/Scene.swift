@@ -14,14 +14,28 @@ class MapScene: SKScene {
     var scale = 0.3
     var lastTouchPosition: CGPoint? // Store the last touch position
     var annotations: [AnnotationNode] = []
+    @Binding var selectedRoute: String
+    @Binding var currentScale: CGFloat
     
     
     var background: SKSpriteNode!
     var gradientNode: SKSpriteNode!
     
+    init(selectedRoute: Binding<String>, currentScale: Binding<CGFloat>) {
+        self._selectedRoute = selectedRoute // Initialize the binding property
+        self._currentScale = currentScale
+        super.init(size: CGSize(width: 390, height: 310))
+            
+        // Other setup for the SKScene
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func didMove(to view: SKView) {
         // Add background image
-        scene?.size = CGSize(width: 390, height: 310)
+        //scene?.size = CGSize(width: 390, height: 310)
         print("init again")
         
         background = SKSpriteNode(imageNamed: "world_map.jpg")
@@ -91,12 +105,19 @@ class MapScene: SKScene {
            lastTouchPosition = nil
        }
     
-    func scaleBackground(newScale: CGFloat) {
+    func scaleBackground(scale: CGFloat) {
         guard let background = self.background else {
             return
         }
-
         
+        // Set the scale of the background node
+        
+        let scaleFactor = self.background.xScale + (scale - self.background.xScale) * 0.5
+        
+        print(scaleFactor)
+        
+        let newScale = max(min(scaleFactor, 1.0), 0.3)
+        currentScale = newScale
         let scaleAction = SKAction.scale(to: newScale, duration: 0.3)
         
         let minX = -(background.texture?.size().width)! * newScale / 2 + frame.size.width
@@ -121,7 +142,7 @@ class MapScene: SKScene {
         
         
         for annot in annotations {
-            let scale = max(min(newScale / scale * 0.05, 0.1), 0.05)
+            let scale = max(min(newScale / self.scale * 0.05, 0.1), 0.05)
             let scaleAction = SKAction.scale(to: scale, duration: 0.3)
             annot.scale = scale
             
@@ -153,6 +174,7 @@ class MapScene: SKScene {
             if annot.contains(sceneLocation) {
                 annot.selected.toggle()
                 if annot.selected {
+                    dismissPopover()
                     annot.annotationTapped()
                     showPopover(route: annot.route, node: annot)
                 } else {
@@ -168,11 +190,11 @@ class MapScene: SKScene {
         guard let sceneView = self.scene?.view else { return }
         
         let popoverView = RoutePopover(scene: (self.scene as! MapScene), node: node, route: route)
-        let popoverSize = CGSize(width: 200, height: 200) // Adjust size as needed
+        let popoverSize = CGSize(width: 250, height: 200) // Adjust size as needed
             
                 
         // Calculate the popover position
-        let popoverOrigin = CGPoint(x: 100, y: 50)
+        let popoverOrigin = CGPoint(x: 70, y: 55)
                 
         // Present the popover view using a SwiftUI hosting controller
         let hostingController = UIHostingController(rootView: popoverView)
@@ -182,7 +204,7 @@ class MapScene: SKScene {
         sceneView.addSubview(hostingController.view)
     }
     
-    func dismissPopover(node: AnnotationNode) {
+    func dismissPopover() {
         guard let sceneView = self.scene?.view else { return }
         
         // Find the popover view using its unique tag
@@ -190,6 +212,9 @@ class MapScene: SKScene {
             // Remove the popover view from its superview
             popoverView.removeFromSuperview()
         }
-        node.annotationUntapped()
+    }
+    
+    func selectRoute(route: String){
+        selectedRoute = route
     }
 }

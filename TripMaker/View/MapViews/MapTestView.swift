@@ -10,10 +10,10 @@ import SpriteKit
 
 struct MapTestView: View {
     @Binding var presentSideMenu: Bool
+    @State private var mapScene: MapScene? = nil
     
-    //var scene: SKScene
-    var mapScene = MapScene()
-    @State private var currentScale: CGFloat = 0.26
+    @State var selectedRoute: String = "Taiwan"
+    @State private var currentScale: CGFloat = 0.3
         
     var body: some View {
         ZStack {
@@ -41,36 +41,45 @@ struct MapTestView: View {
                     ZStack {
                         Color(red: 0.7137255,green: 0.8627451, blue: 0.81176471).edgesIgnoringSafeArea(.all)
                         
-                        SpriteView(scene: mapScene)
-                            .ignoresSafeArea()
-                            .frame(width: 390, height: 310) // Set the size of the map view
-                            .gesture(MagnificationGesture().onChanged { scale in
-                                // Handle zooming in and out
-                                // Set the scale of the background node
-                                
-                                let scaleFactor = mapScene.background.xScale + (scale - mapScene.background.xScale) * 0.5
-                                
-                                print(scaleFactor)
-                                //let minScale = min(scaleX, scaleY)
-                                //background.setScale(minScale)
-                                
-                                
-                                let scale = max(min(scaleFactor, 1.0), 0.3)
-                                mapScene.scaleBackground(newScale: scale)
-                                print("applied scale: ", scale)
-                                
-                                currentScale = scale
-                            })
-                            .background(Color.clear)
-                        //.padding(.vertical, 15)
-                        
+                        VStack {
+                            SpriteView(scene: mapScene ?? SKScene())
+                                .ignoresSafeArea()
+                                .frame(width: 390, height: 310) // Set the size of the map view
+                                .gesture(MagnificationGesture().onChanged { scale in
+                                    // Handle zooming in and out
+                                    
+                                    mapScene?.scaleBackground(scale: scale)
+                                    
+                                    currentScale = scale
+                                })
+                                .background(Color.clear)
+                                .padding(.top, 30)
+                            
+                            Spacer()
+                            
+                            NavigationLink {
+                                TimerView(routeName: selectedRoute)
+                            } label: {
+                                Text("Start")
+                                    .padding()
+                                    .frame(width: 300)
+                                    .background(Color.blue)
+                                    .foregroundColor(Color.white)
+                                    .cornerRadius(8)
+                            }
+                        }
                     }
                 } detail: {
                     
                 }
-                .frame(height: 400)
+                .frame(height: 600)
+                
                 Spacer()
             }
+        }
+        .onAppear {
+            // Initialize the MapScene instance
+            mapScene = MapScene(selectedRoute: $selectedRoute, currentScale: $currentScale)
         }
     }
 }

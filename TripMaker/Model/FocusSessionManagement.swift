@@ -37,6 +37,10 @@ extension DBManager {
             focusSessionTable.endTime <- startTime.addingTimeInterval(duration)
         )
         try db?.run(insert)
+        
+        // After creating a session, update user stats
+        try updateUserStats(userID: userID, focusTime: duration)
+        
         return sessionID
     }
     

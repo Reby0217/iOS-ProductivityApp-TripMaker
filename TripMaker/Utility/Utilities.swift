@@ -48,3 +48,34 @@ extension Color {
         )
     }
 }
+
+func calculateControlPoint(start: CGPoint, end: CGPoint, factor: CGFloat) -> CGPoint {
+    // Calculate midpoint
+    let midpoint = CGPoint(x: (start.x + end.x) / 2, y: (start.y + end.y) / 2)
+    
+    // Calculate adjustment vector (perpendicular to the line connecting start and end points)
+    let dx = end.x - start.x
+    let dy = end.y - start.y
+    let adjustmentVector = CGPoint(x: -dy, y: dx)
+    
+    // Normalize adjustment vector
+    let magnitude = sqrt(adjustmentVector.x * adjustmentVector.x + adjustmentVector.y * adjustmentVector.y)
+    let normalizedAdjustmentVector = CGPoint(x: adjustmentVector.x / magnitude, y: adjustmentVector.y / magnitude)
+    
+    // Scale and adjust the midpoint by the factor
+    let controlPoint = CGPoint(x: midpoint.x + normalizedAdjustmentVector.x * factor, y: midpoint.y + normalizedAdjustmentVector.y * factor)
+    
+    return controlPoint
+}
+
+// Calculate a point along a quadratic Bézier curve
+func pointOnQuadraticBezier(startPoint: CGPoint, controlPoint: CGPoint, endPoint: CGPoint, progress: Double) -> CGPoint {
+    let t = CGFloat(progress)
+    let oneMinusT = 1 - t
+    
+    // Bézier formula
+    let x = oneMinusT * oneMinusT * startPoint.x + 2 * oneMinusT * t * controlPoint.x + t * t * endPoint.x
+    let y = oneMinusT * oneMinusT * startPoint.y + 2 * oneMinusT * t * controlPoint.y + t * t * endPoint.y
+       
+    return CGPoint(x: x, y: y)
+}

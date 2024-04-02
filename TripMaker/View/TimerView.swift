@@ -15,7 +15,7 @@ struct TimerView: View {
     var body: some View {
         VStack {
             
-            RouteProgress(route: routeName, currentProgress: 0.3)
+            RouteProgress(route: routeName, currentProgress: 0.7, startPos: 5)
                 .frame(width: 400, height: 400)
                 //.scaledToFit()
                 .padding()

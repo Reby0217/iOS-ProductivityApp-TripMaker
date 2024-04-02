@@ -25,8 +25,6 @@ class AnnotationNode: SKNode {
         let container = SKNode()
         
         let pinSprite = SKSpriteNode(imageNamed: imageNamed)
-        
-        //let pinSprite = SKSpriteNode(imageNamed: imageNamed)
         container.addChild(pinSprite)
         
         // Offset the pin so it points to the correct position

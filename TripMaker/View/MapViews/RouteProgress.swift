@@ -95,7 +95,7 @@ struct RouteProgress: View {
             }
             
             
-            LottieView(animationFileName: "WalkingAnimation", loopMode: .loop, flip: true)
+            LottieView(animationFileName: "WalkingAnimation", loopMode: .loop, flip: false)
                 .scaleEffect(0.05)
                 .position(x: curPos.x, y: curPos.y - 30)
                 .frame(width: width, height: height)

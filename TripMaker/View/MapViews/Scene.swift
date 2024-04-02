@@ -11,7 +11,7 @@ import SpriteKit
 
 
 class MapScene: SKScene {
-    var scale = 0.3
+    var scale = 0.175
     var lastTouchPosition: CGPoint? // Store the last touch position
     var annotations: [AnnotationNode] = []
     @Binding var selectedRoute: String
@@ -24,7 +24,7 @@ class MapScene: SKScene {
     init(selectedRoute: Binding<String>, currentScale: Binding<CGFloat>) {
         self._selectedRoute = selectedRoute // Initialize the binding property
         self._currentScale = currentScale
-        super.init(size: CGSize(width: 400, height: 310))
+        super.init(size: CGSize(width: 400, height: 300))
             
         // Other setup for the SKScene
     }

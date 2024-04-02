@@ -25,7 +25,7 @@ struct RoutePopover: View {
                 
                 Spacer()
                 
-                Image("map")
+                Image("taiwan-route")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 100, height: 100)

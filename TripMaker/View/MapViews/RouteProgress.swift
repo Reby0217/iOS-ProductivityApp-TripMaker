@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct RouteProgress: View {
+    @State var route: String
     let routeCompletions: [Double] = [0, 0.15, 0.4, 0.65, 0.85, 1.0]
     @State var currentProgress: Double = 0
     @State var width: CGFloat = 400
@@ -17,22 +18,10 @@ struct RouteProgress: View {
     var endPoint: CGPoint {CGPoint(x: width - 215, y: height - 50)}
     var controlPoint: CGPoint {calculateControlPoint(start: startPoint, end: endPoint, factor: 200)}
     var attractions: [CGPoint] {
-        [CGPoint(x: width - 50,y: height - 300),
-         CGPoint(x: width - 150,y: height - 300),
-         CGPoint(x: width - 278,y: height - 240),
-         CGPoint(x: width - 324,y: height - 150),
-         CGPoint(x: width - 230,y: height - 94),
-         CGPoint(x: width - 212,y: height - 200),
-         CGPoint(x: width - 130,y: height - 165),
-         CGPoint(x: width - 125,y: height - 94),
-         CGPoint(x: width - 125,y: height - 30)]
+        route_attractions[route]!
     }
-    var segments: [Int: [String: CGPoint]] {
-        [1 : ["startPoint": attractions[8], "endPoint": attractions[7], "controlPoint": attractions[8]],
-         2 : ["startPoint": attractions[7], "endPoint": attractions[4], "controlPoint": attractions[7]],
-         3 : ["startPoint": attractions[4], "endPoint": CGPoint(x: width - 319, y: height - 100), "controlPoint": CGPoint(x: width - 318, y: height - 90)],
-         4 : ["startPoint": CGPoint(x: width - 317, y: height - 97), "endPoint": attractions[3], "controlPoint": CGPoint(x: width - 327, y: height - 108)],
-        ]
+    var segments: [Int: [[String: CGPoint]]] {
+        route_segments[route]!
     }
     
         
@@ -41,7 +30,7 @@ struct RouteProgress: View {
             Color(hex: 0xc9dedb).edgesIgnoringSafeArea(.all)
             
             // Background image
-            Image("taiwan-route")
+            Image(route + "-route")
                 .resizable()
                 .frame(width: width, height: height)
                 .scaledToFit()
@@ -67,16 +56,18 @@ struct RouteProgress: View {
             //var point_ = CGPoint(x: 0, y: 0)
             
             ForEach(segments.keys.sorted(), id: \.self){ key in
-                GeometryReader { geometry in
-                    
-                    Path { path in
-                        path.move(to: (segments[key]?["startPoint"])!) // Start point
-        
-                        path.addQuadCurve(to: (segments[key]?["endPoint"])!, control: (segments[key]?["controlPoint"])!) // Curve
+                ForEach(segments[key]!, id: \.self){ node in
+                    GeometryReader { geometry in
+                        
+                        Path { path in
+                            path.move(to: (node["startPoint"])!) // Start point
+                            
+                            path.addQuadCurve(to: (node["endPoint"])!, control: (node["controlPoint"])!) // Curve
+                        }
+                        .stroke(Color.purple, lineWidth: 8)
                     }
-                    .stroke(Color.purple, lineWidth: 8)
+                    .frame(width: width, height: height)
                 }
-                .frame(width: width, height: height)
             }
              
             
@@ -96,10 +87,12 @@ struct RouteProgress: View {
                  controlPoint: controlPoint,
                  endPoint: endPoint,
                 progress: currentProgress)
+            /*
             LottieView(animationFileName: "WalkingAnimation", loopMode: .loop)
                 .scaleEffect(0.1)
-                .position(x: attractions[3].x, y: attractions[3].y - 50)
+                .position(x: attractions[3].x, y: attractions[3].y)
                 .frame(width: width, height: height)
+             */
                     
         }
     }
@@ -137,5 +130,5 @@ struct RouteProgress: View {
 }
 
 #Preview {
-    RouteProgress(currentProgress: 0.5)
+    RouteProgress(route: "Taiwan", currentProgress: 0.5)
 }

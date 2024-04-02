@@ -9,6 +9,18 @@ import Foundation
 import UIKit
 import SwiftUI
 
+
+extension CGPoint: Hashable {
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(x)
+        hasher.combine(y)
+    }
+
+    static public func ==(lhs: CGPoint, rhs: CGPoint) -> Bool {
+        return lhs.x == rhs.x && lhs.y == rhs.y
+    }
+}
+
 func imageFromString(_ strPic: String) -> Image? {
     if let picImageData = Data(base64Encoded: strPic, options: .ignoreUnknownCharacters) {
         if let picImage = UIImage(data: picImageData) {

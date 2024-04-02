@@ -44,7 +44,7 @@ struct MapTestView: View {
                         VStack {
                             SpriteView(scene: mapScene ?? SKScene())
                                 .ignoresSafeArea()
-                                .frame(width: 400, height: 310) // Set the size of the map view
+                                .frame(width: 400, height: 300) // Set the size of the map view
                                 .gesture(MagnificationGesture().onChanged { scale in
                                     // Handle zooming in and out
                                     
@@ -54,7 +54,7 @@ struct MapTestView: View {
                                 })
                                 .padding(.top, 30)
                                 .padding(.bottom, 30)
-                                .background(Color(red: 0.7137255,green: 0.8627451, blue: 0.81176471).edgesIgnoringSafeArea(.all))
+                                //.background(Color(red: 0.7137255,green: 0.8627451, blue: 0.81176471).edgesIgnoringSafeArea(.all))
                             
                             Spacer()
                             

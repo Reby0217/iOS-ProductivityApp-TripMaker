@@ -27,12 +27,16 @@ struct RoutePopover: View {
                 
                 Image("map")
                     .resizable()
+                    .aspectRatio(contentMode: .fit)
                     .frame(width: 100, height: 100)
-                    .scaledToFit()
+                    .padding(.bottom, 5)
+                    //.scaledToFill()
 
-                Text("Total Time: 10hrs")
-                    .font(.custom("Bradley Hand", size: 18))
-                Stars(star: 3)
+                HStack {
+                    Text("Level: ")
+                        .font(.custom("Bradley Hand", size: 18))
+                    Stars(star: 3)
+                }
                 
                 Spacer()
                 

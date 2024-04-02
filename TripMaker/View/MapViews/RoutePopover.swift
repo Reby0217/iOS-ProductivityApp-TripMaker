@@ -18,7 +18,7 @@ struct RoutePopover: View {
     var body: some View {
         NavigationView{
             
-            VStack (spacing: 10){
+            VStack (spacing: 5){
                 Text(route)
                     .font(.custom("Bradley Hand", size: 22))
                     //.padding(.top, 15)
@@ -32,6 +32,7 @@ struct RoutePopover: View {
 
                 Text("Total Time: 10hrs")
                     .font(.custom("Bradley Hand", size: 18))
+                Stars(star: 3)
                 
                 Spacer()
                 

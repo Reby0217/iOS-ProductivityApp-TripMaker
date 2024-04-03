@@ -33,7 +33,8 @@ class DBManager {
     private func setupDatabase() {
         let fileManager = FileManager.default
         guard let cloudURL = fileManager.url(forUbiquityContainerIdentifier: nil)?.appendingPathComponent("Documents") else {
-            fatalError("Unable to access iCloud Account")
+            print("Unable to access iCloud Account")
+            return
         }
         let dbURL = cloudURL.appendingPathComponent("db.sqlite3")
         self.iCloudURL = dbURL

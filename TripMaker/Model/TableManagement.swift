@@ -99,8 +99,13 @@ extension DBManager {
     
     func inspectRouteTable() throws {
         let query = routeTable.table
-        let routes = try db?.prepare(query)
-        for route in routes! {
+
+        guard let routes = try db?.prepare(query) else {
+            print("No routes found or database preparation failed.")
+            return
+        }
+
+        for route in routes {
             print("Route ID: \(route[routeTable.name])\n")
 //            print("Map Picture: \(route[routeTable.mapPicture])")
         }
@@ -108,52 +113,82 @@ extension DBManager {
     
     func inspectLocationTable() throws {
         let query = locationTable.table
-        let locations = try db?.prepare(query)
-        for location in locations! {
+        
+        guard let locations = try db?.prepare(query) else {
+            print("No locations found or database preparation failed.")
+            return
+        }
+        
+        for location in locations {
             print("Location ID: \(location[locationTable.name]), Name: \(location[locationTable.name]), Description: \(location[locationTable.description]), Is Locked: \(location[locationTable.isLocked])\n")
             
             print("Real Picture: \(location[locationTable.realPicture]),")
+            
         }
+        
     }
     
     func inspectTagTable() throws {
         let query = tagTable.table
-        let tags = try db?.prepare(query)
-        for tag in tags! {
+        
+        guard let tags = try db?.prepare(query) else {
+            print("No tags found or database preparation failed.")
+            return
+        }
+        
+        for tag in tags {
             print("Tag ID: \(tag[tagTable.tag]), Location ID: \(tag[tagTable.location]), Tag: \(tag[tagTable.tag])")
         }
     }
     
     func inspectRewardTable() throws {
         let query = rewardTable.table
-        let rewards = try db?.prepare(query)
-        for reward in rewards! {
+        guard let rewards = try db?.prepare(query) else {
+            print("No rewards found or database preparation failed.")
+            return
+        }
+        for reward in rewards {
             print("Reward Name: \(reward[rewardTable.name]), Is Claimed: \(reward[rewardTable.isClaimed])\n")
-            
 //            print("Picture: \(reward[rewardTable.picture])\n")
         }
     }
     
     func inspectFocusSessionTable() throws {
         let query = focusSessionTable.table
-        let focusSessions = try db?.prepare(query)
-        for session in focusSessions! {
+         
+        
+        guard let focusSessions = try db?.prepare(query) else {
+            print("No focus sessions found or database preparation failed.")
+            return
+        }
+        
+        for session in focusSessions {
             print("Focus Session ID: \(session[focusSessionTable.focusSessionID]), User ID: \(session[focusSessionTable.userID]), Start Time: \(session[focusSessionTable.startTime]), End Time: \(session[focusSessionTable.endTime])")
         }
     }
     
     func inspectLocationVisitedTable() throws {
         let query = locationVisitedTable.table
-        let visitedLocations = try db?.prepare(query)
-        for visited in visitedLocations! {
+
+        guard let visitedLocations = try db?.prepare(query) else {
+            print("No visited locations found or database preparation failed.")
+            return
+        }
+        
+        for visited in visitedLocations {
             print("Focus Session ID: \(visited[locationVisitedTable.focusSessionID]), Location ID: \(visited[locationVisitedTable.location])")
         }
     }
     
     func inspectUserProfileTable() throws {
         let query = userProfileTable.table
-        let userProfiles = try db?.prepare(query)
-        for userProfile in userProfiles! {
+         
+        guard let userProfiles = try db?.prepare(query) else {
+            print("No user profiles found or database preparation failed.")
+            return
+        }
+        
+        for userProfile in userProfiles {
             print("User ID: \(userProfile[userProfileTable.userID]), Username: \(userProfile[userProfileTable.username])\n")
 //            print("Image: \(userProfile[userProfileTable.image])")
         }

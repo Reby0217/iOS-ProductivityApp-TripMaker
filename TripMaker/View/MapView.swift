@@ -20,6 +20,7 @@ struct MapView: View {
     @State private var selectedSeconds = 0
     @State private var isTimePickerShown = false
     @State private var isNavigatingToTimer = false
+    @State private var showAlert = false
     let lightGreen = Color(UIColor(red: 0, green: 0.8, blue: 0.35, alpha: 0.8))
 
     var body: some View {
@@ -89,12 +90,21 @@ struct MapView: View {
                 Spacer()
                 
                 Button("Start") {
-                    isNavigatingToTimer = true
+                    if selectedHours == 0 && selectedMinutes == 0 && selectedSeconds == 0 {
+                        showAlert = true
+                    } else {
+                        isNavigatingToTimer = true
+                    }
                 }
                 .buttonStyle(.borderedProminent)
                 .controlSize(.large)
                 .padding(.bottom)
                 .tint(lightGreen)
+                .alert("Invalid Focus Time", isPresented: $showAlert) {
+                    Button("OK", role: .cancel) {}
+                } message: {
+                    Text("Please set a focus time greater than 0 second.")
+                }
             }
             .navigationDestination(isPresented: $isNavigatingToTimer) {
                 TimerView(

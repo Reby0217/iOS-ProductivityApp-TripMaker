@@ -47,8 +47,7 @@ struct TimerView: View {
                 ClockView(timeRemaining: $timeRemaining)
             }
             .frame(width: 350, height: 350)
-
-            Spacer()
+            .padding(.bottom, -50)
             
             if showCancelButton {
                 Button("Cancel (\(cancelTimeRemaining)s)") {
@@ -62,6 +61,9 @@ struct TimerView: View {
                 .cornerRadius(10)
                 .opacity(showCancelButton ? 1 : 0)
             }
+            
+            Spacer()
+            
 //            if showBackButton {
 //                Button("Back to Map") {
 //                    dismiss()
@@ -166,6 +168,6 @@ struct TimerView: View {
 }
 
 #Preview {
-    TimerView(routeName: "Taiwan", totalTime: 5)
+    TimerView(routeName: "Taiwan", totalTime: 20)
 }
 

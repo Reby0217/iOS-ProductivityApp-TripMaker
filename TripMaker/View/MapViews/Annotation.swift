@@ -33,12 +33,12 @@ class AnnotationNode: SKNode {
         // Create tag label
         let tagLabel = SKLabelNode(text: routeName)
         tagLabel.fontName = "Bradley Hand"
-        tagLabel.fontSize = 300
+        tagLabel.fontSize = 280
         tagLabel.fontColor = .black
         tagLabel.position = CGPoint(x: 0, y: 420) // Position above the pin
         
         // Create a rectangle frame behind the tag label
-        let frameSize = CGSize(width: tagLabel.frame.width + 300, height: tagLabel.frame.height + 220)
+        let frameSize = CGSize(width: tagLabel.frame.width + 200, height: tagLabel.frame.height + 150)
         let frameRect = CGRect(origin: CGPoint(x: -frameSize.width / 2, y: -(frameSize.height - tagLabel.frame.height) / 2), size: frameSize)
         let frameNode = SKShapeNode(rect: frameRect, cornerRadius: 5)
         frameNode.fillColor = .white
@@ -78,16 +78,16 @@ class AnnotationNode: SKNode {
 extension MapScene {
     func addAnnotations() {
         // Create and add annotation nodes
-        let annotation1 = AnnotationNode(imageNamed: "pin.jpg", routeName: "Japan", pos: (100 - frame.size.width / 2, 100 - frame.size.height / 2))
+        let annotation1 = AnnotationNode(imageNamed: "pin.jpg", routeName: "Canada", pos: (340 - frame.size.width / 2, 170 - frame.size.height / 2))
         annotation1.setScale(0.05)
-        annotation1.position = CGPoint(x: 100, y: 100)
+        annotation1.position = CGPoint(x: 65, y: 230)
         addChild(annotation1)
         annotation1.isUserInteractionEnabled = true
         annotations.append(annotation1)
             
-        let annotation2 = AnnotationNode(imageNamed: "pin.jpg", routeName: "Taiwan", pos: (340 - frame.size.width / 2, 177 - frame.size.height / 2))
+        let annotation2 = AnnotationNode(imageNamed: "pin.jpg", routeName: "Taiwan", pos: (340 - frame.size.width / 2, 180 - frame.size.height / 2))
         annotation2.setScale(0.05)
-        annotation2.position = CGPoint(x: 320, y: 157)
+        annotation2.position = CGPoint(x: 340, y: 180)
         addChild(annotation2)
         annotation2.isUserInteractionEnabled = true
         annotations.append(annotation2)

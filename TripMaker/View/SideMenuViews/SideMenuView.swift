@@ -12,7 +12,6 @@ enum SideMenuRowType: Int, CaseIterable{
     case stats
     case profile
     case passport
-    case ranking
     
     var title: String {
         switch self {
@@ -24,8 +23,6 @@ enum SideMenuRowType: Int, CaseIterable{
             return "Profile"
         case .passport:
             return "Passport"
-        case .ranking:
-            return "Ranking"
         }
     }
     
@@ -39,8 +36,6 @@ enum SideMenuRowType: Int, CaseIterable{
             return "person.crop.circle"
         case .passport:
             return "person.text.rectangle"
-        case .ranking:
-            return "list.number"
         }
     }
 

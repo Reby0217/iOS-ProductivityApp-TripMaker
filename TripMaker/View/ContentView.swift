@@ -26,8 +26,6 @@ struct ContentView: View {
                     .tag(2)
                 PassportView(presentSideMenu: $presentSideMenu)
                     .tag(3)
-                RankingView(presentSideMenu: $presentSideMenu)
-                    .tag(4)
             }
             
             SideMenu(isShowing: $presentSideMenu, content: AnyView(SideMenuView(selectedTab: $selectedSideMenuTab, showSideMenu: $presentSideMenu)))

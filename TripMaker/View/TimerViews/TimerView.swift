@@ -36,11 +36,10 @@ struct TimerView: View {
 
     var body: some View {
         VStack {
-            image?
-                .resizable()
-                .scaledToFit()
-                .frame(width: UIScreen.main.bounds.width * 0.8)
-                .padding()
+            RouteProgress(route: routeName, currentProgress: 0.7, startPos: 5)
+                .frame(width: 400, height: 400)
+                //.scaledToFit()
+                //.padding()
 
             ZStack {
                 ProgressTrackView()
@@ -167,3 +166,4 @@ struct TimerView: View {
 #Preview {
     TimerView(routeName: "Taiwan", totalTime: 5)
 }
+

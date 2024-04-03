@@ -6,9 +6,15 @@
 //
 
 import SwiftUI
+import SpriteKit
 
 struct MapView: View {
     @Binding var showSideMenu: Bool
+    
+    @State private var mapScene: MapScene? = nil
+    @State var selectedRoute: String = "Taiwan"
+    @State private var currentScale: CGFloat = 0.3
+    
     @State private var selectedHours = 0
     @State private var selectedMinutes = 0
     @State private var selectedSeconds = 0
@@ -34,11 +40,17 @@ struct MapView: View {
                 
                 Spacer()
                 
-                Image(uiImage: UIImage(named: "world_map.jpg")!)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: UIScreen.main.bounds.width * 0.8)
-                    .padding()
+                SpriteView(scene: mapScene ?? SKScene())
+                    .ignoresSafeArea()
+                    .frame(width: 400, height: 300) // Set the size of the map view
+                    .gesture(MagnificationGesture().onChanged { scale in
+                        // Handle zooming in and out
+                        
+                        mapScene?.scaleBackground(scale: scale)
+                        
+                        currentScale = scale
+                    })
+                    .padding(.vertical, 30)
                                 
                 Text("Set Focus Session Time")
                     .padding(.horizontal)
@@ -90,6 +102,10 @@ struct MapView: View {
                     totalTime: TimeInterval((selectedHours * 3600) + (selectedMinutes * 60) + selectedSeconds)
                 )
             }
+        }
+        .onAppear {
+            // Initialize the MapScene instance
+            mapScene = MapScene(selectedRoute: $selectedRoute, currentScale: $currentScale)
         }
     }
 }

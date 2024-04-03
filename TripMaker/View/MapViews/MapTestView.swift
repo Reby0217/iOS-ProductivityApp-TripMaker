@@ -59,7 +59,7 @@ struct MapTestView: View {
                             Spacer()
                             
                             NavigationLink {
-                                TimerView(routeName: selectedRoute)
+                                TimerRouteView(routeName: selectedRoute)
                             } label: {
                                 Text("Start")
                                     .padding()

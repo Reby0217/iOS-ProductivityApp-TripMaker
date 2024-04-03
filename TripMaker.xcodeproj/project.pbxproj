@@ -28,6 +28,8 @@
 		44DFB1842BBB0F6800597D6C /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 44DFB1832BBB0F6800597D6C /* Lottie */; };
 		44DFB1862BBB0FB500597D6C /* WalkingAnimation.json in Resources */ = {isa = PBXBuildFile; fileRef = 44DFB1852BBB0FB500597D6C /* WalkingAnimation.json */; };
 		44DFB1882BBB0FF300597D6C /* LottieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44DFB1872BBB0FF300597D6C /* LottieView.swift */; };
+		44DFB18E2BBCDDE600597D6C /* TimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44DFB18D2BBCDDE600597D6C /* TimerView.swift */; };
+		44DFB1902BBCDEBB00597D6C /* TimerRouteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44DFB18F2BBCDEBB00597D6C /* TimerRouteView.swift */; };
 		613381E02BA69EA900DB71AC /* Tables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613381DF2BA69EA900DB71AC /* Tables.swift */; };
 		613381E32BA69F0800DB71AC /* SQLite in Frameworks */ = {isa = PBXBuildFile; productRef = 613381E22BA69F0800DB71AC /* SQLite */; };
 		613381EE2BA6B38100DB71AC /* dataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613381ED2BA6B38100DB71AC /* dataModel.swift */; };
@@ -69,8 +71,6 @@
 		4407A17D2BAC889D0047DF93 /* BlurView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurView.swift; sourceTree = "<group>"; };
 		4407A17F2BAC8DA90047DF93 /* SmallCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmallCardView.swift; sourceTree = "<group>"; };
 		4407A1812BAC93950047DF93 /* DataStructures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStructures.swift; sourceTree = "<group>"; };
-		61093A662BBB662400385BBD /* TripMaker.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TripMaker.entitlements; sourceTree = "<group>"; };
-		61093A672BBB668B00385BBD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4407A1952BB625580047DF93 /* MapTestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapTestView.swift; sourceTree = "<group>"; };
 		4407A1972BB625910047DF93 /* Scene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scene.swift; sourceTree = "<group>"; };
 		4407A1992BB6490A0047DF93 /* Annotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Annotation.swift; sourceTree = "<group>"; };
@@ -78,6 +78,10 @@
 		44DFB1802BBA4AE600597D6C /* RouteProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteProgress.swift; sourceTree = "<group>"; };
 		44DFB1852BBB0FB500597D6C /* WalkingAnimation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = WalkingAnimation.json; sourceTree = "<group>"; };
 		44DFB1872BBB0FF300597D6C /* LottieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieView.swift; sourceTree = "<group>"; };
+		44DFB18D2BBCDDE600597D6C /* TimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerView.swift; sourceTree = "<group>"; };
+		44DFB18F2BBCDEBB00597D6C /* TimerRouteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerRouteView.swift; sourceTree = "<group>"; };
+		61093A662BBB662400385BBD /* TripMaker.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TripMaker.entitlements; sourceTree = "<group>"; };
+		61093A672BBB668B00385BBD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		613381DF2BA69EA900DB71AC /* Tables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tables.swift; sourceTree = "<group>"; };
 		613381ED2BA6B38100DB71AC /* dataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dataModel.swift; sourceTree = "<group>"; };
 		61872C672BB525CC0058990F /* ClockView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClockView.swift; sourceTree = "<group>"; };
@@ -195,9 +199,10 @@
 			isa = PBXGroup;
 			children = (
 				61872C672BB525CC0058990F /* ClockView.swift */,
-				4407A1672BAA88570047DF93 /* TimerView.swift */,
+				44DFB18F2BBCDEBB00597D6C /* TimerRouteView.swift */,
 				61872C6C2BB526E00058990F /* ProgressBarView.swift */,
 				61872C6E2BB527500058990F /* ProgressTrackView.swift */,
+				44DFB18D2BBCDDE600597D6C /* TimerView.swift */,
 			);
 			path = TimerViews;
 			sourceTree = "<group>";
@@ -335,6 +340,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				44DFB1902BBCDEBB00597D6C /* TimerRouteView.swift in Sources */,
+				44DFB18E2BBCDDE600597D6C /* TimerView.swift in Sources */,
 				4407A1662BAA41A70047DF93 /* LocationView.swift in Sources */,
 				44DFB1882BBB0FF300597D6C /* LottieView.swift in Sources */,
 				61C355C92BA69ABA00B8FD66 /* ContentView.swift in Sources */,
@@ -351,7 +358,6 @@
 				44DFB1812BBA4AE600597D6C /* RouteProgress.swift in Sources */,
 				61872C6F2BB527500058990F /* ProgressTrackView.swift in Sources */,
 				61872C682BB525CC0058990F /* ClockView.swift in Sources */,
-				4407A1682BAA88570047DF93 /* TimerView.swift in Sources */,
 				613381E02BA69EA900DB71AC /* Tables.swift in Sources */,
 				619359242BAAA68600541BC2 /* FocusSessionManagement.swift in Sources */,
 				61DDB61D2BABD3C900A8D1EE /* MapView.swift in Sources */,

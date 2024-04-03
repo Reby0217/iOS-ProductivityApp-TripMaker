@@ -14,6 +14,7 @@ let dummyRewards = [
     Reward(name: "First Reward", picture: rewardImageString, isClaimed: true)
 ]
 
+/*
 let dummyUserProfile = UserProfile(
     userID: UUID(),
     username: "Snow White",
@@ -26,6 +27,7 @@ let dummyUserProfile = UserProfile(
     yearTotal: 3600,
     rewardsArray: dummyRewards.map{ $0.name }
 )
+ */
 
 let route_attractions: [String: [CGPoint]] = [
     "Taiwan" :

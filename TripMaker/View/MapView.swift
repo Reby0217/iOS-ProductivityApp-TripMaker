@@ -13,7 +13,7 @@ struct MapView: View {
     
     @State private var mapScene: MapScene? = nil
     @State var selectedRoute: String = "Taiwan"
-    @State private var currentScale: CGFloat = 0.3
+    //@State private var currentScale: CGFloat = 0.175
     
     @State private var selectedHours = 0
     @State private var selectedMinutes = 0
@@ -49,7 +49,6 @@ struct MapView: View {
                         
                         mapScene?.scaleBackground(scale: scale)
                         
-                        currentScale = scale
                     })
                     .padding(.vertical, 30)
                                 
@@ -115,7 +114,7 @@ struct MapView: View {
         }
         .onAppear {
             // Initialize the MapScene instance
-            mapScene = MapScene(selectedRoute: $selectedRoute, currentScale: $currentScale)
+            mapScene = MapScene(selectedRoute: $selectedRoute)
         }
     }
 }

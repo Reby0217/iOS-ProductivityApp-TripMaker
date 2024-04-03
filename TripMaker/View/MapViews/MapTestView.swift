@@ -80,7 +80,7 @@ struct MapTestView: View {
         }
         .onAppear {
             // Initialize the MapScene instance
-            mapScene = MapScene(selectedRoute: $selectedRoute, currentScale: $currentScale)
+            mapScene = MapScene(selectedRoute: $selectedRoute)
         }
     }
 }

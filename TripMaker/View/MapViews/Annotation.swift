@@ -78,7 +78,7 @@ class AnnotationNode: SKNode {
 extension MapScene {
     func addAnnotations() {
         // Create and add annotation nodes
-        let annotation1 = AnnotationNode(imageNamed: "pin.jpg", routeName: "Canada", pos: (340 - frame.size.width / 2, 170 - frame.size.height / 2))
+        let annotation1 = AnnotationNode(imageNamed: "pin.jpg", routeName: "Canada", pos: (65 - frame.size.width / 2, 230 - frame.size.height / 2))
         annotation1.setScale(0.05)
         annotation1.position = CGPoint(x: 65, y: 230)
         addChild(annotation1)

@@ -15,15 +15,15 @@ class MapScene: SKScene {
     var lastTouchPosition: CGPoint? // Store the last touch position
     var annotations: [AnnotationNode] = []
     @Binding var selectedRoute: String
-    @Binding var currentScale: CGFloat
+    //@Binding var currentScale: CGFloat
     
     
     var background: SKSpriteNode!
     var gradientNode: SKSpriteNode!
     
-    init(selectedRoute: Binding<String>, currentScale: Binding<CGFloat>) {
+    init(selectedRoute: Binding<String>) {
         self._selectedRoute = selectedRoute // Initialize the binding property
-        self._currentScale = currentScale
+        //self._currentScale = currentScale
         super.init(size: CGSize(width: 400, height: 300))
             
         // Other setup for the SKScene
@@ -89,8 +89,8 @@ class MapScene: SKScene {
            print(background.position)
            
            for annot in annotations {
-               let newPosX = (background.xScale / 0.3) * annot.relativePosition.x + background.position.x
-               let newPosY = (background.yScale / 0.3) * annot.relativePosition.y + background.position.y
+               let newPosX = (background.xScale / scale) * annot.relativePosition.x + background.position.x
+               let newPosY = (background.yScale / scale) * annot.relativePosition.y + background.position.y
                let newPosition = CGPoint(x: newPosX, y: newPosY)
                let moveAction = SKAction.move(to: newPosition, duration: 0.01)
                annot.run(moveAction)
@@ -112,12 +112,12 @@ class MapScene: SKScene {
         
         // Set the scale of the background node
         
-        let scaleFactor = self.background.xScale + (scale - self.background.xScale) * 0.5
+        let scaleFactor = self.background.xScale * ((scale/self.background.xScale - 1) * 0.3 + 1)
         
         print(scaleFactor)
         
-        let newScale = max(min(scaleFactor, 1.0), 0.3)
-        currentScale = newScale
+        let newScale = max(min(scaleFactor, 1.0), self.scale)
+        //currentScale = newScale
         let scaleAction = SKAction.scale(to: newScale, duration: 0.3)
         
         let minX = -(background.texture?.size().width)! * newScale / 2 + frame.size.width
@@ -142,12 +142,12 @@ class MapScene: SKScene {
         
         
         for annot in annotations {
-            let scale = max(min(newScale / self.scale * 0.05, 0.1), 0.05)
-            let scaleAction = SKAction.scale(to: scale, duration: 0.3)
-            annot.scale = scale
+            let scaleAnnotation = max(min(newScale / self.scale * 0.05, 0.1), 0.05)
+            let scaleAction = SKAction.scale(to: scaleAnnotation, duration: 0.3)
+            annot.scale = scaleAnnotation
             
-            let newPosX_a = (newScale / 0.3) * annot.relativePosition.x + newPosX
-            let newPosY_a = (newScale / 0.3) * annot.relativePosition.y + newPosY
+            let newPosX_a = (newScale / self.scale) * annot.relativePosition.x + newPosX
+            let newPosY_a = (newScale / self.scale) * annot.relativePosition.y + newPosY
             let newPosition = CGPoint(x: newPosX_a, y: newPosY_a)
             let moveAction = SKAction.move(to: newPosition, duration: 0.3)
             

@@ -14,63 +14,81 @@ struct StatsView: View {
     @State private var dayStats: [CGFloat] = []
     @State private var weekStats: [CGFloat] = []
     @State private var yearStats: [CGFloat] = []
+    let lightGreen = Color(UIColor(red: 0, green: 0.8, blue: 0.35, alpha: 0.6))
+    let darkGreen = Color(UIColor(red: 0, green: 0.6, blue: 0.1, alpha: 0.8))
 
     let dbManager = DBManager.shared
     let username = "Snow White"
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 20) {
-            HStack {
-                Button(action: {
-                    self.presentSideMenu.toggle()
-                }) {
-                    Image(systemName: "list.bullet")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 28, height: 24)
+        ZStack {
+            LinearGradient(gradient: Gradient(colors: [Color.white.opacity(0.2), darkGreen.opacity(0.2),darkGreen.opacity(0.5)]), startPoint: .topLeading, endPoint: .bottomTrailing)
+                .edgesIgnoringSafeArea(.all)
+            
+            VStack(alignment: .leading, spacing: 20) {
+                HStack {
+                    Button(action: {
+                        self.presentSideMenu.toggle()
+                    }) {
+                        Image(systemName: "list.bullet")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 28, height: 24)
+                    }
+                    .tint(darkGreen)
+                    Spacer()
+                }
+                .padding(.horizontal)
+
+                VStack(alignment: .leading) {
+                    HStack {
+                        Spacer()
+                        Text("Focus Time")
+                            .font(Font.custom("Noteworthy", size: 34))
+                            .padding(.bottom, 10)
+                            .foregroundColor(.black.opacity(0.7))
+                        Spacer()
+                    }
+                    
+                    HStack {
+                        Spacer()
+                        Picker("Timeframe", selection: $timeframeSelection) {
+                            Text("Day").tag(0)
+                            Text("Week").tag(1)
+                            Text("Year").tag(2)
+                        }
+                        .pickerStyle(SegmentedPickerStyle())
+                        .frame(width: 250)
+//                        .tint(.white)
+//                        .colorMultiply(.orange.opacity(0.8))
+                        .padding()
+                        Spacer()
+                    }
+
+
+                    HStack {
+                        Spacer()
+                        BarChartView(
+                            data: getChartData(),
+                            labels: getLabels(),
+                            maxValue: getMaxValue()
+                        )
+                        .frame(height: 200)
+                        .padding(.top, 50)
+                        Spacer()
+                    }
                 }
                 Spacer()
             }
-            .padding(.horizontal)
-
-            VStack(alignment: .leading) {
-                HStack {
-                    Spacer()
-                    Text("Focus Time")
-                        .font(Font.custom("Noteworthy", size: 34))
-                        .padding(.bottom, 10)
-                    Spacer()
-                }
-                
-                HStack {
-                    Spacer()
-                    Picker("Timeframe", selection: $timeframeSelection) {
-                        Text("Day").tag(0)
-                        Text("Week").tag(1)
-                        Text("Year").tag(2)
-                    }
-                    .pickerStyle(SegmentedPickerStyle())
-                    .frame(width: 250)
-                    .padding()
-                    Spacer()
-                }
-
-
-                HStack {
-                    Spacer()
-                    BarChartView(
-                        data: getChartData(),
-                        labels: getLabels(),
-                        maxValue: getMaxValue()
-                    )
-                    .frame(height: 200)
-                    .padding(.top, 50)
-                    Spacer()
-                }
-            }
-            Spacer()
         }
+        
         .onAppear {
+            UISegmentedControl.appearance().selectedSegmentTintColor = UIColor(darkGreen)
+            
+            UISegmentedControl.appearance().setTitleTextAttributes([.foregroundColor: UIColor.white], for: .selected)
+      
+            
+            UISegmentedControl.appearance().setTitleTextAttributes([.foregroundColor: UIColor.black.withAlphaComponent(0.8)], for: .normal)
             fetchUserStats()
         }
     }

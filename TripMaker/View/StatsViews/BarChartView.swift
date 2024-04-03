@@ -12,6 +12,11 @@ struct BarChartView: View {
     var labels: [String]
     var maxValue: CGFloat
     @State private var selectedBarIndex: Int? = nil
+    
+    let darkGreen = Color(UIColor(red: 143/256, green: 188/256, blue: 143/256, alpha: 0.5))
+//    let brightGreen = Color(UIColor(red: 34/256, green: 139/256, blue: 34/256, alpha: 0.8))
+    
+    let brightGreen = Color(UIColor(red: 0, green: 0.6, blue: 0.1, alpha: 0.8))
 
     var body: some View {
         let safeMaxValue = max(maxValue, 1)
@@ -42,7 +47,8 @@ struct BarChartView: View {
                         VStack {
                             ZStack(alignment: .bottom) {
                                 Capsule().frame(width: 20, height: 200)
-                                    .foregroundColor(Color(.systemGray5))
+//                                    .foregroundColor(Color(.systemGray5))
+                                    .foregroundColor(darkGreen)
                                 VStack {
                                     Text("\(String(format: "%.1f", value))")
                                         .font(.caption)
@@ -50,7 +56,7 @@ struct BarChartView: View {
                                         .padding(.bottom, -5)
                                         .foregroundColor(Color.black.opacity(0.8))
                                     Capsule().frame(width: 20, height: value / safeMaxValue * 200)
-                                        .foregroundColor(Color.green)
+                                        .foregroundColor(brightGreen)
                                 }
                             }
                             Text(labels[index])

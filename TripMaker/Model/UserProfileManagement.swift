@@ -20,10 +20,10 @@ extension DBManager {
             userProfileTable.userID <- userID,
             userProfileTable.username <- username,
             userProfileTable.image <- image,
-            userProfileTable.dayTotal <- 0,
-            userProfileTable.weekTotal <- 0,
-            userProfileTable.monthTotal <- 0,
-            userProfileTable.yearTotal <- 0
+            userProfileTable.dayTotalTime <- "00:00:00",
+            userProfileTable.weekTotalTime <- "00:00:00",
+            userProfileTable.monthTotalTime <- "00:00:00",
+            userProfileTable.yearTotalTime <- "00:00:00"
         )
         try db?.run(insert)
         return userID
@@ -85,10 +85,10 @@ extension DBManager {
             image: user[userProfileTable.image],
             routeArray: routeNames,
             focusSession: focusSessionIDs,
-            dayTotal: user[userProfileTable.dayTotal],
-            weekTotal: user[userProfileTable.weekTotal],
-            monthTotal: user[userProfileTable.monthTotal],
-            yearTotal: user[userProfileTable.yearTotal],
+            dayTotalTime: user[userProfileTable.dayTotalTime],
+            weekTotalTime: user[userProfileTable.weekTotalTime],
+            monthTotalTime: user[userProfileTable.monthTotalTime],
+            yearTotalTime: user[userProfileTable.yearTotalTime],
             rewardsArray: rewardNames
         )
     }
@@ -114,10 +114,10 @@ extension DBManager {
              image: user[userProfileTable.image],
              routeArray: routeNames,
              focusSession: focusSessionIDs,
-             dayTotal: user[userProfileTable.dayTotal],
-             weekTotal: user[userProfileTable.weekTotal],
-             monthTotal: user[userProfileTable.monthTotal],
-             yearTotal: user[userProfileTable.yearTotal],
+             dayTotalTime: user[userProfileTable.dayTotalTime],
+             weekTotalTime: user[userProfileTable.weekTotalTime],
+             monthTotalTime: user[userProfileTable.monthTotalTime],
+             yearTotalTime: user[userProfileTable.yearTotalTime],
              rewardsArray: rewardNames
          )
      }
@@ -127,16 +127,16 @@ extension DBManager {
     - Description: Fetches the user's statistics, including the total focus time over days, weeks, months, and years for the user identified by userID.
     - Returns: A tuple containing the user's focus time statistics.
     */
-    func fetchUserStats(userID: UUID) throws -> (dayTotal: Int, weekTotal: Int, monthTotal: Int, yearTotal: Int) {
+    func fetchUserStats(userID: UUID) throws -> (dayTotalTime: String, weekTotalTime: String, monthTotalTime: String, yearTotalTime: String) {
         let query = userProfileTable.table.filter(userProfileTable.userID == userID)
         guard let user = try db?.pluck(query) else {
             throw NSError(domain: "User Not Found!", code: 404, userInfo: nil)
         }
         return (
-            dayTotal: user[userProfileTable.dayTotal],
-            weekTotal: user[userProfileTable.weekTotal],
-            monthTotal: user[userProfileTable.monthTotal],
-            yearTotal: user[userProfileTable.yearTotal]
+            dayTotalTime: user[userProfileTable.dayTotalTime],
+            weekTotalTime: user[userProfileTable.weekTotalTime],
+            monthTotalTime: user[userProfileTable.monthTotalTime],
+            yearTotalTime: user[userProfileTable.yearTotalTime]
         )
     }
     
@@ -159,13 +159,40 @@ extension DBManager {
     - Returns: void
     */
     func updateUserStats(userID: UUID, focusTime: TimeInterval) throws {
-        let oneDaySeconds: Double = 86400
+        // Function to convert time interval to "HH:mm:ss" format
+        func timeString(from interval: TimeInterval) -> String {
+            let time = NSInteger(interval)
+            let seconds = time % 60
+            let minutes = (time / 60) % 60
+            let hours = (time / 3600)
+            return String(format: "%0.2d:%0.2d:%0.2d", hours, minutes, seconds)
+        }
+
+        // Fetch the current user profile
         let userProfile = userProfileTable.table.filter(userProfileTable.userID == userID)
-        try db?.run(userProfile.update(
-            userProfileTable.dayTotal += Int(focusTime / oneDaySeconds),
-            userProfileTable.weekTotal += Int(focusTime / (oneDaySeconds * 7)),
-            userProfileTable.monthTotal += Int(focusTime / (oneDaySeconds * 30)),
-            userProfileTable.yearTotal += Int(focusTime / (oneDaySeconds * 365))
-        ))
+        if let user = try db?.pluck(userProfile) {
+            // Calculate new total times
+            let newDayTotalTime = timeString(from: focusTime + timeInterval(from: user[userProfileTable.dayTotalTime]))
+            let newWeekTotalTime = timeString(from: focusTime + timeInterval(from: user[userProfileTable.weekTotalTime]))
+            let newMonthTotalTime = timeString(from: focusTime + timeInterval(from: user[userProfileTable.monthTotalTime]))
+            let newYearTotalTime = timeString(from: focusTime + timeInterval(from: user[userProfileTable.yearTotalTime]))
+
+            // Update the user profile with the new total times
+            let update = userProfile.update(
+                userProfileTable.dayTotalTime <- newDayTotalTime,
+                userProfileTable.weekTotalTime <- newWeekTotalTime,
+                userProfileTable.monthTotalTime <- newMonthTotalTime,
+                userProfileTable.yearTotalTime <- newYearTotalTime
+            )
+            try db?.run(update)
+        }
+    }
+    
+    func timeInterval(from timeString: String) -> TimeInterval {
+        let components = timeString.split(separator: ":").compactMap { Int($0) }
+        let hours = components.count > 0 ? components[0] : 0
+        let minutes = components.count > 1 ? components[1] : 0
+        let seconds = components.count > 2 ? components[2] : 0
+        return TimeInterval(hours * 3600 + minutes * 60 + seconds)
     }
 }

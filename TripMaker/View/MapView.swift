@@ -8,53 +8,92 @@
 import SwiftUI
 
 struct MapView: View {
-    @Binding var presentSideMenu: Bool
-    
+    @Binding var showSideMenu: Bool
+    @State private var selectedHours = 0
+    @State private var selectedMinutes = 0
+    @State private var selectedSeconds = 0
+    @State private var isTimePickerShown = false
+    @State private var isNavigatingToTimer = false
+    let lightGreen = Color(UIColor(red: 0, green: 0.8, blue: 0.35, alpha: 0.8))
+
     var body: some View {
-        VStack(alignment: .leading, spacing: 20) {
-            HStack {
-                Button(action: {
-                    self.presentSideMenu.toggle()
-                }) {
-                    Image(systemName: "list.bullet")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 28, height: 24)
+        NavigationStack {
+            VStack {
+                HStack {
+                    Button(action: {
+                        self.showSideMenu.toggle()
+                    }) {
+                        Image(systemName: "list.bullet")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 28, height: 24)
+                    }
+                    Spacer()
                 }
+                .padding(.horizontal)
+                
                 Spacer()
-            }
-            .padding(.horizontal)
-            
-            Spacer()
-            
-            
-            NavigationSplitView {
-                Image(uiImage:UIImage(named: "world_map.jpg")!)
+                
+                Image(uiImage: UIImage(named: "world_map.jpg")!)
                     .resizable()
                     .scaledToFit()
                     .frame(width: UIScreen.main.bounds.width * 0.8)
                     .padding()
-                
-                NavigationLink {
-                    TimerView(routeName: "Taiwan")
-                } label: {
-                    Text("Start")
-                        .padding()
-                        .background(Color.blue)
-                        .foregroundColor(Color.white)
-                        .cornerRadius(8)
+                                
+                Text("Set Focus Session Time")
+                    .padding(.horizontal)
+                    .font(Font.custom("Noteworthy", size: 26))
+                    .padding(.bottom, -15)
+                                
+                HStack {
+                    Spacer()
+                    
+                    Text("\(selectedHours)h \(selectedMinutes)m \(selectedSeconds)s")
+                        .font(Font.custom("Noteworthy", size: 26))
+                        .padding(.horizontal)
+                    
+                    
+                    
+                    Button(action: {
+                        withAnimation {
+                            self.isTimePickerShown.toggle()
+                        }
+                    }) {
+                        Image(systemName: isTimePickerShown ? "chevron.down.circle" : "chevron.right.circle")
+                            .resizable()
+                            .frame(width: 30, height: 30)
+                            .padding()
+                            .tint(.green)
+                    }
                 }
-            } detail: {
+
+                .padding()
                 
+                if isTimePickerShown {
+                    TimePickerView(selectedHours: $selectedHours, selectedMinutes: $selectedMinutes, selectedSeconds: $selectedSeconds)
+                        .transition(.opacity)
+                }
+                
+                Spacer()
+                
+                Button("Start") {
+                    isNavigatingToTimer = true
+                }
+                .buttonStyle(.borderedProminent)
+                .controlSize(.large)
+                .padding(.bottom)
+                .tint(lightGreen)
             }
-            
-            Spacer()
+            .navigationDestination(isPresented: $isNavigatingToTimer) {
+                TimerView(
+                    routeName: "Taiwan",
+                    totalTime: TimeInterval((selectedHours * 3600) + (selectedMinutes * 60) + selectedSeconds)
+                )
+            }
         }
-        .padding(.horizontal, 24)
     }
-    
 }
 
 #Preview {
-    MapView(presentSideMenu: .constant(true))
+    MapView(showSideMenu: .constant(true))
 }

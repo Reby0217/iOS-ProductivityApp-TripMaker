@@ -40,9 +40,9 @@ struct UserProfile {
     let image: String
     let routeArray: [String] // Route names
     let focusSession: [UUID]
-    let dayTotal: Int
-    let weekTotal: Int
-    let monthTotal: Int
-    let yearTotal: Int
+    let dayTotalTime: String
+    let weekTotalTime: String
+    let monthTotalTime: String
+    let yearTotalTime: String
     let rewardsArray: [String] // Reward names
 }

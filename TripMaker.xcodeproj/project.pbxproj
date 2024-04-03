@@ -31,12 +31,16 @@
 		613381E02BA69EA900DB71AC /* Tables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613381DF2BA69EA900DB71AC /* Tables.swift */; };
 		613381E32BA69F0800DB71AC /* SQLite in Frameworks */ = {isa = PBXBuildFile; productRef = 613381E22BA69F0800DB71AC /* SQLite */; };
 		613381EE2BA6B38100DB71AC /* dataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613381ED2BA6B38100DB71AC /* dataModel.swift */; };
+		61872C682BB525CC0058990F /* ClockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61872C672BB525CC0058990F /* ClockView.swift */; };
+		61872C6D2BB526E00058990F /* ProgressBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61872C6C2BB526E00058990F /* ProgressBarView.swift */; };
+		61872C6F2BB527500058990F /* ProgressTrackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61872C6E2BB527500058990F /* ProgressTrackView.swift */; };
 		6193591C2BAAA66900541BC2 /* TableManagement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6193591B2BAAA66900541BC2 /* TableManagement.swift */; };
 		6193591E2BAAA67400541BC2 /* RouteManagement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6193591D2BAAA67400541BC2 /* RouteManagement.swift */; };
 		619359202BAAA67C00541BC2 /* LocationManagement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6193591F2BAAA67C00541BC2 /* LocationManagement.swift */; };
 		619359222BAAA68200541BC2 /* RewardManagement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619359212BAAA68200541BC2 /* RewardManagement.swift */; };
 		619359242BAAA68600541BC2 /* FocusSessionManagement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619359232BAAA68600541BC2 /* FocusSessionManagement.swift */; };
 		619359262BAAA68A00541BC2 /* UserProfileManagement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619359252BAAA68A00541BC2 /* UserProfileManagement.swift */; };
+		6197B38B2BB5107700C8944F /* TimePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6197B38A2BB5107700C8944F /* TimePickerView.swift */; };
 		61C355C72BA69ABA00B8FD66 /* TripMakerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61C355C62BA69ABA00B8FD66 /* TripMakerApp.swift */; };
 		61C355C92BA69ABA00B8FD66 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61C355C82BA69ABA00B8FD66 /* ContentView.swift */; };
 		61C355CB2BA69ABA00B8FD66 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61C355CA2BA69ABA00B8FD66 /* Item.swift */; };
@@ -65,6 +69,8 @@
 		4407A17D2BAC889D0047DF93 /* BlurView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurView.swift; sourceTree = "<group>"; };
 		4407A17F2BAC8DA90047DF93 /* SmallCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmallCardView.swift; sourceTree = "<group>"; };
 		4407A1812BAC93950047DF93 /* DataStructures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStructures.swift; sourceTree = "<group>"; };
+		61093A662BBB662400385BBD /* TripMaker.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TripMaker.entitlements; sourceTree = "<group>"; };
+		61093A672BBB668B00385BBD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4407A1952BB625580047DF93 /* MapTestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapTestView.swift; sourceTree = "<group>"; };
 		4407A1972BB625910047DF93 /* Scene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scene.swift; sourceTree = "<group>"; };
 		4407A1992BB6490A0047DF93 /* Annotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Annotation.swift; sourceTree = "<group>"; };
@@ -74,12 +80,16 @@
 		44DFB1872BBB0FF300597D6C /* LottieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieView.swift; sourceTree = "<group>"; };
 		613381DF2BA69EA900DB71AC /* Tables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tables.swift; sourceTree = "<group>"; };
 		613381ED2BA6B38100DB71AC /* dataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dataModel.swift; sourceTree = "<group>"; };
+		61872C672BB525CC0058990F /* ClockView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClockView.swift; sourceTree = "<group>"; };
+		61872C6C2BB526E00058990F /* ProgressBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressBarView.swift; sourceTree = "<group>"; };
+		61872C6E2BB527500058990F /* ProgressTrackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressTrackView.swift; sourceTree = "<group>"; };
 		6193591B2BAAA66900541BC2 /* TableManagement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableManagement.swift; sourceTree = "<group>"; };
 		6193591D2BAAA67400541BC2 /* RouteManagement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouteManagement.swift; sourceTree = "<group>"; };
 		6193591F2BAAA67C00541BC2 /* LocationManagement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationManagement.swift; sourceTree = "<group>"; };
 		619359212BAAA68200541BC2 /* RewardManagement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RewardManagement.swift; sourceTree = "<group>"; };
 		619359232BAAA68600541BC2 /* FocusSessionManagement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FocusSessionManagement.swift; sourceTree = "<group>"; };
 		619359252BAAA68A00541BC2 /* UserProfileManagement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfileManagement.swift; sourceTree = "<group>"; };
+		6197B38A2BB5107700C8944F /* TimePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimePickerView.swift; sourceTree = "<group>"; };
 		61C355C32BA69ABA00B8FD66 /* TripMaker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TripMaker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		61C355C62BA69ABA00B8FD66 /* TripMakerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripMakerApp.swift; sourceTree = "<group>"; };
 		61C355C82BA69ABA00B8FD66 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -161,6 +171,7 @@
 			isa = PBXGroup;
 			children = (
 				4407A18A2BB4B6A00047DF93 /* MapViews */,
+				61872C6B2BB5261F0058990F /* TimerViews */,
 				4407A17C2BAC87A40047DF93 /* CustomListViews */,
 				61DDB6172BABD3A200A8D1EE /* SideMenuViews */,
 				61C355C82BA69ABA00B8FD66 /* ContentView.swift */,
@@ -175,8 +186,20 @@
 				61DDB61E2BABD3D000A8D1EE /* ProfileView.swift */,
 				61DDB6222BABFD9D00A8D1EE /* BarChartView.swift */,
 				44DFB1872BBB0FF300597D6C /* LottieView.swift */,
+				6197B38A2BB5107700C8944F /* TimePickerView.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		61872C6B2BB5261F0058990F /* TimerViews */ = {
+			isa = PBXGroup;
+			children = (
+				61872C672BB525CC0058990F /* ClockView.swift */,
+				4407A1672BAA88570047DF93 /* TimerView.swift */,
+				61872C6C2BB526E00058990F /* ProgressBarView.swift */,
+				61872C6E2BB527500058990F /* ProgressTrackView.swift */,
+			);
+			path = TimerViews;
 			sourceTree = "<group>";
 		};
 		61C355BA2BA69ABA00B8FD66 = {
@@ -198,6 +221,8 @@
 		61C355C52BA69ABA00B8FD66 /* TripMaker */ = {
 			isa = PBXGroup;
 			children = (
+				61093A672BBB668B00385BBD /* Info.plist */,
+				61093A662BBB662400385BBD /* TripMaker.entitlements */,
 				4407A1622BAA40AC0047DF93 /* Utility */,
 				613381DE2BA69DF100DB71AC /* View */,
 				613381DD2BA69DE600DB71AC /* Model */,
@@ -324,6 +349,9 @@
 				61C355CB2BA69ABA00B8FD66 /* Item.swift in Sources */,
 				613381EE2BA6B38100DB71AC /* dataModel.swift in Sources */,
 				44DFB1812BBA4AE600597D6C /* RouteProgress.swift in Sources */,
+				61872C6F2BB527500058990F /* ProgressTrackView.swift in Sources */,
+				61872C682BB525CC0058990F /* ClockView.swift in Sources */,
+				4407A1682BAA88570047DF93 /* TimerView.swift in Sources */,
 				613381E02BA69EA900DB71AC /* Tables.swift in Sources */,
 				619359242BAAA68600541BC2 /* FocusSessionManagement.swift in Sources */,
 				61DDB61D2BABD3C900A8D1EE /* MapView.swift in Sources */,
@@ -346,7 +374,9 @@
 				4407A1962BB625580047DF93 /* MapTestView.swift in Sources */,
 				44DFB17D2BB9EDF500597D6C /* RoutePopover.swift in Sources */,
 				4407A16C2BABB10E0047DF93 /* RouteView.swift in Sources */,
+				6197B38B2BB5107700C8944F /* TimePickerView.swift in Sources */,
 				4407A16E2BABB4170047DF93 /* RouteRowView.swift in Sources */,
+				61872C6D2BB526E00058990F /* ProgressBarView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -477,12 +507,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = TripMaker/TripMaker.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"TripMaker/Preview Content\"";
 				DEVELOPMENT_TEAM = U6J58C8CJT;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = TripMaker/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -506,12 +538,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = TripMaker/TripMaker.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"TripMaker/Preview Content\"";
 				DEVELOPMENT_TEAM = U6J58C8CJT;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = TripMaker/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

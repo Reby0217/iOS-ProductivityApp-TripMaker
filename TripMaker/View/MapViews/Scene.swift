@@ -112,7 +112,7 @@ class MapScene: SKScene {
         
         // Set the scale of the background node
         
-        let scaleFactor = self.background.xScale * ((scale/self.background.xScale - 1) * 0.3 + 1)
+        let scaleFactor = self.background.xScale * ((scale - 1) * 0.5 + 1)
         
         print(scaleFactor)
         

@@ -143,7 +143,7 @@ class DBManager {
     }
  
     private func insertInitialData() throws {
-        guard let map_taiwan = UIImage(named: "taiwan-attractions-map.jpg"),
+        guard let map_taiwan = UIImage(named: "Taiwan-route.jpg"),
               let profilePic = UIImage(named: "profilePic.jpg"),
               let rewardImage = UIImage(named: "reward.png"),
               let rewardImage1 = UIImage(named: "reward1.png") else {

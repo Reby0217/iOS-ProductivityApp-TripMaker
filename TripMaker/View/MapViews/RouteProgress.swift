@@ -9,6 +9,7 @@ import SwiftUI
 
 struct RouteProgress: View {
     @State var route: String
+    @State var routeDetail: Route?
 
     @State var currentProgress: Double = 0
     @State var startPos: Int = 0
@@ -32,7 +33,8 @@ struct RouteProgress: View {
             Color(hex: 0xc9dedb).edgesIgnoringSafeArea(.all)
             
             // Background image
-            Image(route + "-route")
+            //Image(route+"-route")
+            imageFromString(routeDetail?.mapPicture ?? "")?
                 .resizable()
                 .frame(width: width, height: height)
                 .scaledToFit()
@@ -101,6 +103,16 @@ struct RouteProgress: View {
                 .frame(width: width, height: height)
              
                     
+        }
+        .onAppear {
+            DispatchQueue.main.async {
+                let db = DBManager.shared
+                do {
+                    self.routeDetail = try db.fetchRouteDetails(route: route)
+                } catch {
+                    print("Location Row View Database operation failed: \(error)")
+                }
+            }
         }
     }
 }

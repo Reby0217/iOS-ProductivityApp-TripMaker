@@ -144,9 +144,10 @@
 			isa = PBXGroup;
 			children = (
 				4407A1952BB625580047DF93 /* MapTestView.swift */,
+				61DDB61C2BABD3C900A8D1EE /* MapView.swift */,
 				4407A1992BB6490A0047DF93 /* Annotation.swift */,
 				44DFB17C2BB9EDF500597D6C /* RoutePopover.swift */,
-				44DFB1802BBA4AE600597D6C /* RouteProgress.swift */,
+				6197B38A2BB5107700C8944F /* TimePickerView.swift */,
 				4407A1972BB625910047DF93 /* Scene.swift */,
 			);
 			path = MapViews;
@@ -192,10 +193,8 @@
 				4407A16D2BABB4170047DF93 /* RouteRowView.swift */,
 				4407A1652BAA41A70047DF93 /* LocationView.swift */,
 				4407A16F2BABBC550047DF93 /* LocationRowView.swift */,
-				61DDB61C2BABD3C900A8D1EE /* MapView.swift */,
 				61DDB61E2BABD3D000A8D1EE /* ProfileView.swift */,
 				44DFB1872BBB0FF300597D6C /* LottieView.swift */,
-				6197B38A2BB5107700C8944F /* TimePickerView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -207,6 +206,7 @@
 				44DFB18F2BBCDEBB00597D6C /* TimerRouteView.swift */,
 				61872C6C2BB526E00058990F /* ProgressBarView.swift */,
 				61872C6E2BB527500058990F /* ProgressTrackView.swift */,
+				44DFB1802BBA4AE600597D6C /* RouteProgress.swift */,
 				44DFB18D2BBCDDE600597D6C /* TimerView.swift */,
 			);
 			path = TimerViews;

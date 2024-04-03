@@ -52,6 +52,8 @@ struct TimerView: View {
             
             if showCancelButton {
                 Button("Cancel (\(cancelTimeRemaining)s)") {
+//                    self.timerSubscription?.cancel()
+//                    self.timeRemaining = totalTime
                     presentationMode.wrappedValue.dismiss()
                 }
                 .padding()

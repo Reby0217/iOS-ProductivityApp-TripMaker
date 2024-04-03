@@ -17,15 +17,29 @@ struct ContentView: View {
     
     var body: some View {
         ZStack{
-            TabView(selection: $selectedSideMenuTab) {
-                MapView(showSideMenu: $presentSideMenu)
-                    .tag(0)
-                StatsView(presentSideMenu: $presentSideMenu)
-                    .tag(1)
-                ProfileView(presentSideMenu: $presentSideMenu)
-                    .tag(2)
-                PassportView(presentSideMenu: $presentSideMenu)
-                    .tag(3)
+//            TabView(selection: $selectedSideMenuTab) {
+//                MapView(showSideMenu: $presentSideMenu)
+//                    .tag(0)
+//                StatsView(presentSideMenu: $presentSideMenu)
+//                    .tag(1)
+//                ProfileView(presentSideMenu: $presentSideMenu)
+//                    .tag(2)
+//                PassportView(presentSideMenu: $presentSideMenu)
+//                    .tag(3)
+//            }
+            Group {
+                switch selectedSideMenuTab {
+                case 0:
+                    MapView(showSideMenu: $presentSideMenu)
+                case 1:
+                    StatsView(presentSideMenu: $presentSideMenu)
+                case 2:
+                    ProfileView(presentSideMenu: $presentSideMenu)
+                case 3:
+                    PassportView(presentSideMenu: $presentSideMenu)
+                default:
+                    Text("Selection does not correspond to a tab view.")
+                }
             }
             
             SideMenu(isShowing: $presentSideMenu, content: AnyView(SideMenuView(selectedTab: $selectedSideMenuTab, showSideMenu: $presentSideMenu)))

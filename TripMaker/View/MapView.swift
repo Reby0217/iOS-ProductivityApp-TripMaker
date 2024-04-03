@@ -114,6 +114,11 @@ struct MapView: View {
         }
         .onAppear {
             // Initialize the MapScene instance
+            selectedHours = 0
+            selectedMinutes = 0
+            selectedSeconds = 0
+            isNavigatingToTimer = false
+            
             mapScene = MapScene(selectedRoute: $selectedRoute)
         }
     }

@@ -19,7 +19,6 @@
 		4407A17E2BAC889E0047DF93 /* BlurView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4407A17D2BAC889D0047DF93 /* BlurView.swift */; };
 		4407A1802BAC8DA90047DF93 /* SmallCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4407A17F2BAC8DA90047DF93 /* SmallCardView.swift */; };
 		4407A1822BAC93950047DF93 /* DataStructures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4407A1812BAC93950047DF93 /* DataStructures.swift */; };
-		4407A1962BB625580047DF93 /* MapTestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4407A1952BB625580047DF93 /* MapTestView.swift */; };
 		4407A1982BB625910047DF93 /* Scene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4407A1972BB625910047DF93 /* Scene.swift */; };
 		4407A19A2BB6490A0047DF93 /* Annotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4407A1992BB6490A0047DF93 /* Annotation.swift */; };
 		44DFB17D2BB9EDF500597D6C /* RoutePopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44DFB17C2BB9EDF500597D6C /* RoutePopover.swift */; };
@@ -28,7 +27,6 @@
 		44DFB1862BBB0FB500597D6C /* WalkingAnimation.json in Resources */ = {isa = PBXBuildFile; fileRef = 44DFB1852BBB0FB500597D6C /* WalkingAnimation.json */; };
 		44DFB1882BBB0FF300597D6C /* LottieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44DFB1872BBB0FF300597D6C /* LottieView.swift */; };
 		44DFB18E2BBCDDE600597D6C /* TimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44DFB18D2BBCDDE600597D6C /* TimerView.swift */; };
-		44DFB1902BBCDEBB00597D6C /* TimerRouteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44DFB18F2BBCDEBB00597D6C /* TimerRouteView.swift */; };
 		613381E02BA69EA900DB71AC /* Tables.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613381DF2BA69EA900DB71AC /* Tables.swift */; };
 		613381E32BA69F0800DB71AC /* SQLite in Frameworks */ = {isa = PBXBuildFile; productRef = 613381E22BA69F0800DB71AC /* SQLite */; };
 		613381EE2BA6B38100DB71AC /* dataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613381ED2BA6B38100DB71AC /* dataModel.swift */; };
@@ -69,7 +67,6 @@
 		4407A17D2BAC889D0047DF93 /* BlurView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurView.swift; sourceTree = "<group>"; };
 		4407A17F2BAC8DA90047DF93 /* SmallCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmallCardView.swift; sourceTree = "<group>"; };
 		4407A1812BAC93950047DF93 /* DataStructures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStructures.swift; sourceTree = "<group>"; };
-		4407A1952BB625580047DF93 /* MapTestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapTestView.swift; sourceTree = "<group>"; };
 		4407A1972BB625910047DF93 /* Scene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scene.swift; sourceTree = "<group>"; };
 		4407A1992BB6490A0047DF93 /* Annotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Annotation.swift; sourceTree = "<group>"; };
 		44DFB17C2BB9EDF500597D6C /* RoutePopover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutePopover.swift; sourceTree = "<group>"; };
@@ -77,7 +74,6 @@
 		44DFB1852BBB0FB500597D6C /* WalkingAnimation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = WalkingAnimation.json; sourceTree = "<group>"; };
 		44DFB1872BBB0FF300597D6C /* LottieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieView.swift; sourceTree = "<group>"; };
 		44DFB18D2BBCDDE600597D6C /* TimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerView.swift; sourceTree = "<group>"; };
-		44DFB18F2BBCDEBB00597D6C /* TimerRouteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerRouteView.swift; sourceTree = "<group>"; };
 		61093A662BBB662400385BBD /* TripMaker.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TripMaker.entitlements; sourceTree = "<group>"; };
 		61093A672BBB668B00385BBD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		613381DF2BA69EA900DB71AC /* Tables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tables.swift; sourceTree = "<group>"; };
@@ -143,7 +139,6 @@
 		4407A18A2BB4B6A00047DF93 /* MapViews */ = {
 			isa = PBXGroup;
 			children = (
-				4407A1952BB625580047DF93 /* MapTestView.swift */,
 				61DDB61C2BABD3C900A8D1EE /* MapView.swift */,
 				4407A1992BB6490A0047DF93 /* Annotation.swift */,
 				44DFB17C2BB9EDF500597D6C /* RoutePopover.swift */,
@@ -203,7 +198,6 @@
 			isa = PBXGroup;
 			children = (
 				61872C672BB525CC0058990F /* ClockView.swift */,
-				44DFB18F2BBCDEBB00597D6C /* TimerRouteView.swift */,
 				61872C6C2BB526E00058990F /* ProgressBarView.swift */,
 				61872C6E2BB527500058990F /* ProgressTrackView.swift */,
 				44DFB1802BBA4AE600597D6C /* RouteProgress.swift */,
@@ -345,7 +339,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				44DFB1902BBCDEBB00597D6C /* TimerRouteView.swift in Sources */,
 				44DFB18E2BBCDDE600597D6C /* TimerView.swift in Sources */,
 				4407A1662BAA41A70047DF93 /* LocationView.swift in Sources */,
 				44DFB1882BBB0FF300597D6C /* LottieView.swift in Sources */,
@@ -381,7 +374,6 @@
 				619359222BAAA68200541BC2 /* RewardManagement.swift in Sources */,
 				4407A19A2BB6490A0047DF93 /* Annotation.swift in Sources */,
 				61C355C72BA69ABA00B8FD66 /* TripMakerApp.swift in Sources */,
-				4407A1962BB625580047DF93 /* MapTestView.swift in Sources */,
 				44DFB17D2BB9EDF500597D6C /* RoutePopover.swift in Sources */,
 				4407A16C2BABB10E0047DF93 /* RouteView.swift in Sources */,
 				6197B38B2BB5107700C8944F /* TimePickerView.swift in Sources */,

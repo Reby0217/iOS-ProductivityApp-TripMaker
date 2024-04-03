@@ -11,7 +11,11 @@ struct RouteProgress: View {
     @State var route: String
     @State var routeDetail: Route?
 
-    @State var currentProgress: Double = 0
+    var counter: Int
+    var countTo: Int
+    var currentProgress: Double {
+        Double(counter) / Double(countTo)
+    }
     @State var startPos: Int = 0
     var curPos: CGPoint {
         pointOnQuadraticBezier(startPoint: segments[startPos+1]!["startPoint"]!, controlPoint: segments[startPos+1]!["controlPoint"]!, endPoint: segments[startPos+1]!["endPoint"]!, progress: currentProgress)
@@ -58,15 +62,15 @@ struct RouteProgress: View {
             // Current progress bar
             var tmp = CGPoint(x: 0, y: 0)
             
-            ForEach(0..<Int(currentProgress*100+1)){ index in
+            ForEach(0..<101){ index in
                 GeometryReader { geometry in
-                    
                     Path { path in
                         // Define the path of the route
                         
-                        let cur = pointOnQuadraticBezier(startPoint: segments[startPos+1]!["startPoint"]!, controlPoint: segments[startPos+1]!["controlPoint"]!, endPoint: segments[startPos+1]!["endPoint"]!, progress: Double(index)/100)
+                        let cur = pointOnQuadraticBezier(startPoint: segments[startPos+1]!["startPoint"]!, controlPoint: segments[startPos+1]!["controlPoint"]!, endPoint: segments[startPos+1]!["endPoint"]!, progress: currentProgress*Double(index)/Double(100))
+                        //print("progress: ", currentProgress*Double(index)/Double(1000))
                         
-                        if index != 0 && index != Int(currentProgress*100) {
+                        if index != 0 && index != 100 {
                             
                             let controlPoint = calculateControlPoint(start: tmp, end: cur, factor: 0)
                             
@@ -118,5 +122,5 @@ struct RouteProgress: View {
 }
 
 #Preview {
-    RouteProgress(route: "Taiwan", currentProgress: 0.7, startPos: 5)
+    RouteProgress(route: "Taiwan", counter: 75, countTo: 120, startPos: 5)
 }

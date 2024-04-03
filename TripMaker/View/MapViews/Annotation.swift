@@ -13,12 +13,12 @@ import SwiftUI
 class AnnotationNode: SKNode {
     var selected = false
     var scale = 0.05
-    var route: String!
+
     var relativePosition: (x: CGFloat, y: CGFloat)!
     
     init(imageNamed: String, routeName: String, pos: (CGFloat, CGFloat)) {
         super.init()
-        route = routeName
+        name = routeName
         relativePosition = pos
         
         // Create a container node for the pin and tag

@@ -62,7 +62,7 @@ class MapScene: SKScene {
            
            // Store the touch position
            lastTouchPosition = touch.location(in: self)
-        print("in touches")
+            //print("in touches")
        }
        
        override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -86,7 +86,7 @@ class MapScene: SKScene {
            background.position.x = max(minX, min(maxX, background.position.x + deltaX))
            background.position.y = max(minY, min(maxY, background.position.y + deltaY))
            
-           print(background.position)
+           //print(background.position)
            
            for annot in annotations {
                let newPosX = (background.xScale / scale) * annot.relativePosition.x + background.position.x
@@ -114,7 +114,7 @@ class MapScene: SKScene {
         
         let scaleFactor = self.background.xScale * ((scale - 1) * 0.5 + 1)
         
-        print(scaleFactor)
+        //print(scaleFactor)
         
         let newScale = max(min(scaleFactor, 1.0), self.scale)
         //currentScale = newScale
@@ -128,8 +128,8 @@ class MapScene: SKScene {
         let newPosX = max(minX, min(maxX, background.position.x))
         let newPosY = max(minY, min(maxY, background.position.y))
         let newPosition = CGPoint(x: newPosX, y: newPosY)
-        print(background)
-        print("scale: ", newScale)
+        //print(background)
+        //print("scale: ", newScale)
 
         // Create the move action to adjust the position
         let moveAction = SKAction.move(to: newPosition, duration: 0.3)
@@ -176,7 +176,7 @@ class MapScene: SKScene {
                 if annot.selected {
                     dismissPopover()
                     annot.annotationTapped()
-                    showPopover(route: annot.route, node: annot)
+                    showPopover(route: annot.name!, node: annot)
                 } else {
                     annot.annotationUntapped()
                 }
@@ -205,10 +205,12 @@ class MapScene: SKScene {
     }
     
     func dismissPopover() {
+        print("dismiss popover")
         guard let sceneView = self.scene?.view else { return }
         
         // Find the popover view using its unique tag
         if let popoverView = sceneView.viewWithTag(123) {
+            print("dismiss ...")
             // Remove the popover view from its superview
             popoverView.removeFromSuperview()
         }

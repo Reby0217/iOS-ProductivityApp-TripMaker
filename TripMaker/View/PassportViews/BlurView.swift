@@ -61,7 +61,7 @@ struct CardDetector: View {
                     }
                     .padding(.horizontal)
                 case .big:
-                    BigCardView(namespace: namespace, route: route)
+                    BigCardView(namespace: namespace, location: route)
                     .padding()
                     .frame(maxWidth: .infinity)
                     .frame(height: 270)

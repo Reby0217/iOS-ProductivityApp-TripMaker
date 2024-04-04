@@ -11,14 +11,14 @@ struct BigCardView: View {
     //@Namespace var namespace
     let namespace: Namespace.ID
     
-    @State var route: String = "Taiwan"
+    @State var location: String = "Taiwan"
     @State var image: Image?
-    @State var routeDetail: Route?
+    @State var locationDetail: Location?
     
     var body: some View {
         VStack(alignment: .leading) {
             VStack(alignment: .leading) {
-                Image(route+"-stamp")
+                imageFromString(locationDetail?.realPicture ?? "")?
                     .resizable()
                     .frame(height: 160)
                     .frame(maxHeight: .infinity)
@@ -27,7 +27,7 @@ struct BigCardView: View {
                 Spacer()
                 VStack(alignment: .leading) {
                     HStack {
-                        blurTags(tags: ["taiwan"], namespace: namespace)
+                        blurTags(tags: locationDetail?.tagsArray ?? [], namespace: namespace)
                         Spacer()
                         Image(systemName: "ellipsis")
                             .foregroundColor(Color.white)
@@ -35,7 +35,7 @@ struct BigCardView: View {
                     }
                     
                     Spacer()
-                    Text(route)
+                    Text(location)
                         .foregroundColor(Color.black)
                         .matchedGeometryEffect(id: "title", in: namespace)
                     Spacer()
@@ -47,6 +47,16 @@ struct BigCardView: View {
                 Spacer()
                 VStack {
                     Spacer()
+                }
+            }
+        }
+        .onAppear {
+            DispatchQueue.main.async {
+                let db = DBManager.shared
+                do {
+                    self.locationDetail = try db.fetchLocationDetails(name: location)
+                } catch {
+                    print("Passport View Database operation failed: \(error)")
                 }
             }
         }

@@ -9,19 +9,57 @@ import SwiftUI
 
 struct RouteView: View {
     @State var route: String
+    @State var small = true
+    @Namespace var namespace
+    @State private var position: CardPosition = .small
     @State var image: Image?
     @State var routeDetail: Route?
     @State var locations: [String] = []
+    @State var isPresented = false
+    @State var selectedLocation = ""
     
     var body: some View {
-        List {
-            ForEach(locations, id: \.self)
-            { location in
-                NavigationLink {
-                    LocationView(location: location)
-                } label: {
-                    LocationRowView(location: location)
-                }
+        NavigationStack {
+            ZStack {
+                LinearGradient(gradient: Gradient(colors: [Color.blue.opacity(0.3), Color.green.opacity(0.3), Color.yellow.opacity(0.3)]), startPoint: .topLeading, endPoint: .bottomTrailing).ignoresSafeArea()
+
+                ScrollView {
+                    /*
+                    HStack{
+                        Button{
+                            presentSideMenu.toggle()
+                        } label: {
+                            Image(systemName: "list.bullet")
+                                .resizable()
+                                .frame(width: 28, height: 24)
+                        }
+                        Spacer()
+                    }
+                    .padding(.horizontal, 24)
+                     */
+                    VStack {
+                        ForEach(locations, id: \.self) { location in
+                            Button(action: {
+                                self.isPresented = true
+                                self.selectedLocation = location
+                            }) {
+                                BigCardView(namespace: namespace, location: location)
+                                .padding()
+                                .frame(maxWidth: .infinity)
+                                .frame(height: 270)
+                                .background(BlurView(style: .regular))
+                                .cornerRadius(10)
+                                .padding(.vertical,6)
+                                .padding(.horizontal)
+                            }
+                            //CardDetector(position: self.position, route: route)
+                        }
+                        .navigationDestination(isPresented: $isPresented) {
+                            LocationView(location: selectedLocation)
+                        }
+                    }
+                    
+                }.frame(maxWidth: .infinity, maxHeight: .infinity)
             }
         }
         .onAppear {

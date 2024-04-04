@@ -13,7 +13,7 @@ struct SmallCardView: View {
     let namespace: Namespace.ID
     
     @State var route: String = "Taiwan"
-    @State var image: Image?
+    //@State var image: Image?
     @State var routeDetail: Route?
     
     var body: some View {

@@ -9,9 +9,10 @@ import SwiftUI
 
 
 struct SmallCardView: View {
-    @Namespace var namespace
+    //@Namespace var namespace
+    let namespace: Namespace.ID
     
-    @State var routeID: UUID
+    @State var route: String = "Taiwan"
     @State var image: Image?
     @State var routeDetail: Route?
     
@@ -19,32 +20,29 @@ struct SmallCardView: View {
         GeometryReader { g in
             VStack(alignment: .leading) {
                 HStack {
-                    image?
+                    Image(route + "-stamp")
                         .resizable()
-                        .frame(width: 120, height: 90)
+                        .frame(width: 120, height: 120)
                         .cornerRadius(10)
                         .matchedGeometryEffect(id: "image", in: namespace)
                     
                     VStack(alignment: .leading) {
-                        blurTags(tags: ["SwiftUI"], namespace: namespace)
-                        Spacer()
-                        Text(routeDetail?.name ?? "")
-                            .foregroundColor(Color.textColor)
+                        Text(route)
+                            .font(.title2)
+                            .foregroundColor(Color.black)
                             .matchedGeometryEffect(id: "title", in: namespace)
+                        Spacer()
+                        blurTags(tags: ["SwiftUI"], namespace: namespace)
                         Spacer()
                         HStack {
                             Stars(star: 5)
                                 .matchedGeometryEffect(id: "stars", in: namespace)
-                            Text("(100)")
-                                .font(.caption2)
-                                .foregroundColor(.subtextColor)
-                                .matchedGeometryEffect(id: "ratingNum", in: namespace)
                         }
                     }.padding(.leading)
                     Spacer()
                     VStack {
                         Image(systemName: "ellipsis")
-                            .foregroundColor(Color.white)
+                            .foregroundColor(Color.black)
                             .matchedGeometryEffect(id: "ellipsis", in: namespace)
                         Spacer()
                     }
@@ -54,6 +52,8 @@ struct SmallCardView: View {
     }
 }
 
-#Preview {
-    SmallCardView(routeID: UUID())
-}
+/*
+ #Preview {
+ SmallCardView(routeID: UUID())
+ }
+ */

@@ -19,6 +19,7 @@ struct RouteRowView: View {
                 .frame(width: UIScreen.main.bounds.width * 0.4)
                 .padding()
             Text(routeDetail?.name ?? "")
+                .font(Font.custom("Bradley Hand", size: 22))
         }
         
         .onAppear {

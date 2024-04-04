@@ -56,7 +56,7 @@ struct TimerView: View {
                     presentationMode.wrappedValue.dismiss()
                 }
                 .padding()
-                .background(Color.lightGray)
+                .background(Color.gray.opacity(0.3))
                 .foregroundColor(Color.gray)
                 .cornerRadius(10)
                 .opacity(showCancelButton ? 1 : 0)

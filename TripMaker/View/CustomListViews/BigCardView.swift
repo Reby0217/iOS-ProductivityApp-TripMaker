@@ -1,0 +1,60 @@
+//
+//  BigCardView.swift
+//  TripMaker
+//
+//  Created by Megan Lin on 4/3/24.
+//
+
+import SwiftUI
+
+struct BigCardView: View {
+    //@Namespace var namespace
+    let namespace: Namespace.ID
+    
+    @State var route: String = "Taiwan"
+    @State var image: Image?
+    @State var routeDetail: Route?
+    
+    var body: some View {
+        VStack(alignment: .leading) {
+            VStack(alignment: .leading) {
+                Image(route+"-stamp")
+                    .resizable()
+                    .frame(height: 160)
+                    .frame(maxHeight: .infinity)
+                    .cornerRadius(10)
+                    .matchedGeometryEffect(id: "image", in: namespace)
+                Spacer()
+                VStack(alignment: .leading) {
+                    HStack {
+                        blurTags(tags: ["taiwan"], namespace: namespace)
+                        Spacer()
+                        Image(systemName: "ellipsis")
+                            .foregroundColor(Color.white)
+                            .matchedGeometryEffect(id: "ellipsis", in: namespace)
+                    }
+                    
+                    Spacer()
+                    Text(route)
+                        .foregroundColor(Color.black)
+                        .matchedGeometryEffect(id: "title", in: namespace)
+                    Spacer()
+                    HStack {
+                        Stars(star: 4)
+                            .matchedGeometryEffect(id: "stars", in: namespace)
+                    }
+                }
+                Spacer()
+                VStack {
+                    Spacer()
+                }
+            }
+        }
+    }
+}
+
+/*
+#Preview {
+    BigCardView(p: ListData(title: "LazyHGrid in SwiftUI (part 1/3)", postType: ["iOS","SwiftUI", "Xcode"], date: "05 Jun", Image: "LazyGrid", percentage: 0.30, stars: 5))
+}
+*/

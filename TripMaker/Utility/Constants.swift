@@ -41,8 +41,8 @@ let route_attractions: [String: [CGPoint]] = [
             CGPoint(x: 400 - 180,y: 400 - 298),
             CGPoint(x: 400 - 55,y: 400 - 298)
         ],
-    "Japan" :
-        []
+    "Canada" :
+        [CGPoint(x: 400 - 125,y: 400 - 30)]
 ]
 
 let route_segments: [String: [Int: [String: CGPoint]]] = [
@@ -56,7 +56,8 @@ let route_segments: [String: [Int: [String: CGPoint]]] = [
          6 : ["startPoint": route_attractions["Taiwan"]![5], "endPoint": route_attractions["Taiwan"]![6], "controlPoint": CGPoint(x:400 - 220, y:400 - 306)],
          7 : ["startPoint": route_attractions["Taiwan"]![6], "endPoint": route_attractions["Taiwan"]![7], "controlPoint": calculateControlPoint(start: route_attractions["Taiwan"]![6], end: route_attractions["Taiwan"]![7], factor: 0)],
         ],
-    "Japan":
-        [0 : ["startPoint": CGPoint(x: 400 - 125,y: 400 - 0), "endPoint": route_attractions["Taiwan"]![0], "controlPoint": calculateControlPoint(start: CGPoint(x: 400 - 125,y: 400 - 0), end: route_attractions["Taiwan"]![0], factor: 0)]
+    "Canada":
+        [0 : ["startPoint": CGPoint(x: 400 - 125,y: 400 - 0), "endPoint": route_attractions["Canada"]![0], "controlPoint": calculateControlPoint(start: CGPoint(x: 400 - 125,y: 400 - 0), end: route_attractions["Canada"]![0], factor: 0)],
+         1 : ["startPoint": route_attractions["Taiwan"]![0], "endPoint": route_attractions["Taiwan"]![0], "controlPoint": calculateControlPoint(start: route_attractions["Taiwan"]![0], end: route_attractions["Taiwan"]![0], factor: 0)],
         ]
 ]

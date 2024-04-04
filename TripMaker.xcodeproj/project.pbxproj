@@ -133,16 +133,21 @@
 			path = Utility;
 			sourceTree = "<group>";
 		};
-		4407A17C2BAC87A40047DF93 /* CustomListViews */ = {
+		4407A17C2BAC87A40047DF93 /* PassportViews */ = {
 			isa = PBXGroup;
 			children = (
+				4407A1732BABCEFD0047DF93 /* PassportView.swift */,
+				4407A16B2BABB10E0047DF93 /* RouteView.swift */,
+				4407A16D2BABB4170047DF93 /* RouteRowView.swift */,
+				4407A1652BAA41A70047DF93 /* LocationView.swift */,
+				4407A16F2BABBC550047DF93 /* LocationRowView.swift */,
 				4407A17D2BAC889D0047DF93 /* BlurView.swift */,
 				44DFB1972BBE373000597D6C /* blurTags.swift */,
 				44DFB1932BBE2B6800597D6C /* Stars.swift */,
 				4407A17F2BAC8DA90047DF93 /* SmallCardView.swift */,
 				44DFB1952BBE2C7400597D6C /* BigCardView.swift */,
 			);
-			path = CustomListViews;
+			path = PassportViews;
 			sourceTree = "<group>";
 		};
 		4407A18A2BB4B6A00047DF93 /* MapViews */ = {
@@ -189,14 +194,9 @@
 				44DFB1922BBCFAF100597D6C /* StatsViews */,
 				4407A18A2BB4B6A00047DF93 /* MapViews */,
 				61872C6B2BB5261F0058990F /* TimerViews */,
-				4407A17C2BAC87A40047DF93 /* CustomListViews */,
+				4407A17C2BAC87A40047DF93 /* PassportViews */,
 				61DDB6172BABD3A200A8D1EE /* SideMenuViews */,
 				61C355C82BA69ABA00B8FD66 /* ContentView.swift */,
-				4407A1732BABCEFD0047DF93 /* PassportView.swift */,
-				4407A16B2BABB10E0047DF93 /* RouteView.swift */,
-				4407A16D2BABB4170047DF93 /* RouteRowView.swift */,
-				4407A1652BAA41A70047DF93 /* LocationView.swift */,
-				4407A16F2BABBC550047DF93 /* LocationRowView.swift */,
 				61DDB61E2BABD3D000A8D1EE /* ProfileView.swift */,
 				44DFB1872BBB0FF300597D6C /* LottieView.swift */,
 			);

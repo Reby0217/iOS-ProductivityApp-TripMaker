@@ -17,9 +17,9 @@ struct LocationView: View {
             imageFromString(locationDetail?.realPicture ?? "")?
                 .resizable()
                 .scaledToFit()
-                .frame(width: UIScreen.main.bounds.width * 0.8, height: UIScreen.main.bounds.height * 0.5)
+                .frame(width: 400, height: 400)
                 .padding()
-            Text(locationDetail?.name ?? "")
+            Text(locationDetail?.name ?? "Taipei 101")
                 .font(.title)
             Text(locationDetail?.description ?? "")
         }

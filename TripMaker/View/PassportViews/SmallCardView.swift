@@ -27,25 +27,25 @@ struct SmallCardView: View {
                         .matchedGeometryEffect(id: "image", in: namespace)
                     
                     VStack(alignment: .leading) {
+                        Spacer()
                         Text(route)
-                            .font(.title2)
+                            .font(.custom("Noteworthy", size: 28))
                             .foregroundColor(Color.black)
                             .matchedGeometryEffect(id: "title", in: namespace)
                         Spacer()
-                        blurTags(tags: ["SwiftUI"], namespace: namespace)
-                        Spacer()
+                        //blurTags(tags: ["SwiftUI"], namespace: namespace)
+                        //Spacer()
                         HStack {
+                            Text("Level: ")
+                                .font(.custom("Noteworthy", size: 20))
+                                .foregroundColor(.black)
                             Stars(star: 5)
                                 .matchedGeometryEffect(id: "stars", in: namespace)
                         }
+                        Spacer()
                     }.padding(.leading)
                     Spacer()
-                    VStack {
-                        Image(systemName: "ellipsis")
-                            .foregroundColor(Color.black)
-                            .matchedGeometryEffect(id: "ellipsis", in: namespace)
-                        Spacer()
-                    }
+                    
                 }
             }
         }

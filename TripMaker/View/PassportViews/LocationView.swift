@@ -17,9 +17,11 @@ struct LocationView: View {
             imageFromString(locationDetail?.realPicture ?? "")?
                 .resizable()
                 .scaledToFit()
-                .frame(width: UIScreen.main.bounds.width * 0.8)
+                .frame(width: UIScreen.main.bounds.width * 0.8, height: UIScreen.main.bounds.height * 0.5)
                 .padding()
             Text(locationDetail?.name ?? "")
+                .font(.title)
+            Text(locationDetail?.description ?? "")
         }
         .onAppear {
             DispatchQueue.main.async {

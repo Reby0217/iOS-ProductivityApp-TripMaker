@@ -8,12 +8,9 @@
 import SwiftUI
 
 struct RouteView: View {
-    @State var route: String
-    @State var small = true
     @Namespace var namespace
-    @State private var position: CardPosition = .small
-    @State var image: Image?
-    @State var routeDetail: Route?
+    
+    @State var route: String
     @State var locations: [String] = []
     @State var isPresented = false
     @State var selectedLocation = ""
@@ -66,8 +63,8 @@ struct RouteView: View {
             DispatchQueue.main.async {
                 let db = DBManager.shared
                 do {
-                    self.routeDetail = try db.fetchRouteDetails(route: route)
-                    self.locations = self.routeDetail?.locationNames ?? []
+                    let routeDetail = try db.fetchRouteDetails(route: route)
+                    self.locations = routeDetail.locationNames
                 } catch {
                     print("Route View Database operation failed: \(error)")
                 }

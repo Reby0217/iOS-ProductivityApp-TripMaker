@@ -36,8 +36,8 @@ struct ContentView: View {
                 case 2:
                     ProfileView(presentSideMenu: $presentSideMenu)
                 case 3:
-                    //BlurryBackGroundView()
-                    PassportView(presentSideMenu: $presentSideMenu)
+                    BlurryBackGroundView(presentSideMenu: $presentSideMenu)
+                    //PassportView(presentSideMenu: $presentSideMenu)
                 default:
                     Text("Selection does not correspond to a tab view.")
                 }

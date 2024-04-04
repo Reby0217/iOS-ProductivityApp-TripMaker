@@ -80,32 +80,51 @@ struct CardDetector: View {
 }
 
 struct BlurryBackGroundView: View {
+    @Binding var presentSideMenu: Bool
     
     @State var small = true
     @Namespace var namespace
     @State private var position: CardPosition = .small
     @State var routes: [String] = []
+    @State var isPresented = false
+    @State var selectedRoute = ""
     
     var body: some View {
-        HStack {
+        NavigationStack {
             ZStack {
                 LinearGradient(gradient: Gradient(colors: [Color.blue.opacity(0.3), Color.green.opacity(0.3), Color.yellow.opacity(0.3)]), startPoint: .topLeading, endPoint: .bottomTrailing).ignoresSafeArea()
 
                 ScrollView {
-                    HStack {
-                        Image(systemName: "text.justify")
-                            .font(.title3)
-                            .foregroundColor(Color.white)
-                        
+                    HStack{
+                        Button{
+                            presentSideMenu.toggle()
+                        } label: {
+                            Image(systemName: "list.bullet")
+                                .resizable()
+                                .frame(width: 28, height: 24)
+                        }
                         Spacer()
-                        
-                        Image(systemName: "bell")
-                            .font(.title2)
-                            .foregroundColor(Color.white)
-                    }.padding()
+                    }
+                    .padding(.horizontal, 24)
                     VStack {
                         ForEach(routes, id: \.self) { route in
-                            CardDetector(position: self.position, route: route)
+                            Button(action: {
+                                self.isPresented = true
+                                self.selectedRoute = route
+                            }) {
+                                SmallCardView(namespace: namespace, route: route)
+                                .padding()
+                                .frame(maxWidth: .infinity)
+                                .frame(height: 150)
+                                .background(BlurView(style: .regular))
+                                .cornerRadius(10)
+                                .padding(.vertical,6)
+                                .padding(.horizontal)
+                            }
+                            //CardDetector(position: self.position, route: route)
+                        }
+                        .navigationDestination(isPresented: $isPresented) {
+                            RouteView(route: selectedRoute)
                         }
                     }
                     
@@ -129,5 +148,5 @@ struct BlurryBackGroundView: View {
 
 
 #Preview {
-    BlurryBackGroundView()
+    BlurryBackGroundView(presentSideMenu: .constant(true), routes : ["Taiwan", "Canada"])
 }

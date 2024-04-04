@@ -46,6 +46,9 @@ struct SideMenuView: View {
     
     @Binding var selectedTab: Int
     @Binding var showSideMenu: Bool
+    @State private var userProfile: UserProfile?
+    let dbManager = DBManager.shared
+    let userName = "Snow White"
     
     var body: some View {
         HStack {
@@ -58,7 +61,7 @@ struct SideMenuView: View {
                 
                 
                 VStack(alignment: .leading, spacing: 0) {
-                    ProfileHeaderView()
+                    ProfileHeaderView(userProfile: userProfile)
                         .frame(height: 140)
                         .padding(.bottom, 30)
                     
@@ -87,6 +90,23 @@ struct SideMenuView: View {
             Spacer()
         }
         .background(.clear)
+        .onAppear {
+            fetchUserProfile()
+        }
+    }
+    
+    private func fetchUserProfile() {
+        DispatchQueue.main.async {
+            do {
+                if let fetchedUserProfile = try dbManager.fetchUserProfileByUsername(username: self.userName) {
+                    self.userProfile = fetchedUserProfile
+                } else {
+                    print("User profile not found.")
+                }
+            } catch {
+                print("Error fetching user profile: \(error)")
+            }
+        }
     }
 
 }

@@ -95,6 +95,26 @@ extension DBManager {
         try updateReward(name: rewardName, isClaimed: true)
     }
     
+    
+    func claimRewards(userID: UUID, yearTotal: TimeInterval) throws {
+        let secInHour: TimeInterval = 3600
+
+        let claimedRewards = try fetchRewardsForUser(userID: userID)
+        
+        if yearTotal >= secInHour && !claimedRewards.contains("First Reward") { // More than 1 hour and not claimed
+            try claimReward(userID: userID, rewardName: "First Reward")
+        }
+        if yearTotal >= 10 * secInHour && !claimedRewards.contains("Second Reward") { // More than 10 hours and not claimed
+            try claimReward(userID: userID, rewardName: "Second Reward")
+        }
+        if yearTotal >= 50 * secInHour && !claimedRewards.contains("Third Reward") { // More than 50 hours and not claimed
+            try claimReward(userID: userID, rewardName: "Third Reward")
+        }
+        if yearTotal >= 200 * secInHour && !claimedRewards.contains("Fourth Reward") { // More than 200 hours and not claimed
+            try claimReward(userID: userID, rewardName: "Fourth Reward")
+        }
+    }
+    
     /**
     - Description: Fetches all rewards from the database.
     - Returns: An array of Reward objects representing all the rewards.

@@ -55,7 +55,7 @@ extension DBManager {
     
     /**
     - Description: Obtains all reward IDs claimed by a user with specified userID.
-    - Returns: An array of UUIDs for the rewards claimed by the user. If the user has not claimed any rewards or in case of an error, an empty array is returned.
+    - Returns: An array of names for the rewards claimed by the user. If the user has not claimed any rewards or in case of an error, an empty array is returned.
     */
     func fetchRewardsForUser(userID: UUID) throws -> [String] {
         let joinQuery = userRewardTable.table.join(rewardTable.table, on: userRewardTable.reward == rewardTable.name)
@@ -167,24 +167,23 @@ extension DBManager {
             let hours = (time / 3600)
             return String(format: "%0.2d:%0.2d:%0.2d", hours, minutes, seconds)
         }
-
-        // Fetch the current user profile
+        
         let userProfile = userProfileTable.table.filter(userProfileTable.userID == userID)
         if let user = try db?.pluck(userProfile) {
-            // Calculate new total times
-            let newDayTotalTime = timeString(from: focusTime + timeInterval(from: user[userProfileTable.dayTotalTime]))
-            let newWeekTotalTime = timeString(from: focusTime + timeInterval(from: user[userProfileTable.weekTotalTime]))
-            let newMonthTotalTime = timeString(from: focusTime + timeInterval(from: user[userProfileTable.monthTotalTime]))
-            let newYearTotalTime = timeString(from: focusTime + timeInterval(from: user[userProfileTable.yearTotalTime]))
-
+            let newYearTotalTimeInterval = focusTime + timeInterval(from: user[userProfileTable.yearTotalTime])
+            let newYearTotalTime = timeString(from: newYearTotalTimeInterval)
+            
             // Update the user profile with the new total times
             let update = userProfile.update(
-                userProfileTable.dayTotalTime <- newDayTotalTime,
-                userProfileTable.weekTotalTime <- newWeekTotalTime,
-                userProfileTable.monthTotalTime <- newMonthTotalTime,
+                userProfileTable.dayTotalTime <- timeString(from: focusTime + timeInterval(from: user[userProfileTable.dayTotalTime])),
+                userProfileTable.weekTotalTime <- timeString(from: focusTime + timeInterval(from: user[userProfileTable.weekTotalTime])),
+                userProfileTable.monthTotalTime <- timeString(from: focusTime + timeInterval(from: user[userProfileTable.monthTotalTime])),
                 userProfileTable.yearTotalTime <- newYearTotalTime
             )
             try db?.run(update)
+            
+            // Claim rewards based on the year total time
+            try claimRewards(userID: userID, yearTotal: newYearTotalTimeInterval)
         }
     }
     

@@ -146,15 +146,20 @@ class DBManager {
         guard let map_taiwan = UIImage(named: "Taiwan-route.jpg"),
               let profilePic = UIImage(named: "profilePic.jpg"),
               let rewardImage = UIImage(named: "reward.png"),
-              let rewardImage1 = UIImage(named: "reward1.png") else {
+              let rewardImage1 = UIImage(named: "reward1.png"),
+              let rewardImage2 = UIImage(named: "reward2.png"),
+              let rewardImage3 = UIImage(named: "reward3.png") else {
             print("Failed to load initial images.")
             return
         }
         
         let mapPictureString = stringFromImage(map_taiwan)
         let profilePicString = stringFromImage(profilePic)
+        
         let rewardImageString = stringFromImage(rewardImage)
         let secondRewardImageStr = stringFromImage(rewardImage1)
+        let thirdRewardImageStr = stringFromImage(rewardImage2)
+        let fourthRewardImageStr = stringFromImage(rewardImage3)
         
         try addRoute(name: "Taiwan", mapPicture: mapPictureString)
         
@@ -162,9 +167,11 @@ class DBManager {
         
         try addReward(name: "First Reward", picture: rewardImageString)
         try addReward(name: "Second Reward", picture: secondRewardImageStr)
+        try addReward(name: "Third Reward", picture: thirdRewardImageStr)
+        try addReward(name: "Fourth Reward", picture: fourthRewardImageStr)
         
-        try claimReward(userID: userID, rewardName: "First Reward")
-        try claimReward(userID: userID, rewardName: "Second Reward")
+//        try claimReward(userID: userID, rewardName: "First Reward")
+//        try claimReward(userID: userID, rewardName: "Second Reward")
         
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"

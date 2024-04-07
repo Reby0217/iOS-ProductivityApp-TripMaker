@@ -145,10 +145,11 @@ class DBManager {
     private func insertInitialData() throws {
         guard let map_taiwan = UIImage(named: "Taiwan-route.jpg"),
               let profilePic = UIImage(named: "profilePic.jpg"),
-              let rewardImage = UIImage(named: "reward.png"),
+              let rewardImage0 = UIImage(named: "reward.png"),
               let rewardImage1 = UIImage(named: "reward1.png"),
               let rewardImage2 = UIImage(named: "reward2.png"),
-              let rewardImage3 = UIImage(named: "reward3.png") else {
+              let rewardImage3 = UIImage(named: "reward3.png"),
+              let rewardImage4 = UIImage(named: "reward4.png") else {
             print("Failed to load initial images.")
             return
         }
@@ -156,19 +157,21 @@ class DBManager {
         let mapPictureString = stringFromImage(map_taiwan)
         let profilePicString = stringFromImage(profilePic)
         
-        let rewardImageString = stringFromImage(rewardImage)
+        let rewardImageString = stringFromImage(rewardImage0)
         let secondRewardImageStr = stringFromImage(rewardImage1)
         let thirdRewardImageStr = stringFromImage(rewardImage2)
         let fourthRewardImageStr = stringFromImage(rewardImage3)
+        let fifthRewardImageStr = stringFromImage(rewardImage4)
         
         try addRoute(name: "Taiwan", mapPicture: mapPictureString)
         
         let userID = try createUserProfile(username: "Snow White", image: profilePicString)
         
-        try addReward(name: "First Reward", picture: rewardImageString)
-        try addReward(name: "Second Reward", picture: secondRewardImageStr)
-        try addReward(name: "Third Reward", picture: thirdRewardImageStr)
-        try addReward(name: "Fourth Reward", picture: fourthRewardImageStr)
+        try addReward(name: "1st Reward", picture: rewardImageString)
+        try addReward(name: "2nd Reward", picture: secondRewardImageStr)
+        try addReward(name: "3rd Reward", picture: thirdRewardImageStr)
+        try addReward(name: "4th Reward", picture: fourthRewardImageStr)
+        try addReward(name: "5th Reward", picture: fifthRewardImageStr)
         
 //        try claimReward(userID: userID, rewardName: "First Reward")
 //        try claimReward(userID: userID, rewardName: "Second Reward")

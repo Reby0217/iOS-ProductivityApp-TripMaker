@@ -79,9 +79,12 @@ struct ProfileView: View {
                                         .padding(.bottom, 1)
                                     Text(reward.name)
                                         .font(Font.custom("Optima", size: 14))
+                                        .frame(width: 100)
                                 }
                             }
                         }
+                        .padding(.vertical, -10)
+                        
                     }
                     
                     .padding(.leading)
@@ -105,7 +108,7 @@ struct ProfileView: View {
                         print("Error fetching reward details for \(rewardName): \(error)")
                         return nil
                     }
-                }
+                }.sorted(by: { $0.name < $1.name })
             } else {
                 print("User profile not found.")
             }

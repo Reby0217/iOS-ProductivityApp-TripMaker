@@ -101,17 +101,20 @@ extension DBManager {
 
         let claimedRewards = try fetchRewardsForUser(userID: userID)
         
-        if yearTotal >= secInHour && !claimedRewards.contains("First Reward") { // More than 1 hour and not claimed
-            try claimReward(userID: userID, rewardName: "First Reward")
+        if yearTotal >= secInHour && !claimedRewards.contains("1st Reward") { // More than 1 hour and not claimed
+            try claimReward(userID: userID, rewardName: "1st Reward")
         }
-        if yearTotal >= 10 * secInHour && !claimedRewards.contains("Second Reward") { // More than 10 hours and not claimed
-            try claimReward(userID: userID, rewardName: "Second Reward")
+        if yearTotal >= 10 * secInHour && !claimedRewards.contains("2nd Reward") { // More than 10 hours and not claimed
+            try claimReward(userID: userID, rewardName: "2nd Reward")
         }
-        if yearTotal >= 50 * secInHour && !claimedRewards.contains("Third Reward") { // More than 50 hours and not claimed
-            try claimReward(userID: userID, rewardName: "Third Reward")
+        if yearTotal >= 20 * secInHour && !claimedRewards.contains("3rd Reward") { // More than 20 hours and not claimed
+            try claimReward(userID: userID, rewardName: "3rd Reward")
         }
-        if yearTotal >= 200 * secInHour && !claimedRewards.contains("Fourth Reward") { // More than 200 hours and not claimed
-            try claimReward(userID: userID, rewardName: "Fourth Reward")
+        if yearTotal >= 50 * secInHour && !claimedRewards.contains("4th Reward") { // More than 50 hours and not claimed
+            try claimReward(userID: userID, rewardName: "4th Reward")
+        }
+        if yearTotal >= 200 * secInHour && !claimedRewards.contains("5th Reward") { // More than 200 hours and not claimed
+            try claimReward(userID: userID, rewardName: "5th Reward")
         }
     }
     

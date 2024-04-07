@@ -22,7 +22,7 @@ struct StatsView: View {
 
     var body: some View {
         ZStack {
-            LinearGradient(gradient: Gradient(colors: [Color.white.opacity(0.2), darkGreen.opacity(0.2),darkGreen.opacity(0.5)]), startPoint: .topLeading, endPoint: .bottomTrailing)
+            LinearGradient(gradient: Gradient(colors: [Color.white.opacity(0.2), darkGreen.opacity(0.2), darkGreen.opacity(0.5)]), startPoint: .topLeading, endPoint: .bottomTrailing)
                 .edgesIgnoringSafeArea(.all)
             
             VStack(alignment: .leading, spacing: 20) {
@@ -43,7 +43,7 @@ struct StatsView: View {
                 VStack(alignment: .leading) {
                     HStack {
                         Spacer()
-                        Text("Focus Time")
+                        Text("Focus Time in Minutes")
                             .font(Font.custom("Noteworthy", size: 34))
                             .padding(.bottom, 10)
                             .foregroundColor(.black.opacity(0.7))
@@ -59,21 +59,18 @@ struct StatsView: View {
                         }
                         .pickerStyle(SegmentedPickerStyle())
                         .frame(width: 250)
-//                        .tint(.white)
-//                        .colorMultiply(.orange.opacity(0.8))
                         .padding()
                         Spacer()
                     }
 
-
                     HStack {
                         Spacer()
-                        BarChartView(
+                        CircularChartView(
                             data: getChartData(),
                             labels: getLabels(),
                             maxValue: getMaxValue()
                         )
-                        .frame(height: 200)
+                        .frame(height: 300)
                         .padding(.top, 50)
                         Spacer()
                     }
@@ -94,13 +91,17 @@ struct StatsView: View {
     }
 
     private func fetchUserStats() {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "HH"
+        
         do {
             if let userProfile = try dbManager.fetchUserProfileByUsername(username: username) {
                 let userID = userProfile.userID
                 let focusSessions = try dbManager.fetchFocusSessionsForUser(userID: userID)
                 let today = Calendar.current.startOfDay(for: Date())
-                let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat = "HH"
+                let currentWeekDay = Calendar.current.component(.weekday, from: Date())
+                let startOfWeek = Calendar.current.date(byAdding: .day, value: -(currentWeekDay - 1), to: today)!
+                let endOfWeek = Calendar.current.date(byAdding: .day, value: 7 - currentWeekDay, to: today)!
 
                 var dailyData = Array(repeating: CGFloat(0), count: 24)
                 var weeklyData = Array(repeating: CGFloat(0), count: 7)
@@ -117,8 +118,10 @@ struct StatsView: View {
                         dailyData[hourIndex] += duration
                     }
 
-                    let weekDay = Calendar.current.component(.weekday, from: startTime) - 1
-                    weeklyData[weekDay] += duration
+                    if startTime >= startOfWeek && endTime <= endOfWeek {
+                        let weekDay = Calendar.current.component(.weekday, from: startTime) - 1
+                        weeklyData[weekDay] += duration
+                    }
 
                     let month = Calendar.current.component(.month, from: startTime) - 1
                     yearlyData[month] += duration
@@ -149,8 +152,25 @@ struct StatsView: View {
     }
 
     private func getMaxValue() -> CGFloat {
-        let data = getChartData()
-        return data.max() ?? 1
+        let calendar = Calendar.current
+        let year = calendar.component(.year, from: Date())
+        let month = calendar.component(.month, from: Date())
+
+        let dateComponents = DateComponents(year: year, month: month)
+        let date = calendar.date(from: dateComponents)!
+        let range = calendar.range(of: .day, in: .month, for: date)!
+        let numDays = CGFloat(range.count)
+        
+        switch timeframeSelection {
+        case 0:
+            return 60 // minutes in an hour
+        case 1:
+            return 24 * 60 // minutes in a day
+        case 2:
+            return numDays * 24 * 60 // minutes in current month
+        default:
+            return 1
+        }
     }
 
     private func getLabels() -> [String] {

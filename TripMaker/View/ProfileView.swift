@@ -99,7 +99,7 @@ struct ProfileView: View {
     
     private func fetchUserProfile() {
         do {
-            if let fetchedUserProfile = try dbManager.fetchUserProfileByUsername(username: "Snow White") {
+            if let fetchedUserProfile = try dbManager.fetchUserProfileByUsername(username: Constants.userName) {
                 self.userProfile = fetchedUserProfile
                 self.userRewards = fetchedUserProfile.rewardsArray.compactMap { rewardName in
                     do {

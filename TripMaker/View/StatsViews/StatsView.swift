@@ -18,7 +18,7 @@ struct StatsView: View {
     let darkGreen = Color(UIColor(red: 0, green: 0.6, blue: 0.1, alpha: 0.8))
 
     let dbManager = DBManager.shared
-    let username = "Snow White"
+    let username = Constants.userName
 
     var body: some View {
         ZStack {

@@ -180,7 +180,7 @@ class DBManager {
         try addTagToLocation(name: "Taipei 101", tag: "Cultural Hub")
         
         
-        let userID = try createUserProfile(username: "Snow White", image: profilePicString)
+        let userID = try createUserProfile(username: Constants.userName, image: profilePicString)
         
         try addReward(name: "1st Reward", picture: rewardImageString)
         try addReward(name: "2nd Reward", picture: secondRewardImageStr)

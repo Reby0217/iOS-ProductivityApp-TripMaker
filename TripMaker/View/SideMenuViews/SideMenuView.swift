@@ -48,7 +48,7 @@ struct SideMenuView: View {
     @Binding var showSideMenu: Bool
     @State private var userProfile: UserProfile?
     let dbManager = DBManager.shared
-    let userName = "Snow White"
+    let userName = Constants.userName
     
     var body: some View {
         HStack {

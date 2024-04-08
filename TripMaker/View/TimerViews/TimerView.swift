@@ -150,7 +150,7 @@ struct TimerView: View {
     
     private func fetchUserID() {
         DispatchQueue.main.async {
-            let username = "Snow White"
+            let username = Constants.userName
             do {
                 if let userProfile = try dbManager.fetchUserProfileByUsername(username: username) {
                     self.userID = userProfile.userID

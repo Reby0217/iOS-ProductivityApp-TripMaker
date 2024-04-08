@@ -182,6 +182,9 @@ class DBManager {
         
         let userID = try createUserProfile(username: Constants.userName, image: profilePicString)
         
+        Constants.userID = userID
+        print("User ID is \(String(describing: Constants.userID))")
+        
         try addReward(name: "1st Reward", picture: rewardImageString)
         try addReward(name: "2nd Reward", picture: secondRewardImageStr)
         try addReward(name: "3rd Reward", picture: thirdRewardImageStr)

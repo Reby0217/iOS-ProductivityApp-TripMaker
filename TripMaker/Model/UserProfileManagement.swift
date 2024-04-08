@@ -194,4 +194,28 @@ extension DBManager {
         let seconds = components.count > 2 ? components[2] : 0
         return TimeInterval(hours * 3600 + minutes * 60 + seconds)
     }
+    
+    /**
+    - Description: Checks if the username is unique in the database.
+    - Returns: Calls the completion handler with true if unique, false otherwise.
+    */
+    func isUsernameUnique(_ username: String, completion: @escaping (Bool) -> Void) {
+        let query = userProfileTable.table.filter(userProfileTable.username == username)
+        do {
+            let existingUser = try db?.pluck(query)
+            completion(existingUser == nil)
+        } catch {
+            print("Error checking username uniqueness: \(error)")
+            completion(false)
+        }
+    }
+
+    /**
+    - Description: Updates the username for a given userID in the database.
+    */
+    func updateUsername(userID: UUID, newUsername: String) throws {
+        let user = userProfileTable.table.filter(userProfileTable.userID == userID)
+        let update = user.update(userProfileTable.username <- newUsername)
+        try db?.run(update)
+    }
 }

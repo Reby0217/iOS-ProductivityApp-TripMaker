@@ -30,7 +30,7 @@ struct TimerView: View {
         do {
             let unlockedLocations = try dbManager.fetchUnlockedLocations(routeName: routeName)
             return unlockedLocations.count
-            print("current location \(self.currentLocationIndex)")
+//            print("current location \(self.currentLocationIndex)")
 
         } catch {
             print("Failed to fetch current location index for '\(routeName)': \(error)")
@@ -149,16 +149,11 @@ struct TimerView: View {
     }
     
     private func fetchUserID() {
-        DispatchQueue.main.async {
-            let username = Constants.userName
-            do {
-                if let userProfile = try dbManager.fetchUserProfileByUsername(username: username) {
-                    self.userID = userProfile.userID
-                }
-            } catch {
-                print("Failed to fetch user profile for '\(username)': \(error)")
-            }
+        guard let userProfile = Constants.userProfile else {
+            print("User profile not found.")
+            return
         }
+        self.userID = userProfile.userID
     }
     
     private func startCancelTimer() {

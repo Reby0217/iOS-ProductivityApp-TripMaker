@@ -9,7 +9,37 @@ import Foundation
 import UIKit
 
 struct Constants {
-    static let userName = "Snow White"
+    static var userID: UUID? = nil
+    
+    static var userProfile: UserProfile? {
+        get {
+            guard let userID = userID else { return nil }
+            do {
+//                print("Fetch user profile successfully.")
+                return try DBManager.shared.fetchUserProfile(userID: userID)
+            } catch {
+                print("Error fetching user profile: \(error)")
+                return nil
+            }
+        }
+    }
+    
+    static var userName: String {
+        get {
+            userProfile?.username ?? "Snow White"
+        }
+        set {
+            guard let userID = userID else { return }
+            do {
+                try DBManager.shared.updateUsername(userID: userID, newUsername: newValue)
+                // Refreshing userProfile implicitly by accessing it after the update
+                let updatedProfile = userProfile //triggers the fetch
+                print("Updated profile for: \(String(describing: updatedProfile?.username))")
+            } catch {
+                print("Error updating username in database: \(error)")
+            }
+        }
+    }
     
     static let route_attractions: [String: [CGPoint]] = [
         "Taiwan" :

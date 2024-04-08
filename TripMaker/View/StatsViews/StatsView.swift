@@ -83,7 +83,6 @@ struct StatsView: View {
             UISegmentedControl.appearance().selectedSegmentTintColor = UIColor(darkGreen)
             
             UISegmentedControl.appearance().setTitleTextAttributes([.foregroundColor: UIColor.white], for: .selected)
-      
             
             UISegmentedControl.appearance().setTitleTextAttributes([.foregroundColor: UIColor.black.withAlphaComponent(0.8)], for: .normal)
             fetchUserStats()
@@ -91,50 +90,52 @@ struct StatsView: View {
     }
 
     private func fetchUserStats() {
+        guard let userProfile = Constants.userProfile else {
+            print("User profile not found.")
+            return
+        }
+        
+        let userID = userProfile.userID
+        
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "HH"
         
         do {
-            if let userProfile = try dbManager.fetchUserProfileByUsername(username: username) {
-                let userID = userProfile.userID
-                let focusSessions = try dbManager.fetchFocusSessionsForUser(userID: userID)
-                let today = Calendar.current.startOfDay(for: Date())
-                let currentWeekDay = Calendar.current.component(.weekday, from: Date())
-                let startOfWeek = Calendar.current.date(byAdding: .day, value: -(currentWeekDay - 1), to: today)!
-                let endOfWeek = Calendar.current.date(byAdding: .day, value: 7 - currentWeekDay, to: today)!
+            let focusSessions = try dbManager.fetchFocusSessionsForUser(userID: userID)
+            let today = Calendar.current.startOfDay(for: Date())
+            let currentWeekDay = Calendar.current.component(.weekday, from: Date())
+            let startOfWeek = Calendar.current.date(byAdding: .day, value: -(currentWeekDay - 1), to: today)!
+            let endOfWeek = Calendar.current.date(byAdding: .day, value: 7 - currentWeekDay, to: today)!
 
-                var dailyData = Array(repeating: CGFloat(0), count: 24)
-                var weeklyData = Array(repeating: CGFloat(0), count: 7)
-                var yearlyData = Array(repeating: CGFloat(0), count: 12)
+            var dailyData = Array(repeating: CGFloat(0), count: 24)
+            var weeklyData = Array(repeating: CGFloat(0), count: 7)
+            var yearlyData = Array(repeating: CGFloat(0), count: 12)
 
-                for session in focusSessions {
-                    let sessionDetails = try dbManager.fetchFocusSessionDetails(sessionID: session)
-                    let startTime = sessionDetails.startTime
-                    let endTime = sessionDetails.endTime
-                    let duration = CGFloat(endTime.timeIntervalSince(startTime) / 60) // Convert to minutes
+            for session in focusSessions {
+                let sessionDetails = try dbManager.fetchFocusSessionDetails(sessionID: session)
+                let startTime = sessionDetails.startTime
+                let endTime = sessionDetails.endTime
+                let duration = CGFloat(endTime.timeIntervalSince(startTime) / 60) // Convert to minutes
 
-                    if Calendar.current.isDate(startTime, inSameDayAs: today) {
-                        let hourIndex = Int(dateFormatter.string(from: startTime))!
-                        dailyData[hourIndex] += duration
-                    }
-
-                    if startTime >= startOfWeek && endTime <= endOfWeek {
-                        let weekDay = Calendar.current.component(.weekday, from: startTime) - 1
-                        weeklyData[weekDay] += duration
-                    }
-
-                    let month = Calendar.current.component(.month, from: startTime) - 1
-                    yearlyData[month] += duration
+                if Calendar.current.isDate(startTime, inSameDayAs: today) {
+                    let hourIndex = Int(dateFormatter.string(from: startTime))!
+                    dailyData[hourIndex] += duration
                 }
 
-                dayStats = dailyData
-                weekStats = weeklyData
-                yearStats = yearlyData
-            } else {
-                print("User profile not found.")
+                if startTime >= startOfWeek && endTime <= endOfWeek {
+                    let weekDay = Calendar.current.component(.weekday, from: startTime) - 1
+                    weeklyData[weekDay] += duration
+                }
+
+                let month = Calendar.current.component(.month, from: startTime) - 1
+                yearlyData[month] += duration
             }
+
+            dayStats = dailyData
+            weekStats = weeklyData
+            yearStats = yearlyData
         } catch {
-            print("Error fetching user stats: \(error)")
+            print("Error fetching or processing user stats: \(error)")
         }
     }
 

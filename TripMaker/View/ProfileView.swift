@@ -151,9 +151,12 @@ struct ProfileView: View {
             if isUnique {
                 do {
                     try DBManager.shared.updateUsername(userID: userID, newUsername: self.editableUsername)
-                    // Reflect changes immediately
                     self.isEditing = false
-                    Constants.userName = self.editableUsername // trigger the "refresh" of userProfile due to the computed property in Constants
+                    // Updates the username
+                    Constants.userName = self.editableUsername
+                    
+                    // Refresh userProfile to reflect the username change
+                    let _ = Constants.userProfile
                 } catch {
                     print("Error updating username: \(error)")
                 }

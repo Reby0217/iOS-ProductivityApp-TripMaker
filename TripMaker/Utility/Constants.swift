@@ -9,7 +9,23 @@ import Foundation
 import UIKit
 
 struct Constants {
-    static var userID: UUID? = nil
+    private static let userIDKey = "userIDKey"
+
+    static var userID: UUID? {
+        get {
+            if let idString = UserDefaults.standard.string(forKey: userIDKey), let id = UUID(uuidString: idString) {
+                return id
+            }
+            return nil
+        }
+        set {
+            if let newValue = newValue {
+                UserDefaults.standard.set(newValue.uuidString, forKey: userIDKey)
+            } else {
+                UserDefaults.standard.removeObject(forKey: userIDKey)
+            }
+        }
+    }
     
     static var userProfile: UserProfile? {
         get {

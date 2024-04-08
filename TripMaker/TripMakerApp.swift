@@ -12,7 +12,7 @@ import SwiftData
 struct TripMakerApp: App {
     let dbManager = DBManager.shared
     
-    @State private var modelData = ModelData()
+    //@State private var modelData = ModelData()
     
     init() {
         do {
@@ -42,7 +42,7 @@ struct TripMakerApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .environment(modelData)
+               // .environment(modelData)
         }
 //        .modelContainer(sharedModelContainer)
     }

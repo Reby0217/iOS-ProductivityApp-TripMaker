@@ -219,5 +219,23 @@ class DBManager {
                 let _ = try createFocusSession(userID: userID, startTime: startTime, duration: endTime.timeIntervalSince(startTime))
             }
         }
+        
+        fetchInfoFromApi()
+    }
+    
+    private func fetchInfoFromApi(){
+        let url = urlTask()
+        var locations: [String] = []
+        do {
+            locations = try fetchAllLocationsInOrder(routeName: "Taiwan")
+        } catch {
+            print("error fetching locations for Taiwan")
+        }
+        for location in locations {
+            url.fetchLocationDescription(for: location)
+            url.fetchLocationPicture(for: location)
+            
+            
+        }
     }
 }

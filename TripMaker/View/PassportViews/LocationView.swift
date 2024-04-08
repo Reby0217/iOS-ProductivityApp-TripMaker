@@ -37,6 +37,6 @@ struct LocationView: View {
 }
 
 #Preview {
-    let modelData = ModelData()
+    //let modelData = ModelData()
     return LocationView(location: "Taipei 101")
 }

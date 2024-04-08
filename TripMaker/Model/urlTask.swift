@@ -23,26 +23,23 @@ struct WikipediaResponse: Decodable {
     let extract: String
 }
 
-@Observable
-class ModelData {
+//@Observable
+class urlTask {
     var finished = false
     let db: DBManager
-    var image: String?
+    var image: [String: String] = [:]
     
 //    var httpString = "https://api.unsplash.com/photos/random?query=taipei/600x600"
     let baseURL = "https://api.unsplash.com/photos/random?query="
-    var locationName = "Taipei101"
+    var locationName = "Taipei 101"
     let imageSize = "/600x600"
         
-    var httpString: String {
-        return baseURL + locationName + imageSize
-    }
     
     let authString = "pPxiEaowEXFSgmLexE1QbvWaDL2AegFje6OHZbv9aHA"
     
     let wikiBaseURL = "https://en.wikipedia.org/api/rest_v1/page/summary/"
     
-    var locationDescription = ""
+    var locationDescription: [String: String] = [:]
     
     var locations: [String] {
         do {
@@ -56,24 +53,28 @@ class ModelData {
     
 //    let authString = "aTMxKAZwBPS8eLOk2WRJFJMSCkTX5_zxTGiHmuhEHG0"
     
+    func httpString(locationName: String) -> String {
+        return baseURL + locationName + imageSize
+    }
+    
     init() {
         db = DBManager.shared
-        
+    }
+    
+    func fetchLocationPicture(for title: String){
         for location in locations {
-            locationName = location
-            fetchLocationDescription(for: location)
             
-            download(urlString: httpString) { [weak self] imageString in
+            download(urlString: httpString(locationName: location)) { [weak self] imageString in
                 guard let self = self, let imageString = imageString else {
                     print("Failed to download image.")
                     return
                 }
                 
                 DispatchQueue.main.async {
-                    self.image = imageString
+                    self.image[location] = imageString
                     
                     do {
-                        try self.db.updateLocatioPicDescrip(name: location, newRealPicture: self.image!, newDescription: self.locationDescription)
+                        try self.db.updateLocatioPicture(name: location, newRealPicture: self.image[location] ?? "")
                         
                         //print("Location added with name: \(self.locationName)")
                     } catch {
@@ -84,7 +85,6 @@ class ModelData {
                 }
             }
         }
-        
     }
 
     func download(urlString: String, completion: @escaping (String?) -> Void) {
@@ -177,7 +177,8 @@ class ModelData {
                     sentences += "."
                 }
                 
-                self.locationDescription = sentences
+                self.locationDescription[title] = sentences
+                try self.db.updateLocatioDescription(name: title, newDescription: self.locationDescription[title] ?? "")
                 
                 print("\nDescription for \(title):")
                 print(sentences)

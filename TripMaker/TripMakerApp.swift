@@ -12,7 +12,7 @@ import SwiftData
 struct TripMakerApp: App {
     let dbManager = DBManager.shared
     
-    @State private var modelData = ModelData()
+    //@State private var modelData = ModelData()
     
     init() {
         do {
@@ -20,6 +20,7 @@ struct TripMakerApp: App {
             //dbManager.deleteAllData()
             
             //try dbManager.addDummyData()
+            dbManager.fetchInfoFromApi()
             dbManager.inspectAllTables()
         } catch {
             print("An error occurred while initializing dummy data: \(error)")
@@ -42,7 +43,7 @@ struct TripMakerApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .environment(modelData)
+               // .environment(modelData)
         }
 //        .modelContainer(sharedModelContainer)
     }

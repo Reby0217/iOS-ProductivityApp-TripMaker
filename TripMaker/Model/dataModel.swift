@@ -11,6 +11,7 @@ import SQLite
 
 
 class DBManager {
+    
     static let shared = DBManager()
     
     var db: Connection?
@@ -221,6 +222,20 @@ class DBManager {
                let endTime = dateFormatter.date(from: end) {
                 let _ = try createFocusSession(userID: userID, startTime: startTime, duration: endTime.timeIntervalSince(startTime))
             }
+        }
+    }
+    
+    func fetchInfoFromApi(){
+        let url = urlTask()
+        var locations: [String] = []
+        do {
+            locations = try fetchAllLocationsInOrder(routeName: "Taiwan")
+        } catch {
+            print("error fetching locations for Taiwan")
+        }
+        for location in locations {
+            url.fetchLocationDescription(for: location)
+            url.fetchLocationPicture(for: location)
         }
     }
 }

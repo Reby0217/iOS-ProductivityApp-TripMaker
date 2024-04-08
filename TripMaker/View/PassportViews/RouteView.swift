@@ -63,8 +63,9 @@ struct RouteView: View {
             DispatchQueue.main.async {
                 let db = DBManager.shared
                 do {
-                    let routeDetail = try db.fetchRouteDetails(route: route)
-                    self.locations = routeDetail.locationNames
+                    // let routeDetail = try db.fetchRouteDetails(route: route)
+                    self.locations = try db.fetchUnlockedLocations(routeName: route)
+                    print("location: ", self.locations)
                 } catch {
                     print("Route View Database operation failed: \(error)")
                 }

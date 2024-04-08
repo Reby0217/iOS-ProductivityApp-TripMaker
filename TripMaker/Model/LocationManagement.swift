@@ -14,8 +14,9 @@ extension DBManager {
      - Description: Adds a new location to an existing route identified by route name.
      - Returns: The name of the newly added location as it's the primary key.
      */
-    func addLocationToRoute(routeName: String, name: String, realPicture: String, description: String, isLocked: Bool) throws {
+    func addLocationToRoute(index: Int, routeName: String, name: String, realPicture: String, description: String, isLocked: Bool) throws {
         let insert = locationTable.table.insert(
+            locationTable.index <- index,
             locationTable.route <- routeName,
             locationTable.name <- name,
             locationTable.realPicture <- realPicture,
@@ -43,6 +44,7 @@ extension DBManager {
             let tags = try db?.prepare(tagsQuery).map { $0[tagTable.tag] } ?? []
             
             locations[locationName] = Location(
+                index: row[locationTable.index],
                 name: locationName,
                 realPicture: row[locationTable.realPicture],
                 tagsArray: tags,
@@ -55,6 +57,19 @@ extension DBManager {
     }
     
     /**
+     - Description: Retrieves unlocked locations associated with a given route name.
+     - Returns: An array of Location objects, each representing a location on the route with its associated tags.
+     */
+    func fetchUnlockedLocations(routeName: String) throws -> [String] {
+        let locationsQuery = locationTable.table.filter(locationTable.route == routeName)
+        //.filter(locationTable.isLocked == false)
+        let locationRecords = try db?.prepare(locationsQuery)
+        let locations = locationRecords?.map { $0[locationTable.name] } ?? []
+        
+        return locations
+    }
+    
+    /**
      - Description: Fetches all tags associated with a specific location by its name.
      - Returns: An array of strings representing the tags associated with the location.
      */
@@ -62,6 +77,18 @@ extension DBManager {
         let tagsQuery = tagTable.table.filter(tagTable.location == name).select(tagTable.tag)
         let tagsRecords = try db?.prepare(tagsQuery)
         return tagsRecords?.map { $0[tagTable.tag] } ?? []
+    }
+    
+    /**
+     - Description: Updates the picture and description of an existing location identified by name.
+     - Returns: void
+     */
+    func updateLocatioPicDescrip(name: String, newRealPicture: String, newDescription: String) throws {
+        let locationToUpdate = locationTable.table.filter(locationTable.name == name)
+        try db?.run(locationToUpdate.update(
+            locationTable.realPicture <- newRealPicture,
+            locationTable.description <- newDescription
+        ))
     }
     
     /**
@@ -102,6 +129,7 @@ extension DBManager {
         let tags = try fetchTagsForLocation(name: name)
         
         return Location(
+            index: location[locationTable.index],
             name: name,
             realPicture: location[locationTable.realPicture],
             tagsArray: tags,

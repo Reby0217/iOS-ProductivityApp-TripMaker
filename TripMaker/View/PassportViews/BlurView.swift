@@ -136,7 +136,7 @@ struct BlurryBackGroundView: View {
             DispatchQueue.main.async {
                 let db = DBManager.shared
                 do {
-                    //self.routes = try db.fetchAllRoutes()
+                    self.routes = try db.fetchAllRoutes()
                     print("")
                 } catch {
                     print("Passport View Database operation failed: \(error)")

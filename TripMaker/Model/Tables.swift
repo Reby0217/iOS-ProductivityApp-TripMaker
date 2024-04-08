@@ -16,6 +16,7 @@ struct RouteTable {
 
 struct LocationTable {
     let table = Table("locations")
+    let index = Expression<Int>("index")
     let route = Expression<String>("route") // foreign key
     let name = Expression<String>("name") // primary key
     let realPicture = Expression<String>("realPicture")

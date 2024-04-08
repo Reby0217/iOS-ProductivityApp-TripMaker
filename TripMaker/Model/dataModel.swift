@@ -76,6 +76,7 @@ class DBManager {
         })
 
         try db?.run(locationTable.table.create(ifNotExists: true) { t in
+            t.column(locationTable.index)
             t.column(locationTable.route)
             t.column(locationTable.name, primaryKey: true)
             t.column(locationTable.realPicture)
@@ -164,6 +165,20 @@ class DBManager {
         let fifthRewardImageStr = stringFromImage(rewardImage4)
         
         try addRoute(name: "Taiwan", mapPicture: mapPictureString)
+        
+        try addLocationToRoute(index: 1, routeName: "Taiwan", name: "???", realPicture: "", description: "", isLocked: false)
+        try addLocationToRoute(index: 2, routeName: "Taiwan", name: "National Taichung Theater", realPicture: "", description: "", isLocked: false)
+        try addLocationToRoute(index: 3, routeName: "Taiwan", name: "Lanyang Museum", realPicture: "", description: "", isLocked: false)
+        try addLocationToRoute(index: 4, routeName: "Taiwan", name: "Taipei 101", realPicture: "", description: "", isLocked: true)
+        try addLocationToRoute(index: 5, routeName: "Taiwan", name: "85 Sky Tower", realPicture: "", description: "", isLocked: true)
+        try addLocationToRoute(index: 6, routeName: "Taiwan", name: "Baguashan Buddha", realPicture: "", description: "", isLocked: true)
+        try addLocationToRoute(index: 7, routeName: "Taiwan", name: "Queen’S Head Rock", realPicture: "", description: "", isLocked: true)
+        try addLocationToRoute(index: 8, routeName: "Taiwan", name: "Chiang Kai-shek Memorial Hall", realPicture: "", description: "", isLocked: true)
+        
+        
+        try addTagToLocation(name: "Taipei 101", tag: "Engineering Marvel")
+        try addTagToLocation(name: "Taipei 101", tag: "Cultural Hub")
+        
         
         let userID = try createUserProfile(username: "Snow White", image: profilePicString)
         

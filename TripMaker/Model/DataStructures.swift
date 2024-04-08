@@ -14,6 +14,7 @@ struct Route {
 }
 
 struct Location {
+    let index: Int
     let name: String // Primary key and unique
     let realPicture: String
     var tagsArray: [String]

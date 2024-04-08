@@ -44,32 +44,44 @@ class ModelData {
     
     var locationDescription = ""
     
+    var locations: [String] {
+        do {
+            return try db.fetchAllLocationsInOrder(routeName: "Taiwan")
+        } catch {
+            print("error fetching locations for Taiwan")
+        }
+        return []
+    }
+    
     
 //    let authString = "aTMxKAZwBPS8eLOk2WRJFJMSCkTX5_zxTGiHmuhEHG0"
     
     init() {
         db = DBManager.shared
         
-        fetchLocationDescription(for: "Taipei 101")
-        
-        download(urlString: httpString) { [weak self] imageString in
-            guard let self = self, let imageString = imageString else {
-                print("Failed to download image.")
-                return
-            }
+        for location in locations {
+            locationName = location
+            fetchLocationDescription(for: location)
             
-            DispatchQueue.main.async {
-                self.image = imageString
-                
-                do {
-                    try self.db.updateLocatioPicDescrip(name: "Taipei 101", newRealPicture: self.image!, newDescription: self.locationDescription)
-                    
-                    //print("Location added with name: \(self.locationName)")
-                } catch {
-                    print("Database operation error: \(error)")
+            download(urlString: httpString) { [weak self] imageString in
+                guard let self = self, let imageString = imageString else {
+                    print("Failed to download image.")
+                    return
                 }
                 
-                self.finished = true
+                DispatchQueue.main.async {
+                    self.image = imageString
+                    
+                    do {
+                        try self.db.updateLocatioPicDescrip(name: location, newRealPicture: self.image!, newDescription: self.locationDescription)
+                        
+                        //print("Location added with name: \(self.locationName)")
+                    } catch {
+                        print("Database operation error: \(error)")
+                    }
+                    
+                    self.finished = true
+                }
             }
         }
         

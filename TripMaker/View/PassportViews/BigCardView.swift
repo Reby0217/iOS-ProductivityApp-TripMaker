@@ -35,9 +35,9 @@ struct BigCardView: View {
                     }
                     
                     Spacer()
-                    Text(location)
+                    Text(locationDetail?.name ?? "")
                         .foregroundColor(Color.black)
-                        .matchedGeometryEffect(id: "title", in: namespace)
+                    //    .matchedGeometryEffect(id: "title", in: namespace)
                     Spacer()
                     //HStack {
                     //    Stars(star: 4)

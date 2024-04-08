@@ -31,6 +31,10 @@ struct RouteProgress: View {
         Constants.route_segments[route]!
     }
     
+    var animation_flip: [Int: Bool] {
+        Constants.route_animation[route]!
+    }
+    
         
     var body: some View {
         ZStack {
@@ -101,7 +105,7 @@ struct RouteProgress: View {
             }
             
             
-            LottieView(animationFileName: "WalkingAnimation", loopMode: .loop, flip: false)
+            LottieView(animationFileName: "WalkingAnimation", loopMode: .loop, flip: animation_flip[startPos] ?? true)
                 .scaleEffect(0.08)
                 .position(x: curPos.x, y: curPos.y - 30)
                 .frame(width: width, height: height)

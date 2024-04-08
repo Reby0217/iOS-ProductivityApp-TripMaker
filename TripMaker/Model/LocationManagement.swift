@@ -113,7 +113,7 @@ extension DBManager {
     }
     
     /**
-     - Description: Updates the picture and description of an existing location identified by name.
+     - Description: Updates the picture of an existing location identified by name.
      - Returns: void
      */
     func updateLocatioPicture(name: String, newRealPicture: String) throws {
@@ -124,7 +124,7 @@ extension DBManager {
     }
     
     /**
-     - Description: Updates the picture and description of an existing location identified by name.
+     - Description: Updates the description of an existing location identified by name.
      - Returns: void
      */
     func updateLocatioDescription(name: String, newDescription: String) throws {

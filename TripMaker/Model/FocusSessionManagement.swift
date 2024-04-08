@@ -87,6 +87,16 @@ extension DBManager {
         )
     }
     
-    
+    /**
+    - Description: Adds a location to a focusSession.
+    - Returns: void
+    */
+    func addLocationToFocusSession(sessionID: UUID, location: String) throws {
+        let insert = locationVisitedTable.table.insert(
+            locationVisitedTable.focusSessionID <- sessionID,
+            locationVisitedTable.location <- location
+        )
+        try db?.run(insert)
+    }
 }
     

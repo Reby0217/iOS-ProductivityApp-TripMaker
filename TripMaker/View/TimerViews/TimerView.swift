@@ -129,6 +129,8 @@ struct TimerView: View {
                             print("Unlock location \(locations[currentLocationIndex])")
                         }
                         
+                        try self.dbManager.addLocationToFocusSession(sessionID: newSessionID, location: locations[currentLocationIndex])
+                        
                         // Update user stats
                         do {
                             try dbManager.updateUserStats(userID: userID, focusTime: self.totalTime)

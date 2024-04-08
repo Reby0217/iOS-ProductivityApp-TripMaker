@@ -11,6 +11,7 @@ import SQLite
 
 
 class DBManager {
+    
     static let shared = DBManager()
     
     var db: Connection?
@@ -219,11 +220,9 @@ class DBManager {
                 let _ = try createFocusSession(userID: userID, startTime: startTime, duration: endTime.timeIntervalSince(startTime))
             }
         }
-        
-        fetchInfoFromApi()
     }
     
-    private func fetchInfoFromApi(){
+    func fetchInfoFromApi(){
         let url = urlTask()
         var locations: [String] = []
         do {
@@ -234,8 +233,6 @@ class DBManager {
         for location in locations {
             url.fetchLocationDescription(for: location)
             url.fetchLocationPicture(for: location)
-            
-            
         }
     }
 }

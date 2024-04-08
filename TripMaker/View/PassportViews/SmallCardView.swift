@@ -24,14 +24,14 @@ struct SmallCardView: View {
                         .resizable()
                         .frame(width: 120, height: 120)
                         .cornerRadius(10)
-                        .matchedGeometryEffect(id: "image", in: namespace)
+                        //.matchedGeometryEffect(id: "image", in: namespace)
                     
                     VStack(alignment: .leading) {
                         Spacer()
                         Text(route)
                             .font(.custom("Noteworthy", size: 28))
                             .foregroundColor(Color.black)
-                            .matchedGeometryEffect(id: "title", in: namespace)
+                        //    .matchedGeometryEffect(id: "title", in: namespace)
                         Spacer()
                         //blurTags(tags: ["SwiftUI"], namespace: namespace)
                         //Spacer()
@@ -40,7 +40,7 @@ struct SmallCardView: View {
                                 .font(.custom("Noteworthy", size: 20))
                                 .foregroundColor(.black)
                             Stars(star: 5)
-                                .matchedGeometryEffect(id: "stars", in: namespace)
+                        //        .matchedGeometryEffect(id: "stars", in: namespace)
                         }
                         Spacer()
                     }.padding(.leading)

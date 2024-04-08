@@ -26,6 +26,17 @@ struct TimerView: View {
     
     @State private var focusSessionID: UUID?
     @State private var userID: UUID?
+    private var currentLocationIndex: Int {
+        do {
+            let unlockedLocations = try dbManager.fetchUnlockedLocations(routeName: routeName)
+            return unlockedLocations.count
+            print("current location \(self.currentLocationIndex)")
+
+        } catch {
+            print("Failed to fetch current location index for '\(routeName)': \(error)")
+        }
+        return 1
+    }
 
     init(routeName: String, totalTime: TimeInterval) {
         self.routeName = routeName
@@ -36,7 +47,7 @@ struct TimerView: View {
 
     var body: some View {
         VStack {
-            RouteProgress(route: routeName, counter:  Int(totalTime - timeRemaining), countTo: Int(totalTime), startPos: 5)
+            RouteProgress(route: routeName, counter:  Int(totalTime - timeRemaining), countTo: Int(totalTime), startPos: currentLocationIndex)
                 .frame(width: 400, height: 400)
                 //.scaledToFit()
                 //.padding()
@@ -79,6 +90,7 @@ struct TimerView: View {
             self.startTimer()
             self.startCancelTimer()
             self.loadImage()
+            //fetchCurrentLocationIndex()
         }
         .onDisappear {
             self.timerSubscription?.cancel()
@@ -111,6 +123,12 @@ struct TimerView: View {
                         self.showBackButton = true
                         print("Save focus session with ID \(newSessionID)")
                         
+                        let locations = try self.dbManager.fetchAllLocationsInOrder(routeName: routeName)
+                        if (currentLocationIndex < locations.count){
+                            try self.dbManager.updateLocationLockStatus(name: locations[currentLocationIndex], isLocked: false)
+                            print("Unlock location \(locations[currentLocationIndex])")
+                        }
+                        
                         // Update user stats
                         do {
                             try dbManager.updateUserStats(userID: userID, focusTime: self.totalTime)
@@ -142,7 +160,7 @@ struct TimerView: View {
             }
         }
     }
-
+    
     private func startCancelTimer() {
         self.cancelTimerSubscription = Timer.publish(every: 1, on: .main, in: .common).autoconnect().sink { _ in
             if self.cancelTimeRemaining > 0 {

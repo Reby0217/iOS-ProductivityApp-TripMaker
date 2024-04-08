@@ -23,7 +23,7 @@ struct BigCardView: View {
                     .frame(height: 160)
                     .frame(maxHeight: .infinity)
                     .cornerRadius(10)
-                    .matchedGeometryEffect(id: "image", in: namespace)
+                    //.matchedGeometryEffect(id: "image", in: namespace)
                 Spacer()
                 VStack(alignment: .leading) {
                     HStack {
@@ -31,7 +31,7 @@ struct BigCardView: View {
                         Spacer()
                         Image(systemName: "ellipsis")
                             .foregroundColor(Color.white)
-                            .matchedGeometryEffect(id: "ellipsis", in: namespace)
+                            //.matchedGeometryEffect(id: "ellipsis", in: namespace)
                     }
                     
                     Spacer()
@@ -39,10 +39,10 @@ struct BigCardView: View {
                         .foregroundColor(Color.black)
                         .matchedGeometryEffect(id: "title", in: namespace)
                     Spacer()
-                    HStack {
-                        Stars(star: 4)
-                            .matchedGeometryEffect(id: "stars", in: namespace)
-                    }
+                    //HStack {
+                    //    Stars(star: 4)
+                    //        .matchedGeometryEffect(id: "stars", in: namespace)
+                    //}
                 }
                 Spacer()
                 VStack {

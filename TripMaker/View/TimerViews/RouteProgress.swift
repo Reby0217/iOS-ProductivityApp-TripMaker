@@ -18,7 +18,7 @@ struct RouteProgress: View {
     }
     @State var startPos: Int = 0
     var curPos: CGPoint {
-        pointOnQuadraticBezier(startPoint: segments[startPos+1]!["startPoint"]!, controlPoint: segments[startPos+1]!["controlPoint"]!, endPoint: segments[startPos+1]!["endPoint"]!, progress: currentProgress)
+        pointOnQuadraticBezier(startPoint: segments[startPos]!["startPoint"]!, controlPoint: segments[startPos]!["controlPoint"]!, endPoint: segments[startPos]!["endPoint"]!, progress: currentProgress)
     }
     
     @State var width: CGFloat = 400
@@ -45,7 +45,7 @@ struct RouteProgress: View {
             
                 
             // Previous Progress
-            ForEach(0..<Int(startPos+1)){ key in
+            ForEach(0..<Int(startPos)){ key in
                 GeometryReader { geometry in
                         
                     Path { path in
@@ -67,7 +67,7 @@ struct RouteProgress: View {
                     Path { path in
                         // Define the path of the route
                         
-                        let cur = pointOnQuadraticBezier(startPoint: segments[startPos+1]!["startPoint"]!, controlPoint: segments[startPos+1]!["controlPoint"]!, endPoint: segments[startPos+1]!["endPoint"]!, progress: currentProgress*Double(index)/Double(100))
+                        let cur = pointOnQuadraticBezier(startPoint: segments[startPos]!["startPoint"]!, controlPoint: segments[startPos]!["controlPoint"]!, endPoint: segments[startPos]!["endPoint"]!, progress: currentProgress*Double(index)/Double(100))
                         //print("progress: ", currentProgress*Double(index)/Double(1000))
                         
                         if index != 0 && index != 100 {
@@ -109,6 +109,7 @@ struct RouteProgress: View {
                     
         }
         .onAppear {
+            print("current location index \(startPos)")
             DispatchQueue.main.async {
                 let db = DBManager.shared
                 do {

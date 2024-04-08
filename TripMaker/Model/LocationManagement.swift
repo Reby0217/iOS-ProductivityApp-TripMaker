@@ -57,16 +57,49 @@ extension DBManager {
     }
     
     /**
+     - Description: Retrieves all locations associated with a given route name in order.
+     - Returns: An array of Location names, each representing a location on the route.
+     */
+    func fetchAllLocationsInOrder(routeName: String) throws -> [String] {
+        let locationsQuery = locationTable.table
+            .select(locationTable.name, locationTable.index)
+            .filter(locationTable.route == routeName)
+        
+        let locationRecords = try db?.prepare(locationsQuery)
+        let locations = locationRecords?.compactMap { record in
+            return (name: record[locationTable.name], index: record[locationTable.index])
+        } ?? []
+        
+        // Sort the locations by index
+        let sortedLocations = locations.sorted(by: { $0.index < $1.index })
+        
+        // Extract only the names
+        let names = sortedLocations.map { $0.name }
+        
+        return names
+    }
+    
+    /**
      - Description: Retrieves unlocked locations associated with a given route name.
-     - Returns: An array of Location objects, each representing a location on the route with its associated tags.
+     - Returns: An array of Location names, each representing a location on the route.
      */
     func fetchUnlockedLocations(routeName: String) throws -> [String] {
-        let locationsQuery = locationTable.table.filter(locationTable.route == routeName)
-        //.filter(locationTable.isLocked == false)
-        let locationRecords = try db?.prepare(locationsQuery)
-        let locations = locationRecords?.map { $0[locationTable.name] } ?? []
+        let locationsQuery = locationTable.table
+            .select(locationTable.name, locationTable.index)
+            .filter(locationTable.route == routeName && locationTable.isLocked == false)
         
-        return locations
+        let locationRecords = try db?.prepare(locationsQuery)
+        let locations = locationRecords?.compactMap { record in
+            return (name: record[locationTable.name], index: record[locationTable.index])
+        } ?? []
+        
+        // Sort the locations by index
+        let sortedLocations = locations.sorted(by: { $0.index < $1.index })
+        
+        // Extract only the names
+        let names = sortedLocations.map { $0.name }
+        
+        return names
     }
     
     /**

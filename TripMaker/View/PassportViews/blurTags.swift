@@ -20,7 +20,7 @@ struct blurTags:  View {
                     .font(.caption)
                     
             }
-        }.matchedGeometryEffect(id: "tags", in: namespace)
+        }
     }
 }
 

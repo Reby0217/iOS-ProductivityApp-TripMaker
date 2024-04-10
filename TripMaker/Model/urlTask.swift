@@ -35,7 +35,7 @@ class urlTask {
     let imageSize = "/600x600"
         
     
-    let authString = "pPxiEaowEXFSgmLexE1QbvWaDL2AegFje6OHZbv9aHA"
+    //let authString = "pPxiEaowEXFSgmLexE1QbvWaDL2AegFje6OHZbv9aHA"
     
     let wikiBaseURL = "https://en.wikipedia.org/api/rest_v1/page/summary/"
     
@@ -51,7 +51,7 @@ class urlTask {
     }
     
     
-//    let authString = "aTMxKAZwBPS8eLOk2WRJFJMSCkTX5_zxTGiHmuhEHG0"
+    let authString = "aTMxKAZwBPS8eLOk2WRJFJMSCkTX5_zxTGiHmuhEHG0"
     
     func httpString(locationName: String) -> String {
         return baseURL + locationName + imageSize

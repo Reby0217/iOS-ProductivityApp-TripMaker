@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// ref: https://github.com/MyNameIsBond/customLists/tree/main/customList
 struct BigCardView: View {
     //@Namespace var namespace
     let namespace: Namespace.ID

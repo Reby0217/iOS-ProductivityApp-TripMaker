@@ -19,7 +19,7 @@ struct LocationView: View {
                 .scaledToFit()
                 .frame(width: 400, height: 400)
                 .padding()
-            Text(locationDetail?.name ?? "Taipei 101")
+            Text(locationDetail?.name ?? "")
                 .font(.title)
             Text(locationDetail?.description ?? "")
         }

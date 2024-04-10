@@ -47,6 +47,11 @@ struct PassportView: View {
         NavigationStack {
             ZStack {
                 LinearGradient(gradient: Gradient(colors: [Color.blue.opacity(0.3), Color.green.opacity(0.3), Color.yellow.opacity(0.3)]), startPoint: .topLeading, endPoint: .bottomTrailing).ignoresSafeArea()
+                Image("passport-background")
+                    .resizable()
+                    //.scaledToFill()
+                    .opacity(0.3)
+                    .ignoresSafeArea()
 
                 ScrollView {
                     HStack{
@@ -56,6 +61,7 @@ struct PassportView: View {
                             Image(systemName: "list.bullet")
                                 .resizable()
                                 .frame(width: 28, height: 24)
+                                .foregroundColor(.orange)
                         }
                         Spacer()
                     }

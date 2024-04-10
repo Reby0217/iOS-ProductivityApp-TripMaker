@@ -10,14 +10,14 @@ import SwiftUI
 struct blurTags:  View {
     
     var tags: Array<String>
-    let namespace: Namespace.ID
+    var size: CGFloat = 14
     var body: some View {
         HStack {
             ForEach(tags, id: \.self) { tag in
                 Text("\(tag)")
+                    .font(Font.custom("Bradley Hand", size: size))
                     .fontWeight(.semibold)
                     .foregroundColor(.gray)
-                    .font(.caption)
                     
             }
         }

@@ -169,11 +169,11 @@ class DBManager {
         
         try addLocationToRoute(index: 1, routeName: "Taiwan", name: "Longshan Temple", realPicture: "", description: "", isLocked: false)
         try addLocationToRoute(index: 2, routeName: "Taiwan", name: "National Taichung Theater", realPicture: "", description: "", isLocked: false)
-        try addLocationToRoute(index: 3, routeName: "Taiwan", name: "Lanyang Museum", realPicture: "", description: "", isLocked: false)
+        try addLocationToRoute(index: 3, routeName: "Taiwan", name: "Jiufen", realPicture: "", description: "", isLocked: false)
         try addLocationToRoute(index: 4, routeName: "Taiwan", name: "Taipei 101", realPicture: "", description: "", isLocked: true)
-        try addLocationToRoute(index: 5, routeName: "Taiwan", name: "85 Sky Tower", realPicture: "", description: "", isLocked: true)
-        try addLocationToRoute(index: 6, routeName: "Taiwan", name: "Baguashan Buddha", realPicture: "", description: "", isLocked: true)
-        try addLocationToRoute(index: 7, routeName: "Taiwan", name: "Queen’S Head Rock", realPicture: "", description: "", isLocked: true)
+        try addLocationToRoute(index: 5, routeName: "Taiwan", name: "The Dome of Light", realPicture: "", description: "", isLocked: true)
+        try addLocationToRoute(index: 6, routeName: "Taiwan", name: "Fo Guang Shan Buddha Museum", realPicture: "", description: "", isLocked: true)
+        try addLocationToRoute(index: 7, routeName: "Taiwan", name: "Queen’s Head Rock", realPicture: "", description: "", isLocked: true)
         try addLocationToRoute(index: 8, routeName: "Taiwan", name: "Chiang Kai-shek Memorial Hall", realPicture: "", description: "", isLocked: true)
         
         

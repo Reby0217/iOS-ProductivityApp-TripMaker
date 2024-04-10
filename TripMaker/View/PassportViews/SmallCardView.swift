@@ -24,23 +24,20 @@ struct SmallCardView: View {
                         .resizable()
                         .frame(width: 120, height: 120)
                         .cornerRadius(10)
-                        //.matchedGeometryEffect(id: "image", in: namespace)
                     
                     VStack(alignment: .leading) {
                         Spacer()
                         Text(route)
                             .font(.custom("Noteworthy", size: 28))
                             .foregroundColor(Color.black)
-                        //    .matchedGeometryEffect(id: "title", in: namespace)
                         Spacer()
                         //blurTags(tags: ["SwiftUI"], namespace: namespace)
                         //Spacer()
                         HStack {
                             Text("Level: ")
-                                .font(.custom("Noteworthy", size: 20))
+                                .font(Font.custom("Bradley Hand", size: 20))
                                 .foregroundColor(.black)
-                            Stars(star: 5)
-                        //        .matchedGeometryEffect(id: "stars", in: namespace)
+                            Stars(star: 3)
                         }
                         Spacer()
                     }.padding(.leading)

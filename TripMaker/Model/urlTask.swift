@@ -30,9 +30,13 @@ class urlTask {
     var image: [String: String] = [:]
     
 //    var httpString = "https://api.unsplash.com/photos/random?query=taipei/600x600"
-    let baseURL = "https://api.unsplash.com/photos/random?query="
-    var locationName = "Taipei 101"
-    let imageSize = "/600x600"
+    let baseURL = "https://api.unsplash.com/photos/"
+    let imageSize = "/300x400"
+    
+    let photoId: [String: [String: String]] = [
+        "Taiwan": ["Longshan Temple": "krPkCYVahXc", "National Taichung Theater": "31UvcGZKgS8", "Jiufen": "UDv1n0xIpU8", "Taipei 101": "qhu2nFWqVEU",
+                   "The Dome of Light": "4SD7fsm4NRQ", "Fo Guang Shan Buddha Museum": "sxXm1_Jf-ns", "Queen’s Head Rock" : "Rh5TxWLjF4", "Chiang Kai shek Memorial Hall": "IPMOJ8I5Ltg"]
+    ]
         
     
     //let authString = "pPxiEaowEXFSgmLexE1QbvWaDL2AegFje6OHZbv9aHA"
@@ -41,20 +45,11 @@ class urlTask {
     
     var locationDescription: [String: String] = [:]
     
-    var locations: [String] {
-        do {
-            return try db.fetchAllLocationsInOrder(routeName: "Taiwan")
-        } catch {
-            print("error fetching locations for Taiwan")
-        }
-        return []
-    }
-    
     
     let authString = "aTMxKAZwBPS8eLOk2WRJFJMSCkTX5_zxTGiHmuhEHG0"
     
-    func httpString(locationName: String) -> String {
-        return baseURL + locationName + imageSize
+    func httpString(route: String, locationName: String) -> String {
+        return baseURL + (photoId[route]?[locationName] ?? "random")// + imageSize
     }
     
     init() {
@@ -62,15 +57,23 @@ class urlTask {
     }
     
     func fetchLocationPicture(for title: String){
+        var locations: [String] = []
+        do {
+            locations = try db.fetchAllLocationsInOrder(routeName: title)
+        } catch {
+            print("error fetching locations for Taiwan")
+        }
+        print("start fetching pictures\n")
         for location in locations {
             
-            download(urlString: httpString(locationName: location)) { [weak self] imageString in
+            download(urlString: httpString(route: title, locationName: location)) { [weak self] imageString in
                 guard let self = self, let imageString = imageString else {
                     print("Failed to download image.")
                     return
                 }
                 
                 DispatchQueue.main.async {
+                    print(imageString)
                     self.image[location] = imageString
                     
                     do {
@@ -105,8 +108,11 @@ class urlTask {
                 return
             }
             
+            print("piture ~~~~~~\n~~~~~~~~")
+            
             guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
                 print("Invalid response from server.")
+                print(response.debugDescription)
                 completion(nil)
                 return
             }

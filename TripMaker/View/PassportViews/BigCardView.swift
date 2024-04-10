@@ -24,21 +24,20 @@ struct BigCardView: View {
                     .frame(height: 160)
                     .frame(maxHeight: .infinity)
                     .cornerRadius(10)
-                    //.matchedGeometryEffect(id: "image", in: namespace)
+                    
                 Spacer()
                 VStack(alignment: .leading) {
-                    HStack {
-                        blurTags(tags: locationDetail?.tagsArray ?? [], namespace: namespace)
-                        Spacer()
-                        Image(systemName: "ellipsis")
-                            .foregroundColor(Color.white)
-                            //.matchedGeometryEffect(id: "ellipsis", in: namespace)
-                    }
                     
                     Spacer()
                     Text(locationDetail?.name ?? "")
+                        .font(.custom("Noteworthy", size: 22))
                         .foregroundColor(Color.black)
-                    //    .matchedGeometryEffect(id: "title", in: namespace)
+                    
+                    HStack {
+                        blurTags(tags: locationDetail?.tagsArray ?? [])
+                        Spacer()
+                    }
+                    
                     Spacer()
                     //HStack {
                     //    Stars(star: 4)

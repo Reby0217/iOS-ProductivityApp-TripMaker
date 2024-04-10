@@ -9,8 +9,6 @@ import SwiftUI
 
 // ref: https://github.com/MyNameIsBond/customLists/tree/main/customList
 struct BigCardView: View {
-    //@Namespace var namespace
-    let namespace: Namespace.ID
     
     @State var location: String = "Taiwan"
     @State var image: Image?

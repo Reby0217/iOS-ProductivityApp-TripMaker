@@ -72,7 +72,7 @@ struct PassportView: View {
                                 self.isPresented = true
                                 self.selectedRoute = route
                             }) {
-                                SmallCardView(namespace: namespace, route: route)
+                                SmallCardView(route: route)
                                 .padding()
                                 .frame(maxWidth: .infinity)
                                 .frame(height: 150)

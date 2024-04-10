@@ -16,54 +16,40 @@ struct RouteView: View {
     @State var selectedLocation = ""
     
     var body: some View {
-        NavigationStack {
-            ZStack {
-                LinearGradient(gradient: Gradient(colors: [Color.blue.opacity(0.3), Color.green.opacity(0.3), Color.yellow.opacity(0.3)]), startPoint: .topLeading, endPoint: .bottomTrailing).ignoresSafeArea()
-                Image("passport-background")
-                    .resizable()
-                    //.scaledToFill()
-                    .opacity(0.3)
-                    .ignoresSafeArea()
 
-                ScrollView {
-                    /*
-                    HStack{
-                        Button{
-                            presentSideMenu.toggle()
-                        } label: {
-                            Image(systemName: "list.bullet")
-                                .resizable()
-                                .frame(width: 28, height: 24)
-                        }
-                        Spacer()
-                    }
-                    .padding(.horizontal, 24)
-                     */
-                    VStack {
-                        ForEach(locations, id: \.self) { location in
-                            Button(action: {
-                                self.isPresented = true
-                                self.selectedLocation = location
-                            }) {
-                                BigCardView(namespace: namespace, location: location)
-                                .padding()
-                                .frame(maxWidth: .infinity)
-                                .frame(height: 270)
-                                .background(BlurView(style: .regular))
-                                .cornerRadius(10)
-                                .padding(.vertical,6)
-                                .padding(.horizontal)
-                            }
-                            //CardDetector(position: self.position, route: route)
-                        }
-                        .navigationDestination(isPresented: $isPresented) {
-                            LocationView(location: selectedLocation)
+        ZStack {
+            LinearGradient(gradient: Gradient(colors: [Color.blue.opacity(0.3), Color.green.opacity(0.3), Color.yellow.opacity(0.3)]), startPoint: .topLeading, endPoint: .bottomTrailing).ignoresSafeArea()
+            Image("passport-background")
+                .resizable()
+                //.scaledToFill()
+                .opacity(0.3)
+                .ignoresSafeArea()
+
+            ScrollView {
+                VStack {
+                    ForEach(locations, id: \.self) { location in
+                        Button(action: {
+                            self.isPresented = true
+                            self.selectedLocation = location
+                        }) {
+                            BigCardView(location: location)
+                            .padding()
+                            .frame(maxWidth: .infinity)
+                            .frame(height: 270)
+                            .background(BlurView(style: .regular))
+                            .cornerRadius(10)
+                            .padding(.vertical,6)
+                            .padding(.horizontal)
                         }
                     }
+                    .navigationDestination(isPresented: $isPresented) {
+                        LocationView(location: selectedLocation)
+                    }
+                }
                     
-                }.frame(maxWidth: .infinity, maxHeight: .infinity)
-            }
+            }.frame(maxWidth: .infinity, maxHeight: .infinity)
         }
+
         .onAppear {
             DispatchQueue.main.async {
                 let db = DBManager.shared

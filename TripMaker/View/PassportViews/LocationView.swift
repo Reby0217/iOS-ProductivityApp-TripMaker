@@ -18,12 +18,15 @@ struct LocationView: View {
                 .resizable()
                 .scaledToFit()
                 .frame(width: 400, height: 400)
-                .padding(.bottom, 20)
+                //.padding(.bottom, 20)
             HStack{
                 VStack{
-                    Text(locationDetail?.name ?? "Taipei 101")
-                        .font(Font.custom("Noteworthy", size: 30))
-                        .multilineTextAlignment(.leading)
+                    HStack {
+                        Text(locationDetail?.name ?? "Taipei 101")
+                            .font(Font.custom("Noteworthy", size: 30))
+                            .multilineTextAlignment(.leading)
+                        Spacer()
+                    }
                         
                     blurTags(tags: locationDetail?.tagsArray ?? ["test", "test"], size: 16)
                 }
@@ -32,7 +35,7 @@ struct LocationView: View {
                     .resizable()
                     .frame(width: 80, height: 80)
             }
-            .padding(.horizontal, 25)
+            .padding(25)
             Spacer()
             Text(locationDetail?.description ?? "")
                 .font(.custom("Comic Sans MS", size: 18))

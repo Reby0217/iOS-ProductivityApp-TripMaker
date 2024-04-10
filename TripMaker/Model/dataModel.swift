@@ -167,7 +167,7 @@ class DBManager {
         
         try addRoute(name: "Taiwan", mapPicture: mapPictureString)
         
-        try addLocationToRoute(index: 1, routeName: "Taiwan", name: "Longshan Temple", realPicture: "", description: "", isLocked: false)
+        try addLocationToRoute(index: 1, routeName: "Taiwan", name: "Bangka Lungshan Temple", realPicture: "", description: "", isLocked: false)
         try addLocationToRoute(index: 2, routeName: "Taiwan", name: "National Taichung Theater", realPicture: "", description: "", isLocked: false)
         try addLocationToRoute(index: 3, routeName: "Taiwan", name: "Jiufen", realPicture: "", description: "", isLocked: false)
         try addLocationToRoute(index: 4, routeName: "Taiwan", name: "Taipei 101", realPicture: "", description: "", isLocked: true)
@@ -235,7 +235,7 @@ class DBManager {
         }
         for location in locations {
             url.fetchLocationDescription(for: location)
-            url.fetchLocationPicture(for: location)
+            url.fetchLocationPicture(route: "Taiwan", for: location)
         }
     }
 }

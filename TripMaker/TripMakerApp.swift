@@ -21,7 +21,7 @@ struct TripMakerApp: App {
             
             //try dbManager.addDummyData()
             dbManager.fetchInfoFromApi()
-            dbManager.inspectAllTables()
+            //dbManager.inspectAllTables()
         } catch {
             print("An error occurred while initializing dummy data: \(error)")
         }

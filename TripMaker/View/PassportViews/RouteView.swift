@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct RouteView: View {
-    @Namespace var namespace
+    @Environment(\.presentationMode) var presentationMode
     
     @State var route: String
     @State var locations: [String] = []
@@ -48,6 +48,18 @@ struct RouteView: View {
                 }
                     
             }.frame(maxWidth: .infinity, maxHeight: .infinity)
+        }
+        .toolbarBackground(.hidden, for: .navigationBar)
+        .navigationBarBackButtonHidden()
+        .toolbar{
+            ToolbarItem(placement: .navigationBarLeading, content: {
+                Button(action: {
+                    presentationMode.wrappedValue.dismiss()
+                }, label: {
+                    Image(systemName: "chevron.backward.circle")
+                        .font(.title2)
+                })
+            })
         }
 
         .onAppear {

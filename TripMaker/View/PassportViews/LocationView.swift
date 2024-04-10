@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct LocationView: View {
+    @Environment(\.presentationMode) var presentationMode
+    
     @State var location: String
     @State var locationDetail: Location?
     
@@ -16,9 +18,12 @@ struct LocationView: View {
         VStack{
             imageFromString(locationDetail?.realPicture ?? "")?
                 .resizable()
-                .scaledToFit()
-                .frame(width: 400, height: 400)
-                //.padding(.bottom, 20)
+                .aspectRatio(contentMode: .fill)
+                .frame(width: 395, height: 380)
+                .cornerRadius(30.0)
+                .padding(.top, -100)
+                .shadow(radius: 15)
+            //.padding(.bottom, 20)
             HStack{
                 VStack{
                     HStack {
@@ -27,13 +32,14 @@ struct LocationView: View {
                             .multilineTextAlignment(.leading)
                         Spacer()
                     }
-                        
+                    
                     blurTags(tags: locationDetail?.tagsArray ?? ["test", "test"], size: 16)
                 }
                 Spacer()
                 Image(locationDetail?.name ?? "Taipei 101")
                     .resizable()
                     .frame(width: 80, height: 80)
+
             }
             .padding(25)
             Spacer()
@@ -41,6 +47,18 @@ struct LocationView: View {
                 .font(.custom("Comic Sans MS", size: 18))
                 .padding(.horizontal, 25)
             Spacer()
+        }
+        .toolbarBackground(.hidden, for: .navigationBar)
+        .navigationBarBackButtonHidden()
+        .toolbar{
+            ToolbarItem(placement: .navigationBarLeading, content: {
+                Button(action: {
+                    presentationMode.wrappedValue.dismiss()
+                }, label: {
+                    Image(systemName: "chevron.backward.circle")
+                        .font(.title2)
+                })
+            })
         }
         .onAppear {
             DispatchQueue.main.async {

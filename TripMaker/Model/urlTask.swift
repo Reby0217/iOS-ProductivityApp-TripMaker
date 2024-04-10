@@ -23,18 +23,17 @@ struct WikipediaResponse: Decodable {
     let extract: String
 }
 
-//@Observable
 class urlTask {
     var finished = false
     let db: DBManager
-    var image: [String: String] = [:]
+    //var image: [String: String] = [:]
     
 //    var httpString = "https://api.unsplash.com/photos/random?query=taipei/600x600"
     let baseURL = "https://api.unsplash.com/photos/"
     let imageSize = "/300x400"
     
     let photoId: [String: [String: String]] = [
-        "Taiwan": ["Longshan Temple": "krPkCYVahXc", "National Taichung Theater": "31UvcGZKgS8", "Jiufen": "UDv1n0xIpU8", "Taipei 101": "qhu2nFWqVEU",
+        "Taiwan": ["Bangka Lungshan Temple": "krPkCYVahXc", "National Taichung Theater": "31UvcGZKgS8", "Jiufen": "UDv1n0xIpU8", "Taipei 101": "qhu2nFWqVEU",
                    "The Dome of Light": "4SD7fsm4NRQ", "Fo Guang Shan Buddha Museum": "sxXm1_Jf-ns", "Queen’s Head Rock" : "Rh5TxWLjF4", "Chiang Kai shek Memorial Hall": "IPMOJ8I5Ltg"]
     ]
         
@@ -43,7 +42,7 @@ class urlTask {
     
     let wikiBaseURL = "https://en.wikipedia.org/api/rest_v1/page/summary/"
     
-    var locationDescription: [String: String] = [:]
+    //var locationDescription: [String: String] = [:]
     
     
     let authString = "aTMxKAZwBPS8eLOk2WRJFJMSCkTX5_zxTGiHmuhEHG0"
@@ -56,36 +55,36 @@ class urlTask {
         db = DBManager.shared
     }
     
-    func fetchLocationPicture(for title: String){
-        var locations: [String] = []
+    func fetchLocationPicture(route: String, for title: String){
+        
         do {
-            locations = try db.fetchAllLocationsInOrder(routeName: title)
-        } catch {
-            print("error fetching locations for Taiwan")
+            let detail = try db.fetchLocationDetails(name: title)
+            if detail.realPicture != "" {
+                return
+            }
+        } catch{
+            print("picture already in the database")
         }
-        print("start fetching pictures\n")
-        for location in locations {
+        
             
-            download(urlString: httpString(route: title, locationName: location)) { [weak self] imageString in
-                guard let self = self, let imageString = imageString else {
-                    print("Failed to download image.")
-                    return
-                }
+        download(urlString: httpString(route: route, locationName: title)) { [weak self] imageString in
+            guard let self = self, let imageString = imageString else {
+                print("Failed to download image.")
+                return
+            }
                 
-                DispatchQueue.main.async {
-                    print(imageString)
-                    self.image[location] = imageString
+            DispatchQueue.main.async {
+                //print(imageString)
                     
-                    do {
-                        try self.db.updateLocatioPicture(name: location, newRealPicture: self.image[location] ?? "")
+                do {
+                    try self.db.updateLocatioPicture(name: title, newRealPicture: imageString ?? "")
                         
-                        //print("Location added with name: \(self.locationName)")
-                    } catch {
-                        print("Database operation error: \(error)")
-                    }
-                    
-                    self.finished = true
+                    //print("Location added with name: \(self.locationName)")
+                } catch {
+                    print("Database operation error: \(error)")
                 }
+                    
+                self.finished = true
             }
         }
     }
@@ -108,11 +107,11 @@ class urlTask {
                 return
             }
             
-            print("piture ~~~~~~\n~~~~~~~~")
             
             guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
                 print("Invalid response from server.")
-                print(response.debugDescription)
+//                print(response.debugDescription)
+                print(String(describing: response))
                 completion(nil)
                 return
             }
@@ -150,6 +149,16 @@ class urlTask {
     }
     
     func fetchLocationDescription(for title: String) {
+        
+        do {
+            let detail = try db.fetchLocationDetails(name: title)
+            if detail.description != "" {
+                return
+            }
+        } catch{
+            print("description already in the database")
+        }
+        
         let formattedTitle = title.replacingOccurrences(of: " ", with: "_")
         let entireUrl = wikiBaseURL + formattedTitle
         
@@ -165,7 +174,7 @@ class urlTask {
             }
             
             guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
-                print("Invalid response from server.")
+                print("Description Invalid response from server.")
                 return
             }
             
@@ -183,8 +192,8 @@ class urlTask {
                     sentences += "."
                 }
                 
-                self.locationDescription[title] = sentences
-                try self.db.updateLocatioDescription(name: title, newDescription: self.locationDescription[title] ?? "")
+                //self.locationDescription[title] = sentences
+                try self.db.updateLocatioDescription(name: title, newDescription: sentences ?? "")
                 
                 print("\nDescription for \(title):")
                 print(sentences)

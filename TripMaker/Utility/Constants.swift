@@ -10,6 +10,7 @@ import UIKit
 
 struct Constants {
     private static let userIDKey = "userIDKey"
+    private static var needsRefresh: Bool = true
 
     static var userID: UUID? {
         get {
@@ -38,6 +39,11 @@ struct Constants {
                 return nil
             }
         }
+    }
+    
+    static func invalidateUserProfileCache() {
+        needsRefresh = true
+        print("User profile cache invalidated.")
     }
     
     static var userName: String {

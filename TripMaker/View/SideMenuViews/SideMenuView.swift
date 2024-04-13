@@ -92,24 +92,8 @@ struct SideMenuView: View {
             Spacer()
         }
         .background(.clear)
-//        .onAppear {
-//            fetchUserProfile()
-//        }
     }
-    
-//    private func fetchUserProfile() {
-//        DispatchQueue.main.async {
-//            do {
-//                if let fetchedUserProfile = try dbManager.fetchUserProfileByUsername(username: self.userName) {
-//                    self.userProfile = fetchedUserProfile
-//                } else {
-//                    print("User profile not found.")
-//                }
-//            } catch {
-//                print("Error fetching user profile: \(error)")
-//            }
-//        }
-//    }
+
 
 }
 

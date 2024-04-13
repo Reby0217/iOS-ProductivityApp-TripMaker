@@ -10,7 +10,31 @@ import SwiftUI
 struct ProfileView: View {
     @Binding var presentSideMenu: Bool
     @State private var editableUsername: String = Constants.userName
+    @State private var selectedImageIndex: Int = 0 {
+        didSet {
+            // Update the editableImage whenever selectedImageIndex changes
+            if let imageName = profileImages[safe: selectedImageIndex], let uiImage = UIImage(named: imageName) {
+                self.editableImage = Image(uiImage: uiImage)
+            }
+        }
+    }
+    @State private var editableImage: Image? = imageFromString(Constants.userProfile?.image ?? "")
     @State private var isEditing: Bool = false
+    let lightPurple = Color(UIColor(red: 217/256, green: 159/256, blue: 255/256, alpha: 1))
+    
+    let brightPink = Color(UIColor(red: 256/256, green: 85/256, blue: 120/256, alpha: 0.8))
+    
+    // Use a computed property to get the current image name based on the selected index.
+    private var currentImageName: String {
+        profileImages[selectedImageIndex]
+    }
+    
+    // Update the editableImage whenever the selection changes.
+    private var currentEditableImage: Image {
+        Image(uiImage: UIImage(named: currentImageName)!)
+    }
+    
+    private let profileImages = ["profilePic", "profilePic1", "profilePic2", "profilePic3"]
     
     private var userProfile: UserProfile? {
         Constants.userProfile
@@ -27,13 +51,11 @@ struct ProfileView: View {
         }.sorted(by: { $0.name < $1.name }) ?? []
     }
 
-    let dbManager = DBManager.shared
-
     var body: some View {
         ZStack {
             LinearGradient(gradient: Gradient(colors: [Color.blue.opacity(0.3), Color.purple.opacity(0.3), Color.pink.opacity(0.3)]), startPoint: .topLeading, endPoint: .bottomTrailing)
                 .edgesIgnoringSafeArea(.all)
-            
+
             ScrollView {
                 VStack(alignment: .leading, spacing: 20) {
                     HStack {
@@ -49,31 +71,50 @@ struct ProfileView: View {
                     }
                     .padding(.horizontal)
                     
-                    // Display the user profile information
                     if let userProfile = userProfile {
                         VStack {
-                            imageFromString(userProfile.image)?
+                            editableImage?
                                 .resizable()
-                                .aspectRatio(contentMode: .fill)
-                                .frame(width: 150, height: 150)
-                                .cornerRadius(75)
-                                .overlay(Circle().stroke(Color.purple.opacity(0.7), lineWidth: 4))
-                                .padding(.top, 20)
+                                 .aspectRatio(contentMode: .fill)
+                                 .frame(width: 150, height: 150)
+                                 .cornerRadius(75)
+                                 .overlay(Circle().stroke(Color.purple.opacity(0.7), lineWidth: 4))
+                                 .padding(.top, 20)
+
                             
-                            // Username field editable
                             if isEditing {
+                                Picker("Select your profile picture:", selection: $selectedImageIndex) {
+                                    ForEach(0..<profileImages.count, id: \.self) { index in
+                                        Text(String("Avatar \(index)"))
+                                            .tag(index)
+                                    }
+                                }
+                                .pickerStyle(SegmentedPickerStyle())
+                                .padding()
+                                .onChange(of: selectedImageIndex, initial: false) { self.editableImage = self.currentEditableImage
+                                }
+                                .pickerStyle(SegmentedPickerStyle())
+                            
                                 TextField("Username", text: $editableUsername)
                                     .textFieldStyle(RoundedBorderTextFieldStyle())
                                     .padding()
-                                Button("Save") {
-                                    saveUsername()
+                                
+                                Button("Save Changes") {
+                                    saveProfileChanges()
                                 }
+                                .padding()
+                                .background(brightPink)
+                                .foregroundColor(Color.white)
+                                .clipShape(Capsule())
+                                
                             } else {
                                 Text(userProfile.username)
                                     .font(.title)
                                     .fontWeight(.bold)
-                                Button("Edit") {
+                                Button("Edit Profile") {
                                     self.isEditing = true
+                                    self.editableUsername = userProfile.username
+                                    self.selectedImageIndex = self.profileImages.firstIndex(of: userProfile.image) ?? 0
                                 }
                             }
                         }
@@ -83,7 +124,6 @@ struct ProfileView: View {
                         Text("Loading profile...")
                             .font(.title)
                     }
-                    
                     // Achievements section
                     Text("My Achievements")
                         .font(Font.custom("Noteworthy", size: 28))
@@ -118,51 +158,82 @@ struct ProfileView: View {
                 }
                 .padding(.horizontal)
             }
+            .onAppear {
+                UISegmentedControl.appearance().selectedSegmentTintColor = UIColor(lightPurple
+                )
+                
+                UISegmentedControl.appearance().setTitleTextAttributes([.foregroundColor: UIColor.white], for: .selected)
+                
+                UISegmentedControl.appearance().setTitleTextAttributes([.foregroundColor: UIColor.black.withAlphaComponent(0.8)], for: .normal)
+            }
         }
-//        .onAppear {
-//            fetchUserProfile()
-//        }
     }
     
-//    private func fetchUserProfile() {
-//        do {
-//            if let fetchedUserProfile = try dbManager.fetchUserProfileByUsername(username: Constants.userName) {
-//                self.userProfile = fetchedUserProfile
-//                self.userRewards = fetchedUserProfile.rewardsArray.compactMap { rewardName in
-//                    do {
-//                        return try dbManager.fetchRewardDetails(name: rewardName)
-//                    } catch {
-//                        print("Error fetching reward details for \(rewardName): \(error)")
-//                        return nil
-//                    }
-//                }.sorted(by: { $0.name < $1.name })
-//            } else {
-//                print("User profile not found.")
-//            }
-//        } catch {
-//            print("Error fetching user profile: \(error)")
-//        }
-//    }
-    
-    private func saveUsername() {
+    private func saveProfileChanges() {
         guard let userID = Constants.userID, !editableUsername.isEmpty else { return }
-        
-        DBManager.shared.isUsernameUnique(editableUsername) { isUnique in
-            if isUnique {
-                do {
-                    try DBManager.shared.updateUsername(userID: userID, newUsername: self.editableUsername)
-                    self.isEditing = false
-                    // Updates the username
-                    Constants.userName = self.editableUsername
-                    
-                    // Refresh userProfile to reflect the username change
-                    let _ = Constants.userProfile
-                } catch {
-                    print("Error updating username: \(error)")
+        // Get the UIImage from the selected index in the picker.
+        if let selectedImage = UIImage(named: profileImages[selectedImageIndex]) {
+            // Convert the UIImage to a Data object and then to a base64 encoded string.
+            let imageString = stringFromImage(selectedImage)
+
+            // Check if the username is unique only if it has been changed.
+            if editableUsername != userProfile?.username {
+                DBManager.shared.isUsernameUnique(editableUsername) { isUnique in
+                    if isUnique {
+                        self.updateUserProfile(userID: userID, newUsername: self.editableUsername, newImage: imageString)
+                    } else {
+                        print("Username is not unique.")
+                    }
                 }
             } else {
-                print("Username is not unique.")
+                // If the username hasn't changed, update the profile with the new image only.
+                self.updateUserProfile(userID: userID, newUsername: editableUsername, newImage: imageString)
             }
+        }
+    }
+
+    private func updateUserProfile(userID: UUID, newUsername: String, newImage: String) {
+        do {
+            try DBManager.shared.updateUserProfile(userID: userID, newUsername: newUsername, newImage: newImage)
+            self.isEditing = false
+            // Invalidate the cached user profile and fetch the updated information.
+            Constants.invalidateUserProfileCache()
+            _ = Constants.userProfile
+            print("Profile successfully updated.")
+        } catch {
+            print("Error updating profile: \(error)")
+        }
+    }
+}
+
+struct ImagePicker: UIViewControllerRepresentable {
+    @Binding var image: UIImage?
+
+    func makeUIViewController(context: Context) -> UIImagePickerController {
+        let picker = UIImagePickerController()
+        picker.delegate = context.coordinator
+        return picker
+    }
+
+    func updateUIViewController(_ uiViewController: UIImagePickerController, context: Context) {}
+
+    func makeCoordinator() -> Coordinator {
+        Coordinator(self)
+    }
+
+    class Coordinator: NSObject, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
+        let parent: ImagePicker
+
+        init(_ parent: ImagePicker) {
+            self.parent = parent
+        }
+
+        func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+            if let image = info[.originalImage] as? UIImage {
+                parent.image = image
+            }
+
+            picker.dismiss(animated: true)
         }
     }
 }
@@ -175,6 +246,11 @@ extension Array {
     }
 }
 
+extension Collection {
+    subscript (safe index: Index) -> Element? {
+        return indices.contains(index) ? self[index] : nil
+    }
+}
 
 #Preview {
     ProfileView(presentSideMenu: .constant(true))

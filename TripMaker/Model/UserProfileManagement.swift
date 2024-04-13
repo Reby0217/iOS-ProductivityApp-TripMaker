@@ -218,4 +218,18 @@ extension DBManager {
         let update = user.update(userProfileTable.username <- newUsername)
         try db?.run(update)
     }
+    
+    /**
+     - Description: Updates the user profile including username and image.
+     - Throws: An `Error` if the update could not be completed.
+     */
+    func updateUserProfile(userID: UUID, newUsername: String, newImage: String) throws {
+        let userProfile = userProfileTable.table.filter(userProfileTable.userID == userID)
+        let update = userProfile.update([
+            userProfileTable.username <- newUsername,
+            userProfileTable.image <- newImage
+        ])
+        try db?.run(update)
+        print("Updated user profile for userID \(userID). New username: \(newUsername). New pic: \(newImage)")
+    }
 }

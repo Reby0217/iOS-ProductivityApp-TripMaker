@@ -105,8 +105,8 @@ struct Constants {
              5 : ["startPoint": route_attractions["Taiwan"]![4], "endPoint": route_attractions["Taiwan"]![5], "controlPoint": CGPoint(x:400 - 315, y:400 - 242)],
              6 : ["startPoint": route_attractions["Taiwan"]![5], "endPoint": route_attractions["Taiwan"]![6], "controlPoint": CGPoint(x:400 - 220, y:400 - 306)],
              7 : ["startPoint": route_attractions["Taiwan"]![6], "endPoint": route_attractions["Taiwan"]![7], "controlPoint": calculateControlPoint(start: route_attractions["Taiwan"]![6], end: route_attractions["Taiwan"]![7], factor: 0)],
-             8 : ["startPoint": route_attractions["Taiwan"]![7], "endPoint": CGPoint(x: 400 - 0,y: 400 - 298), "controlPoint":
-                calculateControlPoint(start: route_attractions["Taiwan"]![7], end: CGPoint(x: 400 - 0,y: 400 - 298), factor: 0)]],
+             8 : ["startPoint": route_attractions["Taiwan"]![7], "endPoint": CGPoint(x: 400 - 15,y: 400 - 298), "controlPoint":
+                calculateControlPoint(start: route_attractions["Taiwan"]![7], end: CGPoint(x: 400 - 15,y: 400 - 298), factor: 0)]],
         "South Korea":
             [0 : ["startPoint": CGPoint(x: 400 - 0,y: 400 - 32), "endPoint": route_attractions["South Korea"]![0], "controlPoint": calculateControlPoint(start: CGPoint(x: 400 - 0,y: 400 - 32), end: route_attractions["South Korea"]![0], factor: 0)],
              1 : ["startPoint": route_attractions["South Korea"]![0], "endPoint": route_attractions["South Korea"]![1], "controlPoint": CGPoint(x: 400 - 320,y: 400 - 24)],

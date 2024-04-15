@@ -35,7 +35,7 @@ struct SmallCardView: View {
                             Text("Level: ")
                                 .font(Font.custom("Bradley Hand", size: 20))
                                 .foregroundColor(.black)
-                            Stars(star: 3)
+                            Stars(star: Constants.route_level[route] ?? 3)
                         }
                         Spacer()
                     }.padding(.leading)

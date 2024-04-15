@@ -44,7 +44,7 @@ struct LocationView: View {
             .padding(25)
             Spacer()
             Text(locationDetail?.description ?? "")
-                .font(.custom("Comic Sans MS", size: 18))
+                .font(.custom("Palatino", size: 18))
                 .padding(.horizontal, 25)
             Spacer()
         }

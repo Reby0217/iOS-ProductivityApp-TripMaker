@@ -34,18 +34,19 @@ class urlTask {
     
     let photoId: [String: [String: String]] = [
         "Taiwan": ["Bangka Lungshan Temple": "krPkCYVahXc", "National Taichung Theater": "31UvcGZKgS8", "Jiufen": "UDv1n0xIpU8", "Taipei 101": "qhu2nFWqVEU",
-                   "The Dome of Light": "4SD7fsm4NRQ", "Fo Guang Shan Buddha Museum": "sxXm1_Jf-ns", "Queen’s Head Rock" : "Rh5TxWLjF4", "Chiang Kai shek Memorial Hall": "IPMOJ8I5Ltg"]
+                   "Formosa Boulevard metro station": "4SD7fsm4NRQ", "Fo Guang Shan Buddha Museum": "sxXm1_Jf-ns", "Yehliu": "_Rh5TxWLjF4", "Chiang Kai-shek Memorial Hall": "K-29Bnhke_E"],
+        "South Korea": ["Gyeongbokgung Palace": "dQytkIHYzYQ", "Myeong-dong": "nq4tcJz77r0", "N Seoul Tower": "zwi5M-SA77I", "Bukchon Hanok Village": "-e6Xu27_T50", "Cheonggyecheon": "wNWxhHjdl6Q", "Haedong Yonggungsa": "kO0w49YXfSY", "Gamcheon Culture Village": "mLKkqlqFiZ4"]
     ]
         
     
-    //let authString = "pPxiEaowEXFSgmLexE1QbvWaDL2AegFje6OHZbv9aHA"
+    let authString = "pPxiEaowEXFSgmLexE1QbvWaDL2AegFje6OHZbv9aHA"
     
     let wikiBaseURL = "https://en.wikipedia.org/api/rest_v1/page/summary/"
     
     //var locationDescription: [String: String] = [:]
     
     
-    let authString = "aTMxKAZwBPS8eLOk2WRJFJMSCkTX5_zxTGiHmuhEHG0"
+    //let authString = "aTMxKAZwBPS8eLOk2WRJFJMSCkTX5_zxTGiHmuhEHG0"
     
     func httpString(route: String, locationName: String) -> String {
         return baseURL + (photoId[route]?[locationName] ?? "random")// + imageSize

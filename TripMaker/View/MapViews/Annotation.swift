@@ -84,12 +84,20 @@ extension MapScene {
         addChild(annotation1)
         annotation1.isUserInteractionEnabled = true
         annotations.append(annotation1)
-            
-        let annotation2 = AnnotationNode(imageNamed: "pin.jpg", routeName: "Taiwan", pos: (340 - frame.size.width / 2, 180 - frame.size.height / 2))
+        
+        let annotation2 = AnnotationNode(imageNamed: "pin.jpg", routeName: "Taiwan", pos: (335 - frame.size.width / 2, 170 - frame.size.height / 2))
         annotation2.setScale(0.05)
-        annotation2.position = CGPoint(x: 340, y: 180)
+        annotation2.position = CGPoint(x: 335, y: 170)
         addChild(annotation2)
         annotation2.isUserInteractionEnabled = true
         annotations.append(annotation2)
+        
+        let annotation3 = AnnotationNode(imageNamed: "pin.jpg", routeName: "South Korea", pos: (350 - frame.size.width / 2, 220 - frame.size.height / 2))
+        annotation3.setScale(0.05)
+        annotation3.position = CGPoint(x: 350, y: 220)
+        addChild(annotation3)
+        annotation3.isUserInteractionEnabled = true
+        annotations.append(annotation3)
+        
     }
 }

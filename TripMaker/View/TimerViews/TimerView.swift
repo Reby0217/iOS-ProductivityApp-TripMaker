@@ -125,11 +125,12 @@ struct TimerView: View {
                         
                         let locations = try self.dbManager.fetchAllLocationsInOrder(routeName: routeName)
                         if (currentLocationIndex < locations.count){
-                            try self.dbManager.updateLocationLockStatus(name: locations[currentLocationIndex], isLocked: false)
                             print("Unlock location \(locations[currentLocationIndex])")
+                            try self.dbManager.addLocationToFocusSession(sessionID: newSessionID, location: locations[currentLocationIndex])
+                            
+                            try self.dbManager.updateLocationLockStatus(name: locations[currentLocationIndex], isLocked: false)
                         }
                         
-                        try self.dbManager.addLocationToFocusSession(sessionID: newSessionID, location: locations[currentLocationIndex])
                         
                         // Update user stats
                         do {

@@ -146,6 +146,7 @@ class DBManager {
  
     private func insertInitialData() throws {
         guard let map_taiwan = UIImage(named: "Taiwan-route.jpg"),
+              let map_korea = UIImage(named: "South Korea-route.jpg"),
               let profilePic = UIImage(named: "profilePic.jpg"),
               let rewardImage0 = UIImage(named: "reward.png"),
               let rewardImage1 = UIImage(named: "reward1.png"),
@@ -156,7 +157,8 @@ class DBManager {
             return
         }
         
-        let mapPictureString = stringFromImage(map_taiwan)
+        let mapTaiwanPictureString = stringFromImage(map_taiwan)
+        let mapKoreaPictureString = stringFromImage(map_korea)
         let profilePicString = stringFromImage(profilePic)
         
         let rewardImageString = stringFromImage(rewardImage0)
@@ -165,16 +167,26 @@ class DBManager {
         let fourthRewardImageStr = stringFromImage(rewardImage3)
         let fifthRewardImageStr = stringFromImage(rewardImage4)
         
-        try addRoute(name: "Taiwan", mapPicture: mapPictureString)
+        try addRoute(name: "Taiwan", mapPicture: mapTaiwanPictureString)
+        try addRoute(name: "South Korea", mapPicture: mapKoreaPictureString)
         
         try addLocationToRoute(index: 1, routeName: "Taiwan", name: "Bangka Lungshan Temple", realPicture: "", description: "", isLocked: false)
         try addLocationToRoute(index: 2, routeName: "Taiwan", name: "National Taichung Theater", realPicture: "", description: "", isLocked: false)
         try addLocationToRoute(index: 3, routeName: "Taiwan", name: "Jiufen", realPicture: "", description: "", isLocked: false)
         try addLocationToRoute(index: 4, routeName: "Taiwan", name: "Taipei 101", realPicture: "", description: "", isLocked: true)
-        try addLocationToRoute(index: 5, routeName: "Taiwan", name: "The Dome of Light", realPicture: "", description: "", isLocked: true)
+        try addLocationToRoute(index: 5, routeName: "Taiwan", name: "Formosa Boulevard metro station", realPicture: "", description: "", isLocked: true)
         try addLocationToRoute(index: 6, routeName: "Taiwan", name: "Fo Guang Shan Buddha Museum", realPicture: "", description: "", isLocked: true)
-        try addLocationToRoute(index: 7, routeName: "Taiwan", name: "Queen’s Head Rock", realPicture: "", description: "", isLocked: true)
+        try addLocationToRoute(index: 7, routeName: "Taiwan", name: "Yehliu", realPicture: "", description: "", isLocked: true)
         try addLocationToRoute(index: 8, routeName: "Taiwan", name: "Chiang Kai-shek Memorial Hall", realPicture: "", description: "", isLocked: true)
+        
+        try addLocationToRoute(index: 1, routeName: "South Korea", name: "Gyeongbokgung Palace", realPicture: "", description: "", isLocked: false)
+        try addLocationToRoute(index: 2, routeName: "South Korea", name: "Myeong-dong", realPicture: "", description: "", isLocked: false)
+        try addLocationToRoute(index: 3, routeName: "South Korea", name: "N Seoul Tower", realPicture: "", description: "", isLocked: false)
+        try addLocationToRoute(index: 4, routeName: "South Korea", name: "Bukchon Hanok Village", realPicture: "", description: "", isLocked: false)
+        try addLocationToRoute(index: 5, routeName: "South Korea", name: "Cheonggyecheon", realPicture: "", description: "", isLocked: true)
+        try addLocationToRoute(index: 6, routeName: "South Korea", name: "Haedong Yonggungsa", realPicture: "", description: "", isLocked: true)
+        try addLocationToRoute(index: 7, routeName: "South Korea", name: "Gamcheon Culture Village", realPicture: "", description: "", isLocked: true)
+
         
         
         try addTagToLocation(name: "Taipei 101", tag: "Engineering Marvel")
@@ -236,6 +248,16 @@ class DBManager {
         for location in locations {
             url.fetchLocationDescription(for: location)
             url.fetchLocationPicture(route: "Taiwan", for: location)
+        }
+        
+        do {
+            locations = try fetchAllLocationsInOrder(routeName: "South Korea")
+        } catch {
+            print("error fetching locations for South Korea")
+        }
+        for location in locations {
+            url.fetchLocationDescription(for: location)
+            url.fetchLocationPicture(route: "South Korea", for: location)
         }
     }
 }

@@ -88,6 +88,7 @@ struct MapView: View {
                 Spacer()
                 
                 Button("Start") {
+                    print("select route: ", selectedRoute)
                     if selectedHours == 0 && selectedMinutes == 0 && selectedSeconds == 0 {
                         showAlert = true
                     } else {
@@ -106,7 +107,7 @@ struct MapView: View {
             }
             .navigationDestination(isPresented: $isNavigatingToTimer) {
                 TimerView(
-                    routeName: "Taiwan",
+                    routeName: selectedRoute,
                     totalTime: TimeInterval((selectedHours * 3600) + (selectedMinutes * 60) + selectedSeconds)
                 )
             }

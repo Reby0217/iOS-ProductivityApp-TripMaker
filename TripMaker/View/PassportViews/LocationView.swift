@@ -27,16 +27,16 @@ struct LocationView: View {
             HStack{
                 VStack{
                     HStack {
-                        Text(locationDetail?.name ?? "Taipei 101")
+                        Text(locationDetail?.name ?? "")
                             .font(Font.custom("Noteworthy", size: 30))
                             .multilineTextAlignment(.leading)
                         Spacer()
                     }
                     
-                    blurTags(tags: locationDetail?.tagsArray ?? ["test", "test"], size: 16)
+                    blurTags(tags: locationDetail?.tagsArray ?? [], size: 16)
                 }
                 Spacer()
-                Image(locationDetail?.name ?? "Taipei 101")
+                Image(locationDetail?.name ?? "")
                     .resizable()
                     .frame(width: 80, height: 80)
 

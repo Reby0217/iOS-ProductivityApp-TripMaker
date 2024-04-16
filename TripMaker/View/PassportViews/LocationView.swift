@@ -36,7 +36,7 @@ struct LocationView: View {
                     blurTags(tags: locationDetail?.tagsArray ?? [], size: 16)
                 }
                 Spacer()
-                Image(locationDetail?.name ?? "")
+                Image(locationDetail?.name ?? "default")
                     .resizable()
                     .frame(width: 80, height: 80)
 

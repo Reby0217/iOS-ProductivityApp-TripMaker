@@ -31,8 +31,8 @@ class DBManager {
     private init() {
         Task {
             try await setupDatabase()
+            fetchInfoFromApi()
         }
-        
     }
 
     private func setupDatabase() async throws {
@@ -54,7 +54,7 @@ class DBManager {
         } catch {
             print("Database setup failed: \(error)")
         }
-
+        inspectAllTables()
     }
 
     private func initializeDatabase(at url: URL) async throws {
@@ -62,7 +62,7 @@ class DBManager {
             db = try Connection(url.path)
             try createTables()
             print("Initialize database...")
-            await try insertInitialData()
+            try await insertInitialData()
         } catch {
             print("Failed to initialize database: \(error)")
         }
@@ -224,8 +224,8 @@ class DBManager {
         let sessionTimes = [
             ("2024-01-01 03:00:00", "2024-01-01 09:35:00"),
             ("2024-01-05 00:00:00", "2024-01-05 22:35:00"),
-            ("2024-01-11 00:00:00", "2024-01-11 23:50:00"),
-            ("2024-01-15 01:00:00", "2024-01-15 23:50:00"),
+            ("2024-01-11 00:00:00", "2024-01-11 14:20:00"),
+            //            ("2024-01-15 01:00:00", "2024-01-15 23:50:00"),
 //            ("2024-04-01 10:15:00", "2024-04-01 12:45:00"),
 //            ("2024-04-01 14:00:00", "2024-04-01 15:00:00"),
 //            ("2024-04-02 11:00:00", "2024-04-02 12:00:00"),
@@ -234,7 +234,7 @@ class DBManager {
             ("\(todayDate) 00:00:00", "\(todayDate) 01:00:00"),
             ("\(todayDate) 02:00:00", "\(todayDate) 02:35:00"),
             ("\(todayDate) 11:00:00", "\(todayDate) 11:50:00"),
-            ("\(todayDate) 21:00:00", "\(todayDate) 21:42:27")
+            ("\(todayDate) 16:00:00", "\(todayDate) 16:42:27")
         ]
         
         for (start, end) in sessionTimes {
@@ -245,27 +245,32 @@ class DBManager {
         }
     }
     
-    func fetchInfoFromApi(){
+    func fetchInfoFromApi() {
         let url = urlTask()
-        var locations: [String] = []
-        do {
-            locations = try fetchAllLocationsInOrder(routeName: "Taiwan")
-        } catch {
-            print("error fetching locations for Taiwan")
-        }
-        for location in locations {
-            url.fetchLocationDescription(for: location)
-            url.fetchLocationPicture(route: "Taiwan", for: location)
+        //var locations: [String] = []
+        Task {
+            do {
+                let locations = try await fetchAllLocationsInOrder(routeName: "Taiwan")
+                print("try to fetch location images")
+                for location in locations {
+                    url.fetchLocationDescription(for: location)
+                    url.fetchLocationPicture(route: "Taiwan", for: location)
+                }
+            } catch {
+                print("error fetching locations for Taiwan")
+            }
+            
+            do {
+                let locations = try await fetchAllLocationsInOrder(routeName: "South Korea")
+                print("try to fetch location descriptions")
+                for location in locations {
+                    url.fetchLocationDescription(for: location)
+                    url.fetchLocationPicture(route: "South Korea", for: location)
+                }
+            } catch {
+                print("error fetching locations for South Korea")
+            }
         }
         
-        do {
-            locations = try fetchAllLocationsInOrder(routeName: "South Korea")
-        } catch {
-            print("error fetching locations for South Korea")
-        }
-        for location in locations {
-            url.fetchLocationDescription(for: location)
-            url.fetchLocationPicture(route: "South Korea", for: location)
-        }
     }
 }

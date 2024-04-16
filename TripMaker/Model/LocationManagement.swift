@@ -60,7 +60,7 @@ extension DBManager {
      - Description: Retrieves all locations associated with a given route name in order.
      - Returns: An array of Location names, each representing a location on the route.
      */
-    func fetchAllLocationsInOrder(routeName: String) throws -> [String] {
+    func fetchAllLocationsInOrder(routeName: String) async throws -> [String] {
         let locationsQuery = locationTable.table
             .select(locationTable.name, locationTable.index)
             .filter(locationTable.route == routeName)

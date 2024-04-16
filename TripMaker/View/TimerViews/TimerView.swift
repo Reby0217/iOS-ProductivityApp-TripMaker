@@ -123,12 +123,14 @@ struct TimerView: View {
                         self.showBackButton = true
                         print("Save focus session with ID \(newSessionID)")
                         
-                        let locations = try self.dbManager.fetchAllLocationsInOrder(routeName: routeName)
-                        if (currentLocationIndex < locations.count){
-                            print("Unlock location \(locations[currentLocationIndex])")
-                            try self.dbManager.addLocationToFocusSession(sessionID: newSessionID, location: locations[currentLocationIndex])
-                            
-                            try self.dbManager.updateLocationLockStatus(name: locations[currentLocationIndex], isLocked: false)
+                        Task {
+                            let locations = try await self.dbManager.fetchAllLocationsInOrder(routeName: routeName)
+                            if (currentLocationIndex < locations.count){
+                                print("Unlock location \(locations[currentLocationIndex])")
+                                try self.dbManager.addLocationToFocusSession(sessionID: newSessionID, location: locations[currentLocationIndex])
+                                
+                                try self.dbManager.updateLocationLockStatus(name: locations[currentLocationIndex], isLocked: false)
+                            }
                         }
                         
                         

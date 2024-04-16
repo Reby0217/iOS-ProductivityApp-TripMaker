@@ -39,14 +39,14 @@ class urlTask {
     ]
         
     
-    let authString = "pPxiEaowEXFSgmLexE1QbvWaDL2AegFje6OHZbv9aHA"
+//    let authString = "pPxiEaowEXFSgmLexE1QbvWaDL2AegFje6OHZbv9aHA"
     
     let wikiBaseURL = "https://en.wikipedia.org/api/rest_v1/page/summary/"
     
     //var locationDescription: [String: String] = [:]
     
     
-    //let authString = "aTMxKAZwBPS8eLOk2WRJFJMSCkTX5_zxTGiHmuhEHG0"
+    let authString = "aTMxKAZwBPS8eLOk2WRJFJMSCkTX5_zxTGiHmuhEHG0"
     
     func httpString(route: String, locationName: String) -> String {
         return baseURL + (photoId[route]?[locationName] ?? "random")// + imageSize
@@ -56,7 +56,7 @@ class urlTask {
         db = DBManager.shared
     }
     
-    func fetchLocationPicture(route: String, for title: String){
+    func fetchLocationPicture(route: String, for title: String) {
         
         do {
             let detail = try db.fetchLocationDetails(name: title)
@@ -68,8 +68,9 @@ class urlTask {
         }
         
             
-        download(urlString: httpString(route: route, locationName: title)) { [weak self] imageString in
-            guard let self = self, let imageString = imageString else {
+        download(urlString: httpString(route: route, locationName: title)) { imageString in
+//            print(String(describing: imageString))
+            guard let imageString = imageString else {
                 print("Failed to download image.")
                 return
             }
@@ -194,7 +195,7 @@ class urlTask {
                 }
                 
                 //self.locationDescription[title] = sentences
-                try self.db.updateLocatioDescription(name: title, newDescription: sentences ?? "")
+                try self.db.updateLocatioDescription(name: title, newDescription: sentences)
                 
                 print("\nDescription for \(title):")
                 print(sentences)

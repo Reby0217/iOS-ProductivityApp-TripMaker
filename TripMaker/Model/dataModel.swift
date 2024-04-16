@@ -8,6 +8,7 @@
 import UIKit
 import Foundation
 import SQLite
+import Combine
 
 
 class DBManager {
@@ -28,10 +29,13 @@ class DBManager {
     let userRewardTable = UserRewardTable()
 
     private init() {
-        setupDatabase()
+        Task {
+            try await setupDatabase()
+        }
+        
     }
 
-    private func setupDatabase() {
+    private func setupDatabase() async throws {
         let fileManager = FileManager.default
         guard let cloudURL = fileManager.url(forUbiquityContainerIdentifier: nil)?.appendingPathComponent("Documents") else {
             print("Unable to access iCloud Account")
@@ -39,22 +43,26 @@ class DBManager {
         }
         let dbURL = cloudURL.appendingPathComponent("db.sqlite3")
         self.iCloudURL = dbURL
-
-        if !fileManager.fileExists(atPath: dbURL.path) {
-            // Create it and insert initial data
-            initializeDatabase(at: dbURL)
-        } else {
-            // Just connect to it
-            connectToExistingDatabase(at: dbURL)
+        do {
+            if !fileManager.fileExists(atPath: dbURL.path) {
+                // Create it and insert initial data
+                try await initializeDatabase(at: dbURL)
+            } else {
+                // Just connect to it
+                connectToExistingDatabase(at: dbURL)
+            }
+        } catch {
+            print("Database setup failed: \(error)")
         }
+
     }
 
-    private func initializeDatabase(at url: URL) {
+    private func initializeDatabase(at url: URL) async throws {
         do {
             db = try Connection(url.path)
             try createTables()
             print("Initialize database...")
-            try insertInitialData()
+            await try insertInitialData()
         } catch {
             print("Failed to initialize database: \(error)")
         }
@@ -144,7 +152,7 @@ class DBManager {
         })
     }
  
-    private func insertInitialData() throws {
+    private func insertInitialData() async throws {
         guard let map_taiwan = UIImage(named: "Taiwan-route.jpg"),
               let map_korea = UIImage(named: "South Korea-route.jpg"),
               let profilePic = UIImage(named: "profilePic.jpg"),

@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4407A15F2BAA04F30047DF93 /* UnsplashPhotoPicker in Frameworks */ = {isa = PBXBuildFile; productRef = 4407A15E2BAA04F30047DF93 /* UnsplashPhotoPicker */; };
 		4407A1612BAA0F6B0047DF93 /* urlTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4407A1602BAA0F6B0047DF93 /* urlTask.swift */; };
 		4407A1642BAA40D00047DF93 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4407A1632BAA40D00047DF93 /* Utilities.swift */; };
 		4407A1662BAA41A70047DF93 /* LocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4407A1652BAA41A70047DF93 /* LocationView.swift */; };
@@ -43,7 +42,6 @@
 		61BABD482BC24CDA00560CC2 /* CircularChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61BABD472BC24CDA00560CC2 /* CircularChartView.swift */; };
 		61C355C72BA69ABA00B8FD66 /* TripMakerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61C355C62BA69ABA00B8FD66 /* TripMakerApp.swift */; };
 		61C355C92BA69ABA00B8FD66 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61C355C82BA69ABA00B8FD66 /* ContentView.swift */; };
-		61C355CB2BA69ABA00B8FD66 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61C355CA2BA69ABA00B8FD66 /* Item.swift */; };
 		61C355CD2BA69ABB00B8FD66 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 61C355CC2BA69ABB00B8FD66 /* Assets.xcassets */; };
 		61C355D02BA69ABB00B8FD66 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 61C355CF2BA69ABB00B8FD66 /* Preview Assets.xcassets */; };
 		61DDB6182BABD3A300A8D1EE /* MenuOptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DDB6132BABD3A200A8D1EE /* MenuOptionView.swift */; };
@@ -92,7 +90,6 @@
 		61C355C32BA69ABA00B8FD66 /* TripMaker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TripMaker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		61C355C62BA69ABA00B8FD66 /* TripMakerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripMakerApp.swift; sourceTree = "<group>"; };
 		61C355C82BA69ABA00B8FD66 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		61C355CA2BA69ABA00B8FD66 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		61C355CC2BA69ABB00B8FD66 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		61C355CF2BA69ABB00B8FD66 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		61DDB6132BABD3A200A8D1EE /* MenuOptionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuOptionView.swift; sourceTree = "<group>"; };
@@ -110,7 +107,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				613381E32BA69F0800DB71AC /* SQLite in Frameworks */,
-				4407A15F2BAA04F30047DF93 /* UnsplashPhotoPicker in Frameworks */,
 				44DFB1842BBB0F6800597D6C /* Lottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -231,7 +227,6 @@
 				613381DE2BA69DF100DB71AC /* View */,
 				613381DD2BA69DE600DB71AC /* Model */,
 				61C355C62BA69ABA00B8FD66 /* TripMakerApp.swift */,
-				61C355CA2BA69ABA00B8FD66 /* Item.swift */,
 				61C355CC2BA69ABB00B8FD66 /* Assets.xcassets */,
 				44DFB1852BBB0FB500597D6C /* WalkingAnimation.json */,
 				61C355CE2BA69ABB00B8FD66 /* Preview Content */,
@@ -276,7 +271,6 @@
 			name = TripMaker;
 			packageProductDependencies = (
 				613381E22BA69F0800DB71AC /* SQLite */,
-				4407A15E2BAA04F30047DF93 /* UnsplashPhotoPicker */,
 				44DFB1832BBB0F6800597D6C /* Lottie */,
 			);
 			productName = TripMaker;
@@ -309,7 +303,6 @@
 			mainGroup = 61C355BA2BA69ABA00B8FD66;
 			packageReferences = (
 				613381E12BA69F0800DB71AC /* XCRemoteSwiftPackageReference "SQLite.swift" */,
-				4407A15D2BAA04F30047DF93 /* XCRemoteSwiftPackageReference "unsplash-photopicker-ios" */,
 				44DFB1822BBB0F6700597D6C /* XCRemoteSwiftPackageReference "lottie-ios" */,
 			);
 			productRefGroup = 61C355C42BA69ABA00B8FD66 /* Products */;
@@ -350,7 +343,6 @@
 				4407A1982BB625910047DF93 /* Scene.swift in Sources */,
 				619359202BAAA67C00541BC2 /* LocationManagement.swift in Sources */,
 				4407A1822BAC93950047DF93 /* DataStructures.swift in Sources */,
-				61C355CB2BA69ABA00B8FD66 /* Item.swift in Sources */,
 				613381EE2BA6B38100DB71AC /* dataModel.swift in Sources */,
 				44DFB1812BBA4AE600597D6C /* RouteProgress.swift in Sources */,
 				61872C6F2BB527500058990F /* ProgressTrackView.swift in Sources */,
@@ -590,14 +582,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		4407A15D2BAA04F30047DF93 /* XCRemoteSwiftPackageReference "unsplash-photopicker-ios" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/unsplash/unsplash-photopicker-ios.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.3.0;
-			};
-		};
 		44DFB1822BBB0F6700597D6C /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/airbnb/lottie-ios.git";
@@ -617,11 +601,6 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		4407A15E2BAA04F30047DF93 /* UnsplashPhotoPicker */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 4407A15D2BAA04F30047DF93 /* XCRemoteSwiftPackageReference "unsplash-photopicker-ios" */;
-			productName = UnsplashPhotoPicker;
-		};
 		44DFB1832BBB0F6800597D6C /* Lottie */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 44DFB1822BBB0F6700597D6C /* XCRemoteSwiftPackageReference "lottie-ios" */;

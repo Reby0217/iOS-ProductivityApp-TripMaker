@@ -49,7 +49,7 @@ struct RouteProgress: View {
             
                 
             // Previous Progress
-            ForEach(0..<Int(startPos)){ key in
+            ForEach(Array(0..<startPos), id: \.self) { key in
                 GeometryReader { geometry in
                         
                     Path { path in

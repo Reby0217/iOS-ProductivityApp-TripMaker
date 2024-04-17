@@ -230,6 +230,7 @@ extension DBManager {
             userProfileTable.image <- newImage
         ])
         try db?.run(update)
-        print("Updated user profile for userID \(userID). New username: \(newUsername). New pic: \(newImage)")
+        print("Updated user profile for userID \(userID). New username: \(newUsername).")
+//        print("New pic: \(newImage)")
     }
 }

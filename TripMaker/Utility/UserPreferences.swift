@@ -29,9 +29,17 @@ struct UserPreferences {
     
     static var userProfile: UserProfile? {
         get {
-            guard let userID = userID else { return nil }
+            guard let userID = userID else {
+                print("User ID not found.")
+                return nil
+            }
+            
+            guard DBManager.shared.isDatabaseReady else {
+                print("Database is not ready. Still setting it up...")
+                return nil
+            }
+            
             do {
-//                print("Fetch user profile successfully.")
                 return try DBManager.shared.fetchUserProfile(userID: userID)
             } catch {
                 print("Error fetching user profile: \(error)")
@@ -42,7 +50,7 @@ struct UserPreferences {
     
     static func invalidateUserProfileCache() {
         needsRefresh = true
-        print("User profile cache invalidated.")
+        print("User profile cache has been invalidated.")
     }
     
     static var userName: String {

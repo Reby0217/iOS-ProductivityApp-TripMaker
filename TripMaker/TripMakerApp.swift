@@ -11,22 +11,6 @@ import SwiftData
 @main
 struct TripMakerApp: App {
     let dbManager = DBManager.shared
-    
-    //@State private var modelData = ModelData()
-    
-//    init() {
-//        do {
-            // Debug purpose
-            //dbManager.deleteAllData()
-            
-            //try dbManager.addDummyData()
-//            dbManager.fetchInfoFromApi()
-//            
-//        } catch {
-//            print("An error occurred while initializing dummy data: \(error)")
-//        }
-//    }
-    
 
     var body: some Scene {
         WindowGroup {

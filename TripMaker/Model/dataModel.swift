@@ -10,13 +10,13 @@ import Foundation
 import SQLite
 import Combine
 
-
 class DBManager {
     
     static let shared = DBManager()
-    
+    private(set) var isDatabaseReady = false
+
     var db: Connection?
-    var iCloudURL: URL?
+    private var iCloudURL: URL?
 
     let routeTable = RouteTable()
     let locationTable = LocationTable()
@@ -30,12 +30,15 @@ class DBManager {
 
     private init() {
         Task {
-            try await setupDatabase()
+            await setupDatabase()
             fetchInfoFromApi()
         }
     }
-
-    private func setupDatabase() async throws {
+    
+    /* Asynchronously sets up the database by
+     either connecting to the existing database or creating a new one.
+     */
+    func setupDatabase() async {
         let fileManager = FileManager.default
         guard let cloudURL = fileManager.url(forUbiquityContainerIdentifier: nil)?.appendingPathComponent("Documents") else {
             print("Unable to access iCloud Account")
@@ -43,41 +46,44 @@ class DBManager {
         }
         let dbURL = cloudURL.appendingPathComponent("db.sqlite3")
         self.iCloudURL = dbURL
-        do {
-            if !fileManager.fileExists(atPath: dbURL.path) {
-                // Create it and insert initial data
+
+        if !fileManager.fileExists(atPath: dbURL.path) {
+            do {
                 try await initializeDatabase(at: dbURL)
-            } else {
-                // Just connect to it
-                connectToExistingDatabase(at: dbURL)
+                try await insertInitialData()
+            } catch {
+                print("Error initializing database with initial data: \(error)")
             }
-        } catch {
-            print("Database setup failed: \(error)")
+        } else {
+            // Connect to existing database if it exists
+            connectToExistingDatabase(at: dbURL)
         }
-        inspectAllTables()
-    }
 
+        isDatabaseReady = true
+        print("Database is ready for transactions.")
+        
+        // Debug purpose
+//        inspectAllTables()
+    }
+    
+    // Creates a new database at the specified URL and sets up tables
     private func initializeDatabase(at url: URL) async throws {
-        do {
-            db = try Connection(url.path)
-            try createTables()
-            print("Initialize database...")
-            try await insertInitialData()
-        } catch {
-            print("Failed to initialize database: \(error)")
-        }
+        db = try Connection(url.path)
+        try createTables()
+        print("Initialize database...")
     }
-
+    
+    // Connects to an existing database at the specified URL
     private func connectToExistingDatabase(at url: URL) {
         do {
-            // Initialize the SQLite connection
             db = try Connection(url.path)
+            print("Connected to existing database.")
         } catch {
             print("Failed to connect to existing database: \(error)")
         }
     }
-
-
+    
+    // Creates tables in the database according to the schema defined in Tables.swift
     private func createTables() throws {
         try db?.run(routeTable.table.create(ifNotExists: true) { t in
             t.column(routeTable.name, primaryKey: true)
@@ -152,105 +158,126 @@ class DBManager {
         })
     }
  
+    // Inserts initial data into the database once it's been created
     private func insertInitialData() async throws {
-        guard let map_taiwan = UIImage(named: "Taiwan-route.jpg"),
-              let map_korea = UIImage(named: "South Korea-route.jpg"),
-              let profilePic = UIImage(named: "profilePic.jpg"),
-              let rewardImage0 = UIImage(named: "reward.png"),
-              let rewardImage1 = UIImage(named: "reward1.png"),
-              let rewardImage2 = UIImage(named: "reward2.png"),
-              let rewardImage3 = UIImage(named: "reward3.png"),
-              let rewardImage4 = UIImage(named: "reward4.png") else {
-            print("Failed to load initial images.")
-            return
-        }
+        // Load initial images
+        let images = try loadInitialImages()
         
-        let mapTaiwanPictureString = stringFromImage(map_taiwan)
-        let mapKoreaPictureString = stringFromImage(map_korea)
-        let profilePicString = stringFromImage(profilePic)
+        // Convert images to strings
+        let imageStrings = images.map { stringFromImage($0) }
         
-        let rewardImageString = stringFromImage(rewardImage0)
-        let secondRewardImageStr = stringFromImage(rewardImage1)
-        let thirdRewardImageStr = stringFromImage(rewardImage2)
-        let fourthRewardImageStr = stringFromImage(rewardImage3)
-        let fifthRewardImageStr = stringFromImage(rewardImage4)
+        // Insert map routes
+        try insertMapRoutes(withImageStrings: Array(imageStrings[0...1]))
         
-        try addRoute(name: "Taiwan", mapPicture: mapTaiwanPictureString)
-        try addRoute(name: "South Korea", mapPicture: mapKoreaPictureString)
+        // Insert locations for routes
+        try insertLocationsForRoutes()
         
-        try addLocationToRoute(index: 1, routeName: "Taiwan", name: "Bangka Lungshan Temple", realPicture: "", description: "", isLocked: true)
-        try addLocationToRoute(index: 2, routeName: "Taiwan", name: "National Taichung Theater", realPicture: "", description: "", isLocked: true)
-        try addLocationToRoute(index: 3, routeName: "Taiwan", name: "Jiufen", realPicture: "", description: "", isLocked: true)
-        try addLocationToRoute(index: 4, routeName: "Taiwan", name: "Taipei 101", realPicture: "", description: "", isLocked: true)
-        try addLocationToRoute(index: 5, routeName: "Taiwan", name: "Formosa Boulevard metro station", realPicture: "", description: "", isLocked: true)
-        try addLocationToRoute(index: 6, routeName: "Taiwan", name: "Fo Guang Shan Buddha Museum", realPicture: "", description: "", isLocked: true)
-        try addLocationToRoute(index: 7, routeName: "Taiwan", name: "Yehliu", realPicture: "", description: "", isLocked: true)
-        try addLocationToRoute(index: 8, routeName: "Taiwan", name: "Chiang Kai-shek Memorial Hall", realPicture: "", description: "", isLocked: true)
+        // Insert tags for locations
+        try insertTagsForLocations()
         
-        try addLocationToRoute(index: 1, routeName: "South Korea", name: "Gyeongbokgung Palace", realPicture: "", description: "", isLocked: true)
-        try addLocationToRoute(index: 2, routeName: "South Korea", name: "Myeong-dong", realPicture: "", description: "", isLocked: true)
-        try addLocationToRoute(index: 3, routeName: "South Korea", name: "N Seoul Tower", realPicture: "", description: "", isLocked: true)
-        try addLocationToRoute(index: 4, routeName: "South Korea", name: "Bukchon Hanok Village", realPicture: "", description: "", isLocked: true)
-        try addLocationToRoute(index: 5, routeName: "South Korea", name: "Cheonggyecheon", realPicture: "", description: "", isLocked: true)
-        try addLocationToRoute(index: 6, routeName: "South Korea", name: "Haedong Yonggungsa", realPicture: "", description: "", isLocked: true)
-        try addLocationToRoute(index: 7, routeName: "South Korea", name: "Gamcheon Culture Village", realPicture: "", description: "", isLocked: true)
-        
-        try addTagToLocation(name: "Bangka Lungshan Temple", tag: "#ReligiousSite")
-        try addTagToLocation(name: "Bangka Lungshan Temple", tag: "#CulturalHeritage")
-        try addTagToLocation(name: "National Taichung Theater", tag: "#ArchitecturalWonder")
-        try addTagToLocation(name: "National Taichung Theater", tag: "#ArtandCulture")
-        try addTagToLocation(name: "Jiufen", tag: "#OldStreet")
-        try addTagToLocation(name: "Jiufen", tag: "#HistoricalSite")
-        try addTagToLocation(name: "Taipei 101", tag: "#EngineeringMarvel")
-        try addTagToLocation(name: "Taipei 101", tag: "#CulturalHub")
-        try addTagToLocation(name: "Formosa Boulevard metro station", tag: "#DomeofLight")
-        try addTagToLocation(name: "Formosa Boulevard metro station", tag: "#ArtInstallation")
-        try addTagToLocation(name: "Fo Guang Shan Buddha Museum", tag: "#Buddhism")
-        try addTagToLocation(name: "Fo Guang Shan Buddha Museum", tag: "#SpiritualJourney")
-        try addTagToLocation(name: "Yehliu", tag: "#Queen'sHead")
-        try addTagToLocation(name: "Yehliu", tag: "#NaturalWonder")
-        try addTagToLocation(name: "Chiang Kai-shek Memorial Hall", tag: "#Monument")
-        try addTagToLocation(name: "Chiang Kai-shek Memorial Hall", tag: "#NationalPride")
-        
-        try addTagToLocation(name: "Gyeongbokgung Palace", tag: "#KoreanCulture")
-        try addTagToLocation(name: "Gyeongbokgung Palace", tag: "#RoyalResidence")
-        try addTagToLocation(name: "Myeong-dong", tag: "#ShoppingDistrict")
-        try addTagToLocation(name: "Myeong-dong", tag: "#StreetFood")
-        try addTagToLocation(name: "N Seoul Tower", tag: "#ObservationTower")
-        try addTagToLocation(name: "N Seoul Tower", tag: "#SeoulSkyline")
-        try addTagToLocation(name: "Bukchon Hanok Village", tag: "#HanokArchitecture")
-        try addTagToLocation(name: "Bukchon Hanok Village", tag: "#TraditionalVillage")
-        try addTagToLocation(name: "Cheonggyecheon", tag: "#SeoulStream")
-        try addTagToLocation(name: "Cheonggyecheon", tag: "#UrbanRenewal")
-        try addTagToLocation(name: "Haedong Yonggungsa", tag: "#SeasideTemple")
-        try addTagToLocation(name: "Haedong Yonggungsa", tag: "#BusanLandmark")
-        try addTagToLocation(name: "Gamcheon Culture Village", tag: "#ColorfulVillage")
-        try addTagToLocation(name: "Gamcheon Culture Village", tag: "#StreetArt")
-
-        
-        
-        try addTagToLocation(name: "Taipei 101", tag: "Engineering Marvel")
-        try addTagToLocation(name: "Taipei 101", tag: "Cultural Hub")
-        
-        
-        let userID = try createUserProfile(username: UserPreferences.userName, image: profilePicString)
-        
+        // Create user profile and save user ID
+        let userID = try createUserProfile(username: UserPreferences.userName, image: imageStrings[2])
         UserPreferences.userID = userID
         print("User ID is \(String(describing: UserPreferences.userID))")
         
-        try addReward(name: "1st Reward", picture: rewardImageString)
-        try addReward(name: "2nd Reward", picture: secondRewardImageStr)
-        try addReward(name: "3rd Reward", picture: thirdRewardImageStr)
-        try addReward(name: "4th Reward", picture: fourthRewardImageStr)
-        try addReward(name: "5th Reward", picture: fifthRewardImageStr)
+        // Insert rewards
+        try insertRewards(withImageStrings: Array(imageStrings[3...7]))
         
-//        try claimReward(userID: userID, rewardName: "First Reward")
-//        try claimReward(userID: userID, rewardName: "Second Reward")
+        // Insert focus sessions
+        try insertFocusSessions(forUserID: userID)
+    }
+    
+    private func loadInitialImages() throws -> [UIImage] {
+        let imageNames = ["Taiwan-route.jpg", "South Korea-route.jpg", "profilePic.jpg", "reward.png", "reward1.png", "reward2.png", "reward3.png", "reward4.png"]
+        var images = [UIImage]()
         
+        for imageName in imageNames {
+            if let image = UIImage(named: imageName) {
+                images.append(image)
+            } else {
+                throw NSError(domain: "com.yourdomain.app", code: 100, userInfo: [NSLocalizedDescriptionKey: "Failed to load image: \(imageName)"])
+            }
+        }
+        
+        return images
+    }
+    
+    
+    private func insertMapRoutes(withImageStrings imageStrings: [String]) throws {
+        try addRoute(name: "Taiwan", mapPicture: imageStrings[0])
+        try addRoute(name: "South Korea", mapPicture: imageStrings[1])
+    }
+    
+    private func insertLocationsForRoutes() throws {
+        let taiwanLocations = [
+            ("Bangka Lungshan Temple", true),
+            ("National Taichung Theater", true),
+            ("Jiufen", true),
+            ("Taipei 101", true),
+            ("Formosa Boulevard metro station", true),
+            ("Fo Guang Shan Buddha Museum", true),
+            ("Yehliu", true),
+            ("Chiang Kai-shek Memorial Hall", true)
+        ]
+        
+        for (index, location) in taiwanLocations.enumerated() {
+            try addLocationToRoute(index: index + 1, routeName: "Taiwan", name: location.0, realPicture: "", description: "", isLocked: location.1)
+        }
+        
+        let koreaLocations = [
+            ("Gyeongbokgung Palace", true),
+            ("Myeong-dong", true),
+            ("N Seoul Tower", true),
+            ("Bukchon Hanok Village", true),
+            ("Cheonggyecheon", true),
+            ("Haedong Yonggungsa", true),
+            ("Gamcheon Culture Village", true)
+        ]
+        
+        for (index, location) in koreaLocations.enumerated() {
+            try addLocationToRoute(index: index + 1, routeName: "South Korea", name: location.0, realPicture: "", description: "", isLocked: location.1)
+        }
+    }
+    
+    private func insertTagsForLocations() throws {
+        let tagsForLocations = [
+            ("Bangka Lungshan Temple", ["#ReligiousSite", "#CulturalHeritage"]),
+            ("National Taichung Theater", ["#ArchitecturalWonder", "#ArtandCulture"]),
+            ("Jiufen", ["#OldStreet", "#HistoricalSite"]),
+            ("Taipei 101", ["#EngineeringMarvel", "#CulturalHub"]),
+            ("Formosa Boulevard metro station", ["#DomeofLight", "#ArtInstallation"]),
+            ("Fo Guang Shan Buddha Museum", ["#Buddhism", "#SpiritualJourney"]),
+            ("Yehliu", ["#Queen'sHead", "#NaturalWonder"]),
+            ("Chiang Kai-shek Memorial Hall", ["#Monument", "#NationalPride"]),
+
+            ("Gyeongbokgung Palace", ["#KoreanCulture", "#RoyalResidence"]),
+            ("Myeong-dong", ["#ShoppingDistrict", "#StreetFood"]),
+            ("N Seoul Tower", ["#ObservationTower", "#SeoulSkyline"]),
+            ("Bukchon Hanok Village", ["#HanokArchitecture", "#TraditionalVillage"]),
+            ("Cheonggyecheon", ["#SeoulStream", "#UrbanRenewal"]),
+            ("Haedong Yonggungsa", ["#SeasideTemple", "#BusanLandmark"]),
+            ("Gamcheon Culture Village", ["#ColorfulVillage", "#StreetArt"])
+        ]
+        
+        for (location, tags) in tagsForLocations {
+            for tag in tags {
+                try addTagToLocation(name: location, tag: tag)
+            }
+        }
+    }
+    
+    private func insertRewards(withImageStrings imageStrings: [String]) throws {
+        let rewardNames = ["1st Reward", "2nd Reward", "3rd Reward", "4th Reward", "5th Reward"]
+        for (index, name) in rewardNames.enumerated() {
+            try addReward(name: name, picture: imageStrings[index])
+        }
+    }
+    
+    private func insertFocusSessions(forUserID userID: UUID) throws {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
         let todayDate = dateFormatter.string(from: Date())
-            
+        
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         
         let sessionTimes = [
@@ -258,10 +285,10 @@ class DBManager {
             ("2024-01-05 00:00:00", "2024-01-05 22:35:00"),
             ("2024-01-11 00:00:00", "2024-01-11 14:20:00"),
             //            ("2024-01-15 01:00:00", "2024-01-15 23:50:00"),
-//            ("2024-04-01 10:15:00", "2024-04-01 12:45:00"),
-//            ("2024-04-01 14:00:00", "2024-04-01 15:00:00"),
-//            ("2024-04-02 11:00:00", "2024-04-02 12:00:00"),
-//            ("2024-04-03 16:34:00", "2024-04-03 17:00:00"),
+            //            ("2024-04-01 10:15:00", "2024-04-01 12:45:00"),
+            //            ("2024-04-01 14:00:00", "2024-04-01 15:00:00"),
+            //            ("2024-04-02 11:00:00", "2024-04-02 12:00:00"),
+            //            ("2024-04-03 16:34:00", "2024-04-03 17:00:00"),
             ("2024-03-28 10:15:00", "2024-03-28 12:45:00"),
             ("\(todayDate) 00:00:00", "\(todayDate) 01:00:00"),
             ("\(todayDate) 02:00:00", "\(todayDate) 02:35:00"),
@@ -272,7 +299,8 @@ class DBManager {
         for (start, end) in sessionTimes {
             if let startTime = dateFormatter.date(from: start),
                let endTime = dateFormatter.date(from: end) {
-                let _ = try createFocusSession(userID: userID, startTime: startTime, duration: endTime.timeIntervalSince(startTime))
+                let duration = endTime.timeIntervalSince(startTime)
+                let _ = try createFocusSession(userID: userID, startTime: startTime, duration: duration)
             }
         }
     }

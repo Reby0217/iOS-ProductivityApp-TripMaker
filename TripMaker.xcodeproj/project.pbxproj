@@ -74,6 +74,7 @@
 		44DFB1972BBE373000597D6C /* blurTags.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = blurTags.swift; sourceTree = "<group>"; };
 		61093A662BBB662400385BBD /* TripMaker.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TripMaker.entitlements; sourceTree = "<group>"; };
 		61093A672BBB668B00385BBD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		611511F32BCF6A9C00416BBC /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		613381DF2BA69EA900DB71AC /* Tables.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tables.swift; sourceTree = "<group>"; };
 		613381ED2BA6B38100DB71AC /* dataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dataModel.swift; sourceTree = "<group>"; };
 		61872C672BB525CC0058990F /* ClockView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClockView.swift; sourceTree = "<group>"; };
@@ -230,6 +231,7 @@
 				61C355CC2BA69ABB00B8FD66 /* Assets.xcassets */,
 				44DFB1852BBB0FB500597D6C /* WalkingAnimation.json */,
 				61C355CE2BA69ABB00B8FD66 /* Preview Content */,
+				611511F32BCF6A9C00416BBC /* README.md */,
 			);
 			path = TripMaker;
 			sourceTree = "<group>";

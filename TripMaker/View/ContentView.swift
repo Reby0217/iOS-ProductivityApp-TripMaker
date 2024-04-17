@@ -17,16 +17,6 @@ struct ContentView: View {
     
     var body: some View {
         ZStack{
-//            TabView(selection: $selectedSideMenuTab) {
-//                MapView(showSideMenu: $presentSideMenu)
-//                    .tag(0)
-//                StatsView(presentSideMenu: $presentSideMenu)
-//                    .tag(1)
-//                ProfileView(presentSideMenu: $presentSideMenu)
-//                    .tag(2)
-//                PassportView(presentSideMenu: $presentSideMenu)
-//                    .tag(3)
-//            }
             Group {
                 switch selectedSideMenuTab {
                 case 0:
@@ -47,27 +37,6 @@ struct ContentView: View {
         }
     }
     
-    
-
-//    var body: some View {
-//        NavigationSplitView {
-//            List {
-//                ForEach(routes, id: \.self)
-//                { route in
-//                    NavigationLink {
-//                        RouteView(routeID: route)
-//                    } label: {
-//                        RouteRowView(routeID: route)
-//                    }
-//                }
-//            }
-//        } detail: {
-//            Text("Passport")
-//        }
-//        .onAppear{
-//            print("refresh")
-//        }
-//    }
 }
 
 func initData() -> [String] {

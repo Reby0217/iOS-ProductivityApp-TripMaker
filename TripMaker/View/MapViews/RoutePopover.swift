@@ -35,7 +35,7 @@ struct RoutePopover: View {
                 HStack {
                     Text("Level: ")
                         .font(.custom("Bradley Hand", size: 18))
-                    Stars(star: Constants.route_level[route] ?? 3)
+                    Stars(star: TripConfig.route_level[route] ?? 3)
                 }
                 
                 Spacer()

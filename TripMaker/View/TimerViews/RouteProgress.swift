@@ -25,14 +25,14 @@ struct RouteProgress: View {
     @State var height: CGFloat = 400
     
     var attractions: [CGPoint] {
-        Constants.route_attractions[route]!
+        TripConfig.route_attractions[route]!
     }
     var segments: [Int: [String: CGPoint]] {
-        Constants.route_segments[route]!
+        TripConfig.route_segments[route]!
     }
     
     var animation_flip: [Int: Bool] {
-        Constants.route_animation[route]!
+        TripConfig.route_animation[route]!
     }
     
         

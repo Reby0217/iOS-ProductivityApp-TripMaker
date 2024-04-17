@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-struct Constants {
+struct TripConfig {
  
     static let route_level: [String: Int] = [
         "Taiwan": 2,

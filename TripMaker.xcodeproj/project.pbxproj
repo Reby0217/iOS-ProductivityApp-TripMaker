@@ -51,7 +51,7 @@
 		61DDB61B2BABD3A300A8D1EE /* SideMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DDB6162BABD3A200A8D1EE /* SideMenuView.swift */; };
 		61DDB61D2BABD3C900A8D1EE /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DDB61C2BABD3C900A8D1EE /* MapView.swift */; };
 		61DDB61F2BABD3D000A8D1EE /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DDB61E2BABD3D000A8D1EE /* ProfileView.swift */; };
-		61DDB6212BABEF0B00A8D1EE /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DDB6202BABEF0B00A8D1EE /* Constants.swift */; };
+		61DDB6212BABEF0B00A8D1EE /* TripConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DDB6202BABEF0B00A8D1EE /* TripConfig.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -101,7 +101,7 @@
 		61DDB6162BABD3A200A8D1EE /* SideMenuView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideMenuView.swift; sourceTree = "<group>"; };
 		61DDB61C2BABD3C900A8D1EE /* MapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		61DDB61E2BABD3D000A8D1EE /* ProfileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
-		61DDB6202BABEF0B00A8D1EE /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		61DDB6202BABEF0B00A8D1EE /* TripConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripConfig.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,7 +121,7 @@
 			isa = PBXGroup;
 			children = (
 				4407A1632BAA40D00047DF93 /* Utilities.swift */,
-				61DDB6202BABEF0B00A8D1EE /* Constants.swift */,
+				61DDB6202BABEF0B00A8D1EE /* TripConfig.swift */,
 				611511F42BCF721500416BBC /* UserPreferences.swift */,
 			);
 			path = Utility;
@@ -363,7 +363,7 @@
 				6193591E2BAAA67400541BC2 /* RouteManagement.swift in Sources */,
 				61DDB6192BABD3A300A8D1EE /* ProfileHeaderView.swift in Sources */,
 				611511F52BCF721500416BBC /* UserPreferences.swift in Sources */,
-				61DDB6212BABEF0B00A8D1EE /* Constants.swift in Sources */,
+				61DDB6212BABEF0B00A8D1EE /* TripConfig.swift in Sources */,
 				4407A1762BABE9680047DF93 /* StatsView.swift in Sources */,
 				61DDB61F2BABD3D000A8D1EE /* ProfileView.swift in Sources */,
 				4407A1802BAC8DA90047DF93 /* SmallCardView.swift in Sources */,

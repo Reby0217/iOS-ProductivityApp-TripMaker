@@ -113,7 +113,7 @@ When running TripMaker in a simulator logged in with an Apple ID, the following 
 
 ## Operating Instructions
 
-    Upon initial setup, the database is pre-populated with several focus sessions, automatically claiming three rewards based on these sessions. Starting any new focus session—even for just one second—will cumulatively bring the total focus time to 50 hours, thereby triggering an additional reward.
+Upon initial setup, the database is pre-populated with several focus sessions, automatically claiming three rewards based on these sessions. Starting any new focus session—even for just one second—will cumulatively bring the total focus time to 50 hours, thereby triggering an additional reward.
 
 ### Getting Started
 The map view is the home base, showcasing your active route. Utilize the side menu for effortless navigation through the app to access map, stats, profile, and travel passport.

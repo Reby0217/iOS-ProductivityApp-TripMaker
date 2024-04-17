@@ -43,6 +43,12 @@ When running TripMaker in a simulator logged in with an Apple ID, the following 
 
 - **SpriteKit Integration**: Incorporate SpriteKit within a SwiftUI framework, facilitating the creation of a dynamic and interactive map scene.
 
+### User Preferences and Profile Management <br>
+  - When a user logs in or updates their profile, `userID` is set, which stores the new ID in UserDefaults. <br>
+  - Accessing `userProfile` checks the database readiness and fetches or refreshes the profile as necessary. <br>
+  - `userName` allows easy access and updating of the user's name directly, with changes reflected in the database and local cache. <br>
+  - This setup ensures that the user's profile is efficiently managed and synchronized across the application, with changes persisted between sessions through UserDefaults.
+
 ### External APIs and Services 
 - **Unsplash API**: Used in the function `fetchLocationPicture(route, for)` which retrieves images for locations to enhance the virtual travel experience. 
 - **Wikipedia API**: Used in the function `fetchLocationDescription(for)` which provides descriptions for landmarks, contributing to the educational aspect of the app.

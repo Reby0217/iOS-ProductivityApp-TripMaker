@@ -56,9 +56,9 @@ When running TripMaker in a simulator logged in with an Apple ID, the following 
 ### Database Management Functions
 
 1. **Initialization and Setup**
-   - `setupDatabase()`: Initializes and connects to the SQLite database stored locally and syncs with iCloud for data backup and cross-device availability.
-   - `createTables()`: Creates tables for routes, locations, tags, rewards, user profiles, user routes, user rewards, focus sessions, and visited locations.
-   - `insertInitialData()`: Populates the database with initial data for routes, locations, tags, and rewards.
+    - `setupDatabase()`: Initializes and connects to the SQLite database. It checks for an existing database at the iCloud-specified path or creates a new one if none exists, then populates it with initial data.
+    - `createTables()`: Creates the necessary tables in the database if they do not already exist. This includes tables for routes, locations, tags, rewards, user profiles, user routes, focus sessions, visited locations, and user rewards.
+   - `insertInitialData()`: Populates the database with initial data including routes, locations, tags, and rewards. This function is a high-level orchestrator that calls other functions to handle specific types of data insertion.
 
 2. **Data Manipulation**
    - `addRoute(name, mapPicture)`: Adds new travel routes.

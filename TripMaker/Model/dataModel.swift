@@ -195,7 +195,7 @@ class DBManager {
             if let image = UIImage(named: imageName) {
                 images.append(image)
             } else {
-                throw NSError(domain: "com.yourdomain.app", code: 100, userInfo: [NSLocalizedDescriptionKey: "Failed to load image: \(imageName)"])
+                throw NSError(domain: "com.TripMaker.app", code: 100, userInfo: [NSLocalizedDescriptionKey: "Failed to load image: \(imageName)"])
             }
         }
         

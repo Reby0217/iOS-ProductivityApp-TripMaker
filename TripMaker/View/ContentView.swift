@@ -27,7 +27,6 @@ struct ContentView: View {
                     ProfileView(presentSideMenu: $presentSideMenu)
                 case 3:
                     PassportView(presentSideMenu: $presentSideMenu)
-                    //PassportView(presentSideMenu: $presentSideMenu)
                 default:
                     Text("Selection does not correspond to a tab view.")
                 }

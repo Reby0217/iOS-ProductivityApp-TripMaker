@@ -62,8 +62,6 @@ struct TimerView: View {
             
             if showCancelButton {
                 Button("Cancel (\(cancelTimeRemaining)s)") {
-//                    self.timerSubscription?.cancel()
-//                    self.timeRemaining = totalTime
                     presentationMode.wrappedValue.dismiss()
                 }
                 .padding()
@@ -75,15 +73,6 @@ struct TimerView: View {
             
             Spacer()
             
-//            if showBackButton {
-//                Button("Back to Map") {
-//                    dismiss()
-//                }
-//                .padding()
-//                .background(Color.blue)
-//                .foregroundColor(Color.white)
-//                .cornerRadius(10)
-//            }
         }
         .onAppear {
             fetchUserID()

@@ -79,7 +79,7 @@ class urlTask {
                 //print(imageString)
                     
                 do {
-                    try self.db.updateLocatioPicture(name: title, newRealPicture: imageString ?? "")
+                    try self.db.updateLocatioPicture(name: title, newRealPicture: imageString)
                         
                     //print("Location added with name: \(self.locationName)")
                 } catch {

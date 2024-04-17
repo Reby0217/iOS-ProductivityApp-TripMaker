@@ -18,7 +18,7 @@ struct StatsView: View {
     let darkGreen = Color(UIColor(red: 0, green: 0.6, blue: 0.1, alpha: 0.8))
 
     let dbManager = DBManager.shared
-    let username = Constants.userName
+    let username = UserPreferences.userName
 
     var body: some View {
         ZStack {
@@ -90,7 +90,7 @@ struct StatsView: View {
     }
 
     private func fetchUserStats() {
-        guard let userProfile = Constants.userProfile else {
+        guard let userProfile = UserPreferences.userProfile else {
             print("User profile not found.")
             return
         }

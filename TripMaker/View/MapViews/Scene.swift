@@ -48,7 +48,7 @@ class MapScene: SKScene {
         let recognizer = UITapGestureRecognizer(target: self, action: #selector(tap(_:)))
         view.addGestureRecognizer(recognizer)
         
-        print("set background ", background)
+//        print("set background ", background)
         isUserInteractionEnabled = true
         
         // Add annotations

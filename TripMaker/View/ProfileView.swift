@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ProfileView: View {
     @Binding var presentSideMenu: Bool
-    @State private var editableUsername: String = Constants.userName
+    @State private var editableUsername: String = UserPreferences.userName
     @State private var selectedImageIndex: Int = 0 {
         didSet {
             // Update the editableImage whenever selectedImageIndex changes
@@ -18,7 +18,7 @@ struct ProfileView: View {
             }
         }
     }
-    @State private var editableImage: Image? = imageFromString(Constants.userProfile?.image ?? "")
+    @State private var editableImage: Image? = imageFromString(UserPreferences.userProfile?.image ?? "")
     @State private var isEditing: Bool = false
     let lightPurple = Color(UIColor(red: 217/256, green: 159/256, blue: 255/256, alpha: 1))
     
@@ -37,7 +37,7 @@ struct ProfileView: View {
     private let profileImages = ["profilePic", "profilePic1", "profilePic2", "profilePic3"]
     
     private var userProfile: UserProfile? {
-        Constants.userProfile
+        UserPreferences.userProfile
     }
     
     private var userRewards: [Reward] {
@@ -170,7 +170,7 @@ struct ProfileView: View {
     }
     
     private func saveProfileChanges() {
-        guard let userID = Constants.userID, !editableUsername.isEmpty else { return }
+        guard let userID = UserPreferences.userID, !editableUsername.isEmpty else { return }
         // Get the UIImage from the selected index in the picker.
         if let selectedImage = UIImage(named: profileImages[selectedImageIndex]) {
             // Convert the UIImage to a Data object and then to a base64 encoded string.
@@ -197,8 +197,8 @@ struct ProfileView: View {
             try DBManager.shared.updateUserProfile(userID: userID, newUsername: newUsername, newImage: newImage)
             self.isEditing = false
             // Invalidate the cached user profile and fetch the updated information.
-            Constants.invalidateUserProfileCache()
-            _ = Constants.userProfile
+            UserPreferences.invalidateUserProfileCache()
+            _ = UserPreferences.userProfile
             print("Profile successfully updated.")
         } catch {
             print("Error updating profile: \(error)")

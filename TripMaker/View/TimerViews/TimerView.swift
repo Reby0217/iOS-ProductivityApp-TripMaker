@@ -154,7 +154,7 @@ struct TimerView: View {
     }
     
     private func fetchUserID() {
-        guard let userProfile = Constants.userProfile else {
+        guard let userProfile = UserPreferences.userProfile else {
             print("User profile not found.")
             return
         }

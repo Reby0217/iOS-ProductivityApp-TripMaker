@@ -47,10 +47,10 @@ struct SideMenuView: View {
     @Binding var selectedTab: Int
     @Binding var showSideMenu: Bool
     private var userProfile: UserProfile? {
-        Constants.userProfile
+        UserPreferences.userProfile
     }
     let dbManager = DBManager.shared
-    let userName = Constants.userName
+    let userName = UserPreferences.userName
     
     var body: some View {
         HStack {

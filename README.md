@@ -35,16 +35,28 @@ When running TripMaker in a simulator logged in with an Apple ID, the following 
 
 - **Route and Locations Discovery**: Unlock and explore various routes and their associated locations.
 
-- **Focus Sessions**: Improve concentration with dedicated focus sessions, contributing to unlocking new locations.
+- **Focus Sessions**: Improve concentration with dedicated focus sessions. Set the duration using a simple time picker, and select your virtual travel destination by tapping a location on the map. This session helps you progress through routes and unlock new locations.
 
-- **Stat Tracking**: Visualize your focus time with stats, enhancing your motivation.
+- **Timer Interface in Focus Sessions**:
+    - **Dynamic Countdown**: Once a focus session starts, a live countdown timer tracks the remaining time, helping you stay aware and focused.
+    - **Lottie Animation**: A Lottie-powered animated figure walks along the route on the map, visually representing your progress. The movement of the figure correlates with the session's duration, advancing from the start point of the route to your current position based on how long you have been focusing.
+    - **Visual Progress Indicator**: The route map displayed during the focus session illuminates as you progress, with a colorful path indicating how much of the route you have completed. This path extends in real-time.
+    
+- **Stat Tracking**: Visualize your focus time with detailed statistics that enhance your motivation. This feature records cumulative focus durations and displays them graphically, allowing you to track your progress over days, weeks, or months.
 
-- **Reward System**: Earn rewards by achieving focus time milestones and exploring locations.
+- **Reward System**: Earn rewards by achieving focus time milestones and exploring locations. This system incentivizes consistent effort with milestones that reward significant achievements:
+    - **1 Hour**: Unlocks the "1st Reward"
+    - **10 Hours**: Unlocks the "2nd Reward"
+    - **20 Hours**: Unlocks the "3rd Reward"
+    - **50 Hours**: Unlocks the "4th Reward"
+    - **200 Hours**: Unlocks the "5th Reward"
 
-- **SpriteKit Integration**: Incorporate SpriteKit within a SwiftUI framework, facilitating the creation of a dynamic and interactive map scene.
+- **Achievement Tracking**: Achievements are marked by claiming rewards and unlocking new locations through focus sessions. 
+
+- **SpriteKit Integration**: Leverage SpriteKit within a SwiftUI framework to create dynamic, interactive map scenes. This integration enriches the user interface by facilitating smooth animations and transitions, enhancing the overall user experience by making the virtual journey visually appealing and engaging.
 
 ### User Preferences and Profile Management <br>
-  - When a user logs in or updates their profile, `userID` is set, which stores the new ID in UserDefaults. <br>
+  - When a user logs in or updates their profile, `userID` is set, which stores the new ID in `UserDefaults`. <br>
   - Accessing `userProfile` checks the database readiness and fetches or refreshes the profile as necessary. <br>
   - `userName` allows easy access and updating of the user's name directly, with changes reflected in the database and local cache. <br>
   - This setup ensures that the user's profile is efficiently managed and synchronized across the application, with changes persisted between sessions through UserDefaults.
@@ -71,7 +83,7 @@ When running TripMaker in a simulator logged in with an Apple ID, the following 
 1. **Initialization and Setup**
     - `setupDatabase()`: Initializes and connects to the SQLite database. It checks for an existing database at the iCloud-specified path or creates a new one if none exists, then populates it with initial data.
     - `createTables()`: Creates the necessary tables in the database if they do not already exist. This includes tables for routes, locations, tags, rewards, user profiles, user routes, focus sessions, visited locations, and user rewards.
-   - `insertInitialData()`: Populates the database with initial data including routes, locations, tags, and rewards. This function is a high-level orchestrator that calls other functions to handle specific types of data insertion.
+    - `insertInitialData()`: Populates the database with initial data including routes, locations, tags, and rewards. This function is a high-level orchestrator that calls other functions to handle specific types of data insertion.
 
 2. **Data Manipulation**
    - `addRoute(name, mapPicture)`: Adds new travel routes.
@@ -97,24 +109,45 @@ When running TripMaker in a simulator logged in with an Apple ID, the following 
    - `updateLocation(name, newName, newRealPicture, newDescription, newIsLocked)`: Changes attributes of an existing location.
    - `updateUserProfile(userID, newUsername, newImage)`: Updates user profile information.
    - `updateUserStats(userID, focusTime)`: Refreshes user statistics with new focus session time and potentially triggers reward claims based on total focus time.
+   
 
 ## Operating Instructions
 
+    Upon initial setup, the database is pre-populated with several focus sessions, automatically claiming three rewards based on these sessions. Starting any new focus session—even for just one second—will cumulatively bring the total focus time to 50 hours, thereby triggering an additional reward.
+
 ### Getting Started
-The map view is the home base, showing your active route. Use the side menu for navigation through the app to view your stats, profile, and your travel passport.
+The map view is the home base, showcasing your active route. Utilize the side menu for effortless navigation through the app to access map, stats, profile, and travel passport.
 
 ### Profile Management
-Edit your profile to change your picture or username. After editing, don't forget to save your changes.
+You can edit your profile to update your picture or username at any time. Ensure you save your changes to keep your profile up to date.
 
-### Focus Sessions
-Initiate focus sessions in the Timer view. Completed sessions contribute to your profile's stats and may unlock new locations based on the session's length.
+### Setting Up Focus Sessions
+In the MapView, establish a focus session using the intuitive time picker, and select your next destination by tapping a pin on the map:
 
-### Achievement Tracking
-Your profile showcases your achievements, which are tied to focus time milestones and location visits.
+- **Selecting a Destination**: Click on any pin that represents a location. Once a pin is selected, a 'Select' button will appear. Pressing this will confirm your destination and initiate the setup for a focus session.
+- **Time Selection**: Adjust the session duration to your preference (hours, minutes, seconds) using the time picker. This determines how long you will focus and subsequently, how much virtual travel progress you'll make.
 
-### Routes and Locations Exploration
-The app lists various routes, each with several locations. Select a location to see more details, such as images and descriptions.
+### Focus Session Commitment
+Once a focus session starts, an at most 10-second grace period begins during which you can opt to cancel:
 
+- **Cancelation Period**: Immediately after a session starts, a 'Cancel' button appears for 10 seconds. Pressing this button will halt the session and return you to the MapView.
+- **Commitment**: If the 10-second window passes without cancellation, the session locks in, and you must complete the set duration. The timer must reach zero before you can leave the session.
+- **Ending a Session**: Upon completion of the focus session, a 'Back' button will appear in the navigation bar. Clicking this will navigate you back to the MapView, allowing you to set another session or explore other features.
+
+This system is designed to encourage commitment to focusing while also allowing a brief moment for reconsideration, ensuring that users are confident in their session settings before proceeding. 
+
+### Exploring Routes and Locations
+
+The Passport View acts as your portal to exploring different routes, enhancing geographical and cultural education:
+
+- **Passport View**: Displays all available routes. If no focus sessions have been initiated, routes will show but no specific locations will be accessible.
+- **Route Selection**: Upon selecting a route, if no locations have been unlocked via focus sessions, no specific locations will be listed.
+- **Unlocked Locations**: If locations within a route are unlocked (e.g., "Taipei 101" in the "Taiwan" route), selecting "Taiwan" in the Passport View will list "Taipei 101" as an accessible location. This approach not only enhances user engagement but also ensures an educational and informed way to keep users focused and motivated.
+
+### Detailed Location View
+Clicking on an unlocked location provides:
+- **Description**: A detailed description sourced from Wikipedia, offering educational content about the location.
+- **Imagery**: A representative image sourced from Unsplash, enhancing the visual experience of the virtual travel.
 
 ## Troubleshooting
 

@@ -209,6 +209,7 @@
 		61C355BA2BA69ABA00B8FD66 = {
 			isa = PBXGroup;
 			children = (
+				611511F32BCF6A9C00416BBC /* README.md */,
 				61C355C52BA69ABA00B8FD66 /* TripMaker */,
 				61C355C42BA69ABA00B8FD66 /* Products */,
 			);
@@ -234,7 +235,6 @@
 				61C355CC2BA69ABB00B8FD66 /* Assets.xcassets */,
 				44DFB1852BBB0FB500597D6C /* WalkingAnimation.json */,
 				61C355CE2BA69ABB00B8FD66 /* Preview Content */,
-				611511F32BCF6A9C00416BBC /* README.md */,
 			);
 			path = TripMaker;
 			sourceTree = "<group>";

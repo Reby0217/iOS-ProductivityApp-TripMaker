@@ -30,26 +30,33 @@ When running TripMaker in a simulator logged in with an Apple ID, the following 
 ## Key Features
 
 - **Profile Customization**: Personalize your profile with a username and a picture.
+
 - **Map Interactions**: Discover new places through an interactive map experience.
+
 - **Route and Locations Discovery**: Unlock and explore various routes and their associated locations.
+
 - **Focus Sessions**: Improve concentration with dedicated focus sessions, contributing to unlocking new locations.
+
 - **Stat Tracking**: Visualize your focus time with stats, enhancing your motivation.
+
 - **Reward System**: Earn rewards by achieving focus time milestones and exploring locations.
+
 - **SpriteKit Integration**: Incorporate SpriteKit within a SwiftUI framework, facilitating the creation of a dynamic and interactive map scene.
 
 ### External APIs and Services 
-- **Unsplash API**: The function `fetchLocationPicture(route, for)` retrieves images for locations to enhance the virtual travel experience. 
-- **Wikipedia API**: The function `fetchLocationDescription(for)` provides descriptions for landmarks, contributing to the educational aspect of the app.
+- **Unsplash API**: Used in the function `fetchLocationPicture(route, for)` which retrieves images for locations to enhance the virtual travel experience. 
+- **Wikipedia API**: Used in the function `fetchLocationDescription(for)` which provides descriptions for landmarks, contributing to the educational aspect of the app.
 
 ### Third-Party Libraries
 - **SQLite.swift 0.15.0**: A Swift framework for interacting with the SQLite database, simplifying SQL operations in Swift.
-- **Lottie 4.4.1**
-    (1) A library for iOS that parses Adobe After Effects animations exported as json with Bodymovin and renders them natively on mobile.
+
+- **Lottie 4.4.1** <br>
+    (1) A library for iOS that parses Adobe After Effects animations exported as json with Bodymovin and renders them natively on mobile.<br>
     (2) To enhance the UI with complex animations, making the user experience more engaging.
 
 ### iCloud Integration
-- **iCloud Documents**
-    (1) Utilizes iCloud's document storage capabilities for data backup and synchronization across devices.
+- **iCloud Documents** <br>
+    (1) Utilizes iCloud's document storage capabilities for data backup and synchronization across devices. <br>
     (2) Leverages `NSUbiquitousKeyValueStore` for seamless iCloud integration with the app's document- based data model.
     
 ## Function List

@@ -167,7 +167,7 @@ class DBManager {
         let imageStrings = images.map { stringFromImage($0) }
         
         // Insert map routes
-        try insertMapRoutes(withImageStrings: Array(imageStrings[0...1]))
+        try insertMapRoutes(withImageStrings: Array(imageStrings[0...2]))
         
         // Insert locations for routes
         try insertLocationsForRoutes()
@@ -176,19 +176,19 @@ class DBManager {
         try insertTagsForLocations()
         
         // Create user profile and save user ID
-        let userID = try createUserProfile(username: UserPreferences.userName, image: imageStrings[2])
+        let userID = try createUserProfile(username: UserPreferences.userName, image: imageStrings[3])
         UserPreferences.userID = userID
         print("User ID is \(String(describing: UserPreferences.userID))")
         
         // Insert rewards
-        try insertRewards(withImageStrings: Array(imageStrings[3...7]))
+        try insertRewards(withImageStrings: Array(imageStrings[4...8]))
         
         // Insert focus sessions
         try insertFocusSessions(forUserID: userID)
     }
     
     private func loadInitialImages() throws -> [UIImage] {
-        let imageNames = ["Taiwan-route.jpg", "South Korea-route.jpg", "profilePic.jpg", "reward.png", "reward1.png", "reward2.png", "reward3.png", "reward4.png"]
+        let imageNames = ["Taiwan-route.jpg", "South Korea-route.jpg", "Canada-route.jpg", "profilePic.jpg", "reward.png", "reward1.png", "reward2.png", "reward3.png", "reward4.png"]
         var images = [UIImage]()
         
         for imageName in imageNames {
@@ -206,6 +206,7 @@ class DBManager {
     private func insertMapRoutes(withImageStrings imageStrings: [String]) throws {
         try addRoute(name: "Taiwan", mapPicture: imageStrings[0])
         try addRoute(name: "South Korea", mapPicture: imageStrings[1])
+        try addRoute(name: "Canada", mapPicture: imageStrings[2])
     }
     
     private func insertLocationsForRoutes() throws {
@@ -237,6 +238,22 @@ class DBManager {
         for (index, location) in koreaLocations.enumerated() {
             try addLocationToRoute(index: index + 1, routeName: "South Korea", name: location.0, realPicture: "", description: "", isLocked: location.1)
         }
+        
+        let canadaLocations = [
+            ("Niagara Falls Canada", true),
+            ("Notre-Dame Basilica", true),
+            ("Old Quebec", true),
+            ("The Butchart Gardens", true),
+            ("CN Tower", true),
+            ("Granville Island", true),
+            ("Old Montreal", true),
+            ("Parliament Hill and Buildings", true),
+            ("Capilano Suspension Bridge Park", true)
+        ]
+        
+        for (index, location) in canadaLocations.enumerated() {
+            try addLocationToRoute(index: index + 1, routeName: "Canada", name: location.0, realPicture: "", description: "", isLocked: location.1)
+        }
     }
     
     private func insertTagsForLocations() throws {
@@ -256,7 +273,17 @@ class DBManager {
             ("Bukchon Hanok Village", ["#HanokArchitecture", "#TraditionalVillage"]),
             ("Cheonggyecheon", ["#SeoulStream", "#UrbanRenewal"]),
             ("Haedong Yonggungsa", ["#SeasideTemple", "#BusanLandmark"]),
-            ("Gamcheon Culture Village", ["#ColorfulVillage", "#StreetArt"])
+            ("Gamcheon Culture Village", ["#ColorfulVillage", "#StreetArt"]),
+            
+            ("Niagara Falls Canada", ["#ScenicViews", "#Adventure"]),
+            ("Notre-Dame Basilica", ["#CatholicChurch", "#GothicArchitecture"]),
+            ("Old Quebec", ["#CobblestoneStreets", "#EuropeanCharm"]),
+            ("The Butchart Gardens", ["#Botanical", "#Horticulture"]),
+            ("CN Tower", ["#Skyscraper", "#ObservationDeck"]),
+            ("Granville Island", ["#Market", "#Art", "#Culture"]),
+            ("Old Montreal", ["#Heritage", "#Architecture"]),
+            ("Parliament Hill and Buildings", ["#NationalSymbol", "#Monuments"]),
+            ("Capilano Suspension Bridge Park", ["#Nature", "#HikingTrails"])
         ]
         
         for (location, tags) in tagsForLocations {

@@ -127,5 +127,5 @@ struct RouteProgress: View {
 }
 
 #Preview {
-    RouteProgress(route: "South Korea", counter: 120, countTo: 120, startPos: 7)
+    RouteProgress(route: "Canada", counter: 120, countTo: 120, startPos: 9)
 }

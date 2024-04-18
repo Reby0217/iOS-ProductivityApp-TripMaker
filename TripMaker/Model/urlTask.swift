@@ -35,7 +35,7 @@ class urlTask {
     let photoId: [String: [String: String]] = [
         "Taiwan": ["Bangka Lungshan Temple": "krPkCYVahXc", "National Taichung Theater": "31UvcGZKgS8", "Jiufen": "UDv1n0xIpU8", "Taipei 101": "qhu2nFWqVEU", "Formosa Boulevard metro station": "4SD7fsm4NRQ", "Fo Guang Shan Buddha Museum": "sxXm1_Jf-ns", "Yehliu": "_Rh5TxWLjF4", "Chiang Kai-shek Memorial Hall": "K-29Bnhke_E"],
         "South Korea": ["Gyeongbokgung Palace": "dQytkIHYzYQ", "Myeong-dong": "nq4tcJz77r0", "N Seoul Tower": "zwi5M-SA77I", "Bukchon Hanok Village": "-e6Xu27_T50", "Cheonggyecheon": "wNWxhHjdl6Q", "Haedong Yonggungsa": "kO0w49YXfSY", "Gamcheon Culture Village": "mLKkqlqFiZ4"],
-        "Canada": ["Niagara Falls Canada": "Gcc3c6MfSM0", "Notre-Dame Basilica": "iJuzlfA8LxE", "Old Quebec": "mSVRrKEZAH8", "The Butchart Gardens": "Ahj_8PUivJI", "CN Tower": "6wVqCeK030Y", "Granville Island": "0UqEQDNJcUw", "Old Montreal": "PT3QQdjhMzw", "Parliament Hill and Buildings": "ReUoz0CwfGo", "Capilano Suspension Bridge Park": "YHXs0hKaeok"]
+        "Canada": ["Niagara Falls": "Gcc3c6MfSM0", "Notre-Dame Basilica": "iJuzlfA8LxE", "Old Quebec": "mSVRrKEZAH8", "Butchart Gardens": "Ahj_8PUivJI", "CN Tower": "6wVqCeK030Y", "Granville Island": "0UqEQDNJcUw", "Old Montreal": "PT3QQdjhMzw", "Canadian Parliament Buildings": "ReUoz0CwfGo", "Capilano Suspension Bridge Park": "YHXs0hKaeok"]
     ]
         
     

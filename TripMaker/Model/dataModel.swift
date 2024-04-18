@@ -240,14 +240,14 @@ class DBManager {
         }
         
         let canadaLocations = [
-            ("Niagara Falls Canada", true),
+            ("Niagara Falls", true),
             ("Notre-Dame Basilica", true),
             ("Old Quebec", true),
-            ("The Butchart Gardens", true),
+            ("Butchart Gardens", true),
             ("CN Tower", true),
             ("Granville Island", true),
             ("Old Montreal", true),
-            ("Parliament Hill and Buildings", true),
+            ("Canadian Parliament Buildings", true),
             ("Capilano Suspension Bridge Park", true)
         ]
         
@@ -275,14 +275,14 @@ class DBManager {
             ("Haedong Yonggungsa", ["#SeasideTemple", "#BusanLandmark"]),
             ("Gamcheon Culture Village", ["#ColorfulVillage", "#StreetArt"]),
             
-            ("Niagara Falls Canada", ["#ScenicViews", "#Adventure"]),
+            ("Niagara Falls", ["#ScenicViews", "#Adventure"]),
             ("Notre-Dame Basilica", ["#CatholicChurch", "#GothicArchitecture"]),
             ("Old Quebec", ["#CobblestoneStreets", "#EuropeanCharm"]),
-            ("The Butchart Gardens", ["#Botanical", "#Horticulture"]),
+            ("Butchart Gardens", ["#Botanical", "#Horticulture"]),
             ("CN Tower", ["#Skyscraper", "#ObservationDeck"]),
             ("Granville Island", ["#Market", "#Art", "#Culture"]),
             ("Old Montreal", ["#Heritage", "#Architecture"]),
-            ("Parliament Hill and Buildings", ["#NationalSymbol", "#Monuments"]),
+            ("Canadian Parliament Buildings", ["#NationalSymbol", "#Monuments"]),
             ("Capilano Suspension Bridge Park", ["#Nature", "#HikingTrails"])
         ]
         
@@ -357,6 +357,17 @@ class DBManager {
                 }
             } catch {
                 print("error fetching locations for South Korea")
+            }
+            
+            do {
+                let locations = try await fetchAllLocationsInOrder(routeName: "Canada")
+                print("try to fetch location descriptions")
+                for location in locations {
+                    url.fetchLocationDescription(for: location)
+                    url.fetchLocationPicture(route: "Canada", for: location)
+                }
+            } catch {
+                print("error fetching locations for Canada")
             }
         }
         

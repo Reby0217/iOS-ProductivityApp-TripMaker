@@ -54,7 +54,7 @@ When running TripMaker in a simulator logged in with an Apple ID, the following 
 - **Achievement Tracking**: Achievements are marked by claiming rewards and unlocking new locations through focus sessions. (The minimum length of time required to unlock a new location varies depending on the indicated level.)
     - **Taiwan**: 30min
     - **South Korea**: 60min
-    - **Canada**: 60min
+    - **Canada**: 120min
     
 
 - **SpriteKit Integration**: Leverage SpriteKit within a SwiftUI framework to create dynamic, interactive map scenes. This integration enriches the user interface by facilitating smooth animations and transitions, enhancing the overall user experience by making the virtual journey visually appealing and engaging.

@@ -23,6 +23,7 @@ struct TimerView: View {
     @State private var timerSubscription: Cancellable?
     @State private var cancelTimerSubscription: Cancellable?
     @State private var showBackButton = false
+    @State private var showingAlert = false
     
     @State private var focusSessionID: UUID?
     @State private var userID: UUID?
@@ -86,7 +87,14 @@ struct TimerView: View {
             self.cancelTimerSubscription?.cancel()
         }
         .navigationBarBackButtonHidden(!showBackButton)
+        .alert(isPresented: $showingAlert) {
+            Alert(
+                title: Text("Unlock new location!"),
+                dismissButton: .default(Text("OK"))
+            )
+        }
     }
+    
 
 
     private func startTimer() {
@@ -114,8 +122,9 @@ struct TimerView: View {
                         
                         Task {
                             let locations = try await self.dbManager.fetchAllLocationsInOrder(routeName: routeName)
-                            if (currentLocationIndex < locations.count){
+                            if (currentLocationIndex < locations.count && Int(totalTime) >= (TripConfig.route_min_time[routeName] ?? 30) * 60){
                                 print("Unlock location \(locations[currentLocationIndex])")
+                                showingAlert = true
                                 try self.dbManager.addLocationToFocusSession(sessionID: newSessionID, location: locations[currentLocationIndex])
                                 
                                 try self.dbManager.updateLocationLockStatus(name: locations[currentLocationIndex], isLocked: false)

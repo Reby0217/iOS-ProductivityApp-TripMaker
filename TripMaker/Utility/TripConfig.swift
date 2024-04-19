@@ -16,6 +16,12 @@ struct TripConfig {
         "Canada": 5
     ]
     
+    static let route_min_time: [String: Int] = [
+        "Taiwan": 30,
+        "South Korea": 60,
+        "Canada": 120
+    ]
+    
     static let route_attractions: [String: [CGPoint]] = [
         "Taiwan" :
             [

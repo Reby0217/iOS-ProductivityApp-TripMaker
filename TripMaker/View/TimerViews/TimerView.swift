@@ -48,7 +48,7 @@ struct TimerView: View {
 
     var body: some View {
         VStack {
-            RouteProgress(route: routeName, counter:  Int(totalTime - timeRemaining), countTo: Int(totalTime), startPos: currentLocationIndex)
+            RouteProgress(route: routeName, counter:  Int(totalTime - timeRemaining), countTo: Int(totalTime) >= TripConfig.route_min_time[routeName]!*60  ? Int(totalTime) : TripConfig.route_min_time[routeName]!*60, startPos: currentLocationIndex)
                 .frame(width: 400, height: 400)
                 //.scaledToFit()
                 //.padding()

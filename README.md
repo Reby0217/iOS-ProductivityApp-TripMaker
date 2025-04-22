@@ -3,7 +3,8 @@
 [![YouTube Video Views](https://img.shields.io/youtube/views/ta87bH3GRe0?style=social)](https://www.youtube.com/watch?v=ta87bH3GRe0)
 
 
-[![Watch on YouTube](https://img.youtube.com/vi/ta87bH3GRe0/0.jpg)](https://youtu.be/ta87bH3GRe0)
+[![Watch on YouTube](https://img.youtube.com/vi/ta87bH3GRe0/hqdefault.jpg)](https://youtu.be/ta87bH3GRe0)
+
 
 
 TripMaker is a dynamic productivity app that enhances focus and motivation through the thrill of virtual travel. Users set a focus timer and advance through global locations, gamifying productivity with immersive travel experiences. Ideal for students, professionals, or anyone looking to boost concentration while exploring the world, TripMaker combines work with pleasure, keeping users engaged, motivated and informed as they achieve their goals. This app promises an enjoyable and educational way to stay focused and meet objectives.

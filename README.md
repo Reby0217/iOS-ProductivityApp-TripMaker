@@ -2,7 +2,6 @@
 
 [![YouTube Video Views](https://img.shields.io/youtube/views/ta87bH3GRe0?style=social)](https://www.youtube.com/watch?v=ta87bH3GRe0)
 
-
 [![Watch on YouTube](https://img.youtube.com/vi/ta87bH3GRe0/hqdefault.jpg)](https://youtu.be/ta87bH3GRe0)
 
 
